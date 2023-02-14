@@ -1,0 +1,49 @@
+{begin_form}
+<input type="hidden" value="{from}"  name="from" />
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị bài Báo giấy</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=news&page=admin_baogiay&cmd=news_store"><span>Danh sách trang</span></a></li>
+				<li><a class="header-menu-active"><span>Thêm/Sửa mới trang</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TẠO & SỬA TIN</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Trang báo</label>
+				<input  type="text" style="width:88px;" name="page" value="{page}" id="page" maxlength="2" /> (<font color="red"> Là các số tự nhiên 1-9 </font>)
+			</li>
+			<li id="cat">
+				<label>Thuộc số báo</label>
+				<select name="cate_id" id="cate_id">
+					<option value="0">Chọn số báo</option>
+					{option_category}
+				</select>
+			</li>
+			<li>
+				<label style="display:block; float:left">Ảnh báo</label>
+				{img1}
+				<br>
+				<input type="file"  name="img1" id="img1"/>
+			</li>
+			<li>
+				<label></label>
+				<input type="submit"  value="Lưu trữ" name="add_edit" class="button"/>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+<input  type="hidden" value="{news_id}" name="news_id" />
+{end_form}
+<script type="text/javascript">
+ 
+</script>

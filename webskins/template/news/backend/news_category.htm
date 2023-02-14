@@ -1,0 +1,138 @@
+		<div class="folder-header">
+			<h1>Quản trị danh mục</h1>
+			<div class="header-menu">
+				<ul>
+					<li><a id="category" class="header-menu-active user-icon" href="?app=news&page=admin_news_category"><span>Danh sách danh mục</span></a></li>					
+					<li><a class="protrans-icon" href="?app=news&page=admin_category_property"><span>Thuộc tính</span></a></li>
+					<li><a class="activities-icon" href="?app=news&page=admin_category_configuration"><span>Cấu hình danh mục</span></a></li>
+					<li><a class="activities-icon" href="?app=news&page=admin_focus_config"><span>Tiêu điểm</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">
+			<a id="add_category" class="add-menu" href="{add_link}">Thêm danh mục</a>
+			<span style="color: red; width: 50%; padding: 1px 5px; border: 1px solid #8A2; {display}">{msg}</span>
+			<div id="add" style="{show}">
+			<h2>Thêm danh mục (Tối đa có 5 cấp)</h2>			
+			{begin_form}
+			<ul>
+				<li>
+					<label for="name">Tên danh mục</label>
+					<input type="text" name="data[name]" style="width:250px;" value="{catename}"/>		
+					Tên danh mục			
+				</li>
+				<li>
+					<label for="name">Tên danh mục hiển thị</label>
+					<input type="text" name="data[name_display]" style="width:250px;" value="{name_display}"/>		
+					Tên hiển thị danh mục tại các vị trí trên trang		
+				</li>
+				<li id="cat">
+					<label for="name">Chọn danh mục</label>
+					<select name="data[cate_id1]" id="cate1">
+						<option value="0">Chọn danh mục cấp 1</option>						
+						{option_cate1}
+					</select>
+					<select name="data[cate_id2]" id="cate2">
+						<option value="0">Chọn danh mục cấp 2</option>
+						{option_cate2}
+					</select>				
+				</li>
+				<li>
+					<label for="name">Tên trang (Meta title)</label>
+					<input type="text" name="data[title]" style="width:250px;" value="{catetitle}"/>
+					Tiêu đề trang của danh mục
+				</li>
+				<li>
+					<label for="name">Từ khóa (Meta keyword)</label>
+					<input type="text" name="data[keyword]" style="width:250px;" value="{catekeyword}"/>
+					Từ khóa trong thẻ meta của danh mục
+				</li>
+				<li>
+					<label for="name">Mô tả (Meta description)</label>
+					<textarea name="data[description]" style="width:246px;">{catedescription}</textarea>
+					Mô tả trang trong thẻ meta của danh mục
+				</li>
+				<li>
+					<label for="name">Hiển thị trên url</label>
+					<input type="text" name="data[alias]" style="width:250px;" value="{catealias}"/>
+					SEO domain ví dụ www.domain.com/<b>xa-hoi</b>.html
+				</li>
+				<li>
+					<label for="name">Chọn layout</label>
+					<select name="data[layout]">
+					{layout_option}
+					</select>
+					Layout hiển thị cho danh mục
+				</li>	
+				<li>
+					<label for="name">Vị trí hiển thị</label>
+					<input type="text" name="data[arrange]" style="width:250px;" value="{catearrange}" />
+					<input type="hidden" name="data[cate_name1]" id="cate_name1" value="">
+					<input type="hidden" name="data[cate_name2]" id="cate_name2" value="">
+					<input type="hidden" name="data[cate_name3]" id="cate_name3" value="">
+					<input type="hidden" name="data[cate_name4]" id="cate_name4" value="">
+				</li>
+				{properties}
+				<li><input type="submit" class="button" value="{submit}" style="margin-left:153px; width:70px;" />
+				<input type="reset" class="button" value="Hủy bỏ" /></li>
+			</ul>
+			{end_form}
+			</div>
+			<div class="line top"></div>
+			<label for="filter" style="margin-top:10px">Lọc theo từ khóa:</label>
+			<input type="text" name="keyword" id="keyword" value="{query}" style="margin-top:10px"> 
+			<select style="margin-top:10px" name="filter" id="filter"><option value="0">Tất cả danh mục</option>{option_filter}</select>
+			<input type="button" class="button" id="search" style="height:25px;margin-top:12px" class="button" value="Tìm kiếm" />
+			<div class="table">
+			{begin_form_update}
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all"></p></td>
+							<td width="25%" class="bdtop bdbottom bdleft"><p>Tên danh mục</p></td>
+							<td width="42%" class="bdtop bdbottom bdleft"><p>SEO [Url - Title - Keyword - Description]</p></td>
+							<td width="8%" class="bdtop bdright bdbottom bdleft"><p>Vị trí</p></td>
+							<td width="20%" class="bdtop bdright bdbottom bdleft"><p>Thao tác</p></td>
+						</tr>
+						<!-- BEGIN LIST -->
+						<tr align="center" valign="top" class="{bg} heightMin">
+							<td class="bdleft"><p><input type="checkbox" name="pos[{stt}][id]" class="checkall" value="1"></p></td>
+							<td style="text-align:left" class="bdleft">
+							<p style="font-weight:bold">{name}</p>
+							<p style="margin-top:15px">
+							[ <a href="#">Create cache</a> ] 
+							[ <a id="move" class="thickbox" href="ajax.php?path=news&fnc=move_cate&source={stt}&width=300">Di chuyển</a> ]</p>
+							</td>
+							<td style="text-align:left" class="bdleft"><p>
+								<b>Url</b>: {url}<br/>
+								<b>Title</b>: {title}<br />
+								<b>Keyword</b>: {keyword}<br />
+								<b>Description</b>: {desc}
+							</p></td>
+							<td class="bdleft"><input type="text" style="width:25px" name="pos[{stt}][possition]" value="{possition}"></td>
+							<td class="bdleft">
+								<p>
+<a href="?app=news&page=admin_news_category&id={stt}{filter}">Sửa</a> | 
+<a href="javascript:;" class="category_delete" rel="ajax.php?path=news&fnc=category_delete&id={stt}&level={level}">Xóa</a> | 
+<a href="javascript:;" class="publish" rel="ajax.php?path=news&fnc=category_publish&id={stt}&value={value}&level={level}&cmd={cmd}">{publish}</a> <br />
+Hiển thị trang chủ: 
+<a href="javascript:;" class="publish" rel="ajax.php?path=news&fnc=category_publish&id={stt}&value={value_hp}&cmd={cmd_hp}">{homepage}</a> <br />
+Hiển thị danh mục: 
+<a href="javascript:;" class="publish" rel="ajax.php?path=news&fnc=category_publish&id={stt}&value={value_dm}&cmd={cmd_dm}">{category}</a> <br />
+Chuyên san: 
+<a href="javascript:;" class="publish" rel="ajax.php?path=news&fnc=category_publish&id={stt}&value={value_sp}&cmd={cmd_sp}">{special}</a> <br />
+HT trên main menu: 
+<a href="javascript:;" class="publish" rel="ajax.php?path=news&fnc=category_publish&id={stt}&value={value_menu}&cmd={cmd_menu}">{menu_show}</a> <br />
+HT trên tab trang chủ: 
+<a href="javascript:;" class="publish" rel="ajax.php?path=news&fnc=category_publish&id={stt}&value={value_tab}&cmd={cmd_tab}">{menu_tab}</a> <br />
+								</p>
+							</td>	
+						</tr>				
+						<!-- END LIST -->	
+					</tbody>
+				</table>
+				<input type="submit" name="update" style="height:25px;margin-top:12px" class="button" value="Cập nhật" />
+				{end_form_update}
+			</div>
+			<div class="clear"></div>
+		</div>

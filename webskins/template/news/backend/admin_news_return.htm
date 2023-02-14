@@ -1,0 +1,148 @@
+<style>
+    th {
+        cursor: pointer;
+    }
+</style>
+<div class="folder-content">
+    <h2>TÌM KIẾM TIN</h2>
+    <ul>
+        <li>
+            <label for="name">Từ khóa cần tìm</label>
+            <input type="text" value="{q}" id="q" name="q" style="width:200px;"/>
+            &nbsp;&nbsp;<input type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin"
+                               value="{date_begin}"/> &nbsp; Ngày tạo đến <input type="text"
+                                                                                 class="date-pick dp-applied"
+                                                                                 style="width:80px;" id="date_end"
+                                                                                 value="{date_end}"/>
+        </li>
+        <li>
+            <label>Trong mục cha</label>
+            <select style="width:120px" id="cate_id">
+                <option value="0">Chọn danh mục</option>
+                {option_category}
+            </select>
+        </li>
+        <li>
+            <label>&nbsp;</label>
+            <input type="button" class="button" value="Tìm kiếm" name="Search" onClick="searchNews()">
+        </li>
+    </ul>
+    <div class="line top"></div>
+    <div class="clear"></div>
+    <!--begin table data-->
+
+    <script language="javascript">
+        $(document).ready(function () {
+            $("table").tablesorter({
+                // pass the headers argument and assing a object
+                headers: {
+                    // assign the secound column (we start counting zero)
+                    0: {
+                        // disable it by setting the property sorter to false
+                        sorter: false
+                    }
+
+                }
+            });
+        });
+    </script>
+    <div class="table">
+        <strong>Bạn có <font color="#990000">{total_rowcount}</font> bị trả về !</strong>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <thead>
+            <tr align="center" class="table-title">
+                <th width="2%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="checkboxall"/></p></th>
+                <th width="15%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+                <th width="45%" class="bdtop bdbottom bdleft" align="left"><p>Tên bài</p></th>
+                <th width="20%" class="bdtop bdbottom bdleft" align="left"><p>Lý do</p></th>
+                <th width="10%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo/trả</p></th>
+                <th class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN ListRow -->
+            <tr>
+                <td class="bdleft" align="center">{stt}<br/><input type="checkbox" name="checkall" value="{nw_id}"/>
+                </td>
+                <td class="bdleft" align="center"><p><img src="{src}" width="120px;"></p></td>
+                <td class="bdleft">
+                    <p><strong><a href="{href}" target="_blank" style="font-size: 15px">{title}</a></strong> (<a rel="detail-news"
+                                                                                         class="show-list"
+                                                                                         href="javascript:;"
+                                                                                         onclick="viewContent({nw_id})">Chi
+                        tiết</a>)</p>
+                    <p style="color:#993300">Trong mục: {path}</p>
+                </td>
+                <td class="bdleft" align="left">
+                    <p>Người tạo: <font color="#990000">{creator}</font><br/>Người duyệt: <font
+                            color="#990000">{censor}</font></p>
+                    <p>{reason}</p>
+                </td>
+                <td class="bdleft" align="left"><p>Tạo: {time_created}<br/>Trả: {date_time_return}</p></td>
+                <td class="bdleft" align="center"><p><a
+                        href="?app=news&page=admin_news&cmd=news_create&news_id={nw_id}">Sửa</a> | <a
+                        href="javascript:;" onclick="delData({nw_id})">Xóa</a></p></td>
+            </tr>
+            <!-- END ListRow -->
+
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div class="pages fr">
+            <ul>{paging}</ul>
+        </div>
+    </div>
+</div>
+<div id="detail-news" class="popup-choose"
+     style="width:800px; position:relative; margin-top:-120px; margin-left:-160px;">
+    <h2 style="padding-left:5px; border-bottom:1px solid #990000" class="jqDnR jqDrag">Nội dung chi tiết tin<label
+            class="popup-close button-close"><b>X</b></label></h2>
+    <div class="popup-content folder-content" style="border: 1px solid #999999;overflow:scroll;" id="news-content">Đang
+        tải dữ liệu...
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#detail-news').jqDrag('.jqDrag');
+    })
+
+    function delData(id) {
+        var ok = confirm('Bạn có chắc chắn muốn xóa bài này ra khỏi hệ thống không?');
+        if (ok == true) {
+            $.post("ajax.php?fnc=admin.news.process&path=news",
+                {'action': 'delete-review', 'nw_id': id},
+                function (data) {
+                    if (data == 1)
+                        window.location.reload();
+                    else
+                        alert('Đã có lỗi xảy ra');
+
+                }
+            )
+        }
+    }
+
+    function viewContent(id) {
+        $.post("ajax.php?fnc=admin.news.process&path=news",
+            {'action': 'view-content-to-review', 'nw_id': id},
+            function (data) {
+                $("#news-content").html(data);
+
+            }
+        )
+    }
+
+    function searchNews() {
+        var url = '?app=news&page=admin_news&cmd=news_return';
+        window.location.href = url + '&q=' + $("#q").val() + '&cate_id=' + $("#cate_id option:selected").val() + '&date_begin=' + $("#date_begin").val() + '&date_end=' + $("#date_end").val();
+    }
+
+
+</script>
+<script language="javascript">
+    $(function () {
+        $('#detail-news').jqDrag('.jqDrag');
+    })
+
+</script>	

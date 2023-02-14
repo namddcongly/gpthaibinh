@@ -1,0 +1,75 @@
+{begin_form}
+
+<div class="folder-header">
+	<h1>Quản trị video</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a id="category"  href="{url_current}"><span>Danh sách quảng cáo</span></a></li>
+			<li><a id="category" class="header-menu-active"  href="{link_add}"><span>Tạo quảng cáo</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TẠO & SỬA QUẢNG CÁO</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tiều để quảng cáo</label>
+				<input  type="text" style="width:520px;" name="title" value="{title}" id="title"/>
+				<font color="#999999">Tiêu đề không quá 255 kí tự</font>
+			</li>
+			<li>
+				<label style="display:block; float:left">Banner quảng cáo</label>
+                <img src="{img1}"  width="100px;"/>&nbsp;
+             </li>
+             <li>
+                <label style="display:block; float:left">Banner quảng cáo</label>
+                <input type="file"  name="img1" id="img1"/>&nbsp;<font color="#999999"></font>		
+			</li>
+            <li>
+				<label style="display:block; float:left">Banner nội dung</label>
+                <img src="{img2}"  width="100px;"/>&nbsp;
+             </li>
+            <li>
+                <label style="display:block; float:left">Banner nội dung</label>
+                <input type="file"  name="img2" id="img2"/>&nbsp;<font color="#999999"></font>		
+			</li>
+            <li>
+				<label style="display:block; float:left">File video</label>
+				<input type="file"  name="video" id="video"/>&nbsp;<font color="#999999"></font>
+			</li>
+            <li>
+				<label style="display:block; float:left">Vị trí hiển thị</label>
+				<input type="text"  name="position" value="{position}" id="position" size="5"/>&nbsp;<font color="#999999"></font>
+			</li>
+            <li>
+				<label style="display:block; float:left">Link quảng cáo</label>
+				<input type="text"  name="link" value="{link}" id="link" size="50"/>&nbsp;<font color="#999999"></font>
+			</li>
+			<li>
+				<label>Trang hiển thị</label>
+				Trang chủ<input  type="checkbox" value="1" id="page" name="page1" {check1}/>&nbsp;
+                Trang cấp hai<input  type="checkbox" value="1" id="page" name="page2" {check2}/>&nbsp;
+                Trang chi tiết<input  type="checkbox" value="1" id="page" name="page3" {check3}/><br />
+                <input type="submit"  value="Thêm/Sửa" name="add_edit" class="button"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<input  type="hidden" value="{id}" name="id" />
+{end_form}
+<script type="text/javascript">
+function checkForm()
+{
+	//return true;
+	if($("#title").val()=='' || $("#title").val()==null)
+	{
+		alert("Bạn phải nhập tiêu đề");
+		$("#title").focus();
+		return false;
+	}
+	return true;
+}   
+</script>

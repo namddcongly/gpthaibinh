@@ -1,0 +1,46 @@
+{begin_form}
+<input type="hidden" value="{user_id}" name="user_id">
+<div style="border:1px solid #CCCCCC; padding:10px;">
+	<div>
+		<h2>THÔNG TIN TÀI KHOẢN</h2>
+		<hr color="#990000">
+		<table cellpadding="2" cellspacing="5">
+			<tr>
+				<td align="right">Tên đăng nhập</td>
+				<td><strong>{user_name}</strong></td>
+			</tr>
+			
+			<tr>
+				<td align="right">Mật khẩu</td>
+				<td><a style="color:#6598CB" href="ajax.php?path=user&fnc=change_password_admin&width=300&height=120&user_id={id}" class="thickbox" title="Đổi mật khẩu">Đổi mật khẩu</a></td>
+			</tr>
+		</table>
+		<br/>
+		<h2>THÔNG TIN CÁ NHÂN</h2>
+		<hr color="#990000">
+		<table cellpadding="2" cellspacing="5">
+			<tr>
+				<td align="right">Tên đầy đủ</td>
+				<td><strong><input type="text" value="{full_name}" name="full_name" class="txt" size="40" /> </strong></td>
+			</tr>
+			
+			<tr>
+				<td align="right">Email</td>
+				<td><input type="text" value="{email}" name="email" class="txt"  size="40" /></td>
+			</tr>
+			<tr>
+				<td align="right">Điện thoại</td>
+				<td><input type="text" value="{phone}" name="phone" class="txt"   size="40"/> </td>
+			</tr>
+			<tr>
+				<td align="right">Địa chỉ</td>
+				<td><input type="text" value="{address}" name="address" class="txt"  size="40" /></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="submit"  value="Cập nhật" name="submit"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+{end_form}

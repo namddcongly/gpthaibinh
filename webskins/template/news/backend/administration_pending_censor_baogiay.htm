@@ -1,0 +1,87 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+			&nbsp;&nbsp;Tên PV <input  type="text" name="user_name" id="user_name" style="width:150px;" value="{user_name}"/>
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<div class="table">
+		<div style="float:left; margin-top:15px;"><strong>Bạn có <font color="#990000">{total_rowcount}</font> tin đang chờ duyệt !</strong></div>
+		<div class="pages fr" ><ul>{paging}</ul></div>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></th>
+				  <th width="50%" class="bdtop bdbottom bdleft" align="left"><p>Tiêu đề / Sapo bài viết</p></th>
+				  <th width="15%" class="bdtop bdbottom bdleft" align="left"><p>Tên PV</p></th>
+				  <th width="10%" class="bdtop bdbottom bdleft" align="center"><p>Ngày nhận bài</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>	
+				<tbody>
+				<!-- BEGIN ListRow -->
+					<tr style="background-color:{bg}">
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/></td>
+					  <td class="bdleft">
+						<p>
+							<strong><a href="?app=news&page=administration_baogiay&cmd=view_content&nw_id={nw_id}">{title}</a></strong>
+						</p>
+						<p>[ <span>{sub_title}</span> ]</p>
+						<p>{description}</p>
+					  </td>
+					  <td class="bdleft" align="left">
+					  		<p>Người viết: {user_name_row}</p>
+							<p>Điện thoại: {mobile}</p>
+					  </td>
+					  <td class="bdleft" align="center"><p>{time_created}</p></td>
+					  <td class="bdleft" align="left">
+					  	<p>
+					  		{function}
+							{act_del_edit}
+						</p>
+					</td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+<div id="detail-news" class="popup-choose" style="width:800px; position:relative; margin-top:-120px; margin-left:-160px;">
+	<h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Nội dung chi tiết tin<label class="popup-close button-close"><b>X</b></label></h2>
+	<div class="popup-content folder-content" style="border: 1px solid #999999;height:500px; overflow:scroll;" id="news-content">Đang tải dữ liệu...</div>	
+</div>
+<div id="reason-return" class="popup-choose" style="position:relative; margin-top:-180px; margin-right:100px;">
+	<h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Lý do trả về<label class="popup-close button-close"><b>X</b></label></h2>
+	<textarea cols="84" rows="5" style="background-color:#FFFFFF;" id="reason"></textarea>
+	<input type="hidden" value="" name="return_id" id="return_id" />
+	<input type="hidden" value="" name="status_value" id="status_value" />
+	<input  type="button" class="button" name="Trả bài" value="Trả bài" onclick="newsReturn()" style="float:right"/>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#reason-return').jqDrag('.jqDrag');	
+	})
+	function searchNews()
+	{
+		var url='?app=news&page=administration_baogiay&cmd=pending_censor';
+		window.location.href=url+'&q='+$("#q").val()  + '&user_name='+ $("#user_name").val() + '&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+	}
+</script>

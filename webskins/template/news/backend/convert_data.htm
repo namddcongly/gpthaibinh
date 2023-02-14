@@ -1,0 +1,156 @@
+<div class="folder-header">
+	<h1 style="padding:0 0 5px 10px">Chuyển dữ liệu từ xahoi.com.vn</h1>	
+</div>
+<div class="folder-content" style="margin-top:-10px">			
+	<ul>
+			
+		<li>
+			<label for="name">Danh mục  NGOISAO.VN</label>
+			<select id="ngoisao" name="ngoisao">
+			<option value="0">Chọn danh mục</option>
+			{option_ngoisao}
+			</select>
+		</li>
+		<li>
+			<label for="name">Danh mục  XAHOI.COM.VN</label>
+			<select id="xahoi" name="xahoi">
+				<option value="0">Chọn danh mục</option>
+				{option_xahoi}
+			</select>
+		</li>	
+		<li>
+			<label for="name"></label>
+			<input type="button" class="button" value="Thực hiện chuyển đổi toàn bộ danh mục" id="submit_all" style="cursor:pointer;"><span id="img1"></span>
+		</li>
+	</ul>
+	<div class="table" >	
+		<table id="refresh" border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">			
+		</table>	
+		<div class="pages fr" id="paging"></div>
+		<div style="float:left; margin:15px 0px 0px 0px;">
+			<input type="button" class="button" name="submit" value="Thực hiện chuyển" id="submit"><span id="img2"></span><br/>
+			(Lấy dữ liệu ảnh của bài đã được convert)
+			<a href="http://ngoisao.vn/ajax.php?path=news&fnc=convert_data_cnn" target="_blank">Lấy dữ liệu ảnh chữ nhật</a> | 
+			<a href="http://ngoisao.vn/ajax.php?path=news&fnc=convert_data_v" target="_blank">Lấy dữ liệu ảnh vuông</a> | 
+			<a href="http://ngoisao.vn/ajax.php?path=news&fnc=convert_data_detail " target="_blank">Lấy dữ liệu ảnh chi tiết</a>
+		</div>
+	</div>
+	
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+var news_id = "0,";
+$(document).ready(function()
+{
+	$("#xahoi").live("change",function()
+	{	
+		$("#refresh").html('<img src="webskins/skins/news/images/loading.gif">');
+		
+		var html = '<tr align="center" class="table-title"><td width="6%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all"></p></td><td width="20%" class="bdtop bdbottom bdleft"><p>Ảnh đại diện</p></td><td width="70%" class="bdtop bdbottom bdleft"><p>Tiêu đề/Mô tả</p></td></tr>';
+		
+		$.ajax({
+            url: 'ajax.php?path=news&fnc=convert&cate_id='+$("#xahoi option:selected").val(),
+            type:'GET',
+            dataType:'json',            
+            success:function(data)
+            {            	
+            	$("#refresh").html(html+data.html);
+            	$("#paging").html(data.paging);
+            },
+            timeout:function(){alert('Kết nối đang bị gián đoạn');}
+        });
+		news_id = "";
+	});	
+	$(".ajax").live("click",function(){
+
+		$("#refresh").html('<img src="webskins/skins/news/images/loading.gif">');
+		
+		var html = '<tr align="center" class="table-title"><td width="6%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all"></p></td><td width="20%" class="bdtop bdbottom bdleft"><p>Ảnh đại diện</p></td><td width="70%" class="bdtop bdbottom bdleft"><p>Tiêu đề/Mô tả</p></td></tr>';
+		
+		$.ajax({
+            url: $(this).attr('rel'),
+            type:'GET',
+            dataType:'json',            
+            success:function(data)
+            {            	
+            	$("#refresh").html(html+data.html);
+            	$("#paging").html(data.paging);
+            },
+            timeout:function(){alert('Kết nối đang bị gián đoạn');}
+        });
+		
+		return false;
+	});
+	$("#all").live("click",function(){
+		var temp = $("#all").attr("checked");
+		$(".checkall").each(function(){
+			$(this).attr("checked", temp);
+			news_id += $(this).val()+",";
+		});
+	});
+	$("#submit").live("click",function(){
+		var ngoisao = $("#ngoisao option:selected").val();
+		if(ngoisao != "" && ngoisao != "0")
+		{
+			if(news_id != "0," && news_id != "")
+			{
+				$("#img2").html('<img src="webskins/skins/news/images/loading.gif"> Đang xử lý ...');
+				$.ajax({
+		            url: 'ajax.php?path=news&fnc=post_convert',
+		            type:'POST',
+		            dataType:'json', 
+		            data:{'news_id':news_id,'ngoisao':ngoisao},
+		            success:function(data)
+		            {  
+		            	$("#img2").html('');
+		            	alert('Cập nhật thành công');
+		            },
+		            timeout:function(){alert('Kết nối đang bị gián đoạn');}
+		        });
+				news_id = "";
+				$(".checkall").each(function(){
+					$(this).attr("checked", false);					
+				});
+			}
+			else
+				alert('Chưa chọn item để convert');
+		}
+		else
+			alert("Chưa chọn danh mục ngôi sao");
+	});
+	$("#submit_all").live("click",function(){
+		var ngoisao = $("#ngoisao option:selected").val();
+		var xahoi = $("#xahoi option:selected").val();
+		if(ngoisao != "" && ngoisao != "0")
+		{			
+			$("#img1").html('<img src="webskins/skins/news/images/loading.gif"> Đang xử lý ...');
+			$.ajax({
+	            url: 'ajax.php?path=news&fnc=post_convert&type=all',
+	            type:'POST',
+	            dataType:'json', 
+	            data:{'xahoi':xahoi,'ngoisao':ngoisao},
+	            success:function(data)
+	            {  
+	            	$("#img1").html('');
+	            	alert('Cập nhật thành công');
+	            },
+	            timeout:function(){alert('Kết nối đang bị gián đoạn');}
+	        });
+			news_id = "";
+			$(".checkall").each(function(){
+				$(this).attr("checked", false);					
+			});
+		}
+		else
+			alert("Chưa chọn danh mục ngôi sao");
+	});
+	$(".checkall").live("click",function()
+	{
+		var tem = $(this).attr("checked");
+		var v = $(this).val();
+		news_id = news_id.replace(v+',','');
+		if(tem)
+			news_id += v+",";
+	});
+});
+</script>

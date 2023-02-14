@@ -1,0 +1,113 @@
+<div class="folder-header">
+	<h1>Quản trị TOPIC</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a  class="header-menu-active"  href="?app=news&page=admin_topic&cmd=admin_topic"><span>Danh sách Topic</span></a></li>
+			<li><a  href="?app=news&page=admin_topic&cmd=add_edit"><span>Thêm Topic</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Tìm từ khóa</label>
+			<input type="text" value="{q}" id="q" name="q" size="50">
+			
+		</li>
+		<li>
+			<label for="name">Chọn danh mục</label> 
+			<select id="cate_id">
+				<option value="0">Chọn danh mục</option>
+				{option_category}
+			</select>
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div>
+	<div class="clear"></div>
+	<div class="table">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p>STT</p></th>
+				  <th width="50%" class="bdtop bdbottom bdleft" align="left"><p>Tên TOPIC</p></th>
+				  <th width="20%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+				  <th width="13%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>	
+				<tbody>
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}</td>
+					  <td class="bdleft">
+						<p><strong><a href="?app=news&page=admin_news&cmd=news_store&topic_id={id}" target="_blank">{name}</a></strong></p>
+						<p>{title}</p>
+						<p>{description}</p>
+						<p style="color:#993300">Trong mục: {path}</p>
+					  </td>
+					  <td class="bdleft" align="center"><p><img src="{src}" width="120px;"></p></td>
+					  <td class="bdleft" align="left"><p>{time_created}</p></td>
+					  <td class="bdleft" align="center">
+					  <p>
+							{set_property}<br/>
+					  		<a href="?app=news&page=admin_topic&cmd=add_edit&id={id}">Sửa</a> | 
+							<a href="javascript:;" onClick="delData({id})">Xóa</a>
+					  </p>					  
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+	</div>
+</div>
+<script type="text/javascript">
+	function delData(id)
+	{
+		
+		var ok=confirm('Bạn có chắc chắn muốn xóa topic này không?');
+		if(ok==true)
+		{
+			$.post("ajax.php?fnc=admin.topic.process&path=news",
+				{'action':'delete','id':id},
+				function(data)
+				{
+					//alert(data);
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+						
+				}			
+			)	
+		}
+	}
+	/*
+		Cài đặt hoặc hủy bỏ tin tiều điểm
+	*/
+	function updateProperty(id,property)
+	{		
+		$.post("ajax.php?fnc=admin.topic.process&path=news",
+				{'action':'update-property','id':id,'property':property},
+				function(data)
+				{
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+				}			
+			)	
+		
+	}
+	function searchNews()
+	{
+		var url='?app=news&page=admin_topic&cmd=admin_topic';
+		window.location.href=url+'&q='+$("#q").val()+ '&cate_id='+$("#cate_id option:selected").val();
+	}
+</script>

@@ -1,0 +1,82 @@
+<style>
+	.input_register{
+		width:250px;
+	}	
+	.label{
+		float:right;
+	}
+	.red{
+		color:red;
+	}
+</style>
+<div class="nav-tool">	
+	<div class="path"><a>Liên hệ & góp ý</a> </div>
+</div>
+<div style="padding:10px 0px 10px 10px; margin-top:15px;">
+{begin_form}
+<table class="table-form" id="register-content" cellpadding="10" cellspacing="10">
+	<tr>
+		<td class="label">Tên đầy đủ (<span class="red">*</span>)</td>
+		<td class="form-element"><input id="full_name" name="full_name"  type="text" class="input_register"/></td>
+	</tr>
+	<tr>
+		<td class="label">Email (<span  class="red">*</span>)</td>
+		<td class="form-element"><input id="email" name="email" type="text" class="input_register"/></td>
+	</tr>
+	<tr>
+		<td class="label">Tiêu đề (<span  class="red">*</span>)</td>
+		<td class="form-element"><input id="title" name="title" type="text" class="input_register"/></td>
+	</tr>
+
+	 <tr>
+		<td class="label">Nội dung (<span  class="red">*</span>)</td>
+		<td class="form-element">
+			<textarea cols="60" rows="8" id="content" name="content"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type="submit" class="bds-button" value="Gửi đi" name="submit">&nbsp;&nbsp;<input type="reset" class="bds-button" value="Làm lại" name="reset">
+		</td>
+	</tr>
+</table>
+{end_form}
+</div>
+<script type="text/javascript">
+function checkForm()
+{
+	if($("#full_name").val()==null || $("#full_name").val()=='')
+	{
+		alert("Bạn phải nhập tên!");
+		$("#full_name").focus();
+		return false;
+	}
+	if($("#email").val()==null || $("#email").val()=='')
+	{
+		alert("Bạn phải email!");
+		$("#email").focus();
+		return false;
+	}
+	var regex = /^(([\-\w]+)\.?)+@(([\-\w]+)\.?)+\.[a-zA-Z]{2,4}$/;
+	
+	if (!regex.test($("#email").val())){
+		window.alert('Email không đúng định dạng!');
+		$("#email").focus();
+		return false;
+	}
+	if($("#title").val()==null || $("#title").val()=='')
+	{
+		alert("Bạn phải nhập tiêu đề!");
+		$("#full_name").focus();
+		return false;
+	}
+	if($("#content").val()==null || $("#content").val()=='')
+	{
+		alert("Bạn phải nhập nội dung!");
+		$("#content").focus();
+		return false;
+	}
+
+}
+</script>

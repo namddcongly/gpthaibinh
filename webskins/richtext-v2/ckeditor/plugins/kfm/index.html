@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- BEGIN KFManager -->
+<script type="text/javascript" src="clientscript/js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="clientscript/css/jquery.kfm.css" media="screen" />
+<script type="text/javascript" src="clientscript/js/jquery.kfm.rclick.js"></script>
+<script type="text/javascript" src="clientscript/js/swfobject.js"></script>
+<script type="text/javascript" src="clientscript/js/jquery.kfm.uploadify.js"></script>
+<script type="text/javascript" src="clientscript/js/jquery.kfm.skin.js"></script>
+<script type="text/javascript" src="clientscript/js/jquery.kfm.lang.js"></script>
+<script type="text/javascript" src="clientscript/js/jquery.kfm.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#kfmListfolder').KFMtree({
+		standalone: false
+	});
+});
+</script>
+<!-- END KFManager -->
+<title>File Manager</title>
+</head>
+<body>
+	<!-- BEGIN KFManager -->
+   <div id="kfmWrapper">
+   <!--[if lte IE 6]>
+    <style type="text/css">
+    .clearfix {height: 1%;}
+    </style>
+    <![endif]-->
+    <!--[if gte IE 7.0]>
+    <style type="text/css">
+    .clearfix {display: inline-block;}
+    </style>
+    <![endif]-->
+    <table border="0" width="100%" cellpadding="0" cellspacing="1">
+        <tr class="kfmTitle">
+            <td width="20%">
+                <div class="label" id="kfmLabelFolder"></div>
+            </td>
+            <td>
+                <div class="label dir"><strong id="kfmLabelAddress"></strong> /root/<span id="kfmdireactory"></span></div>
+            </td>
+          </tr>
+        <tr class="list">
+            <td valign="top">
+                <div id="kfmList">
+                    <ul class="kfmTree" id="kfmListfolder">
+                        <li id="tree" class="kfmTreeSub">
+                            <div class="kfmExpand kfmExpandMinus"></div>
+                            <div class="kfmFolder kfmFolderOpen">
+                                <a href="javascript:void(0);" name="root" class="active">root</a>
+                            </div>
+                            <ul id="kfmlistroot">
+                                <li>
+                                    <div class="kfmFolder kfmBusy">&nbsp;</div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td valign="top">
+                <div class="kfmButtonWrapper clearfix">
+                    <div class="kfmButton kfmfolder">
+                        <a href="javascript:void(0);" id="kfmButtonFolder">New Folder</a>
+                    </div>
+                    <div class="kfmButton kfmupload">
+                        <a href="javascript:void(0);" id="kfmButtonUpload">Upload</a>
+                    </div>
+                    <div class="kfmButton kfmrefresh">
+                        <a href="javascript:void(0);" id="kfmButtonRefresh">Refresh</a>
+                    </div>
+                    <div class="kfmButton kfmhelp">
+                        <a href="javascript:void(0);" id="kfmButtonHelp">Help</a>
+                    </div>
+                    <div class="kfmButton kfmfilter">
+                        Filter <input type="text" name="filter" id="kfmFilter" />
+                    </div>
+                </div>
+                <div id="kfmFilelist">
+                    <div id="kfmLoadBusy"></div>
+                </div>
+                </td>
+        </tr>
+        <tr>
+            <td class="kfmstt"><div id="kfmtt"></div></td>
+            <td class="kfmstt"><div id="kfmstt"></div></td>
+        </tr>
+    </table>
+    </div>
+    <!-- END KFManager -->
+</body>
+</html>

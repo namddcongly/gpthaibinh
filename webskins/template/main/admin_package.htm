@@ -1,0 +1,34 @@
+		<div class="folder-header">
+			<h1>Cắm module vào trang</h1>
+			<div class="header-menu" style="height:1px"></div>
+		</div>
+		<div class="folder-content">				
+			{begin_form}
+				<ul>		
+				{msg}
+					<li>
+						<input type="submit" class="button" name="submit" value="Scan Module on Local" style="width:140px;" />
+						<input type="submit" class="button" name="submit_server" value="Scan Module on Server" style="width:140px;" />
+					</li>
+				</ul>
+				{end_form}
+				<div class="line top"></div>			
+			<div class="table">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+							<td width="25%" class="bdtop bdbottom bdleft"><p>Tên Portal</p></td>
+							<td width="70%" class="bdtop bdbottom bdleft"><p>Module/Path</p></td>
+						</tr>
+						<!-- BEGIN PACKAGE -->
+						<tr align="center" valign="top" class="{layout_class}">
+							<td width="5%" class="bdleft">{stt}</td>
+							<td width="25%" class="bdleft"><p style="text-align:left;"><b>{portal_name}</b><br />Path: <b style="color:red">{portal_path}</b></p></td>
+							<td width="70%" class="bdleft">{module_name}</td>							
+						</tr>				
+						<!-- END PACKAGE -->	
+					</tbody>
+				</table>
+			</div>			
+		</div>

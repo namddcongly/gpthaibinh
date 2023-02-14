@@ -1,0 +1,75 @@
+		<div class="folder-header">
+			<h1>Quản trị Poll</h1>
+			<div class="header-menu">
+				<ul>
+					<li><a id="category" class="header-menu-active user-icon" href="?app=news&page=admin_poll"><span>Danh sách poll</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">
+			<a id="add_category" class="add-menu" href="javascript:;">Thêm poll</a>
+			<span style="color: red; width: 50%; padding: 1px 5px; border: 1px solid #8A2; {display}">{msg}</span>
+			<div id="add" style="{show}">
+			{begin_form}
+			<ul>
+				<li>
+					<label for="name">Tên poll</label>
+					<input type="text" name="data[name]" style="width:250px;" value="{poll_name}"/>		
+					Chủ đề bình chọn	
+				</li>
+				<li>
+					<label for="name">Kiểu hiển thị</label>
+					<select name="data[type]">
+						{option_type}
+					</select>
+				</li>	
+				<li>
+					<label for="name">Ngày hết hạn</label>
+					<input type="text" name="data[end_time]" value="{poll_end_time}" class="date-pick dp-applied" style="width:80px;" id="date_public" >
+				</li>
+				<li>
+					<label for="name">Thêm option</label>
+					<a id="add_option" href="javascript:;">Thêm option</a>
+				</li>
+				<li id="poll_option">{edit_poll}</li>			
+				<li><input type="submit" class="button" value="{submit}" style="margin-left:153px; width:70px;" />
+				<input type="reset" class="button" value="Hủy bỏ" /></li>
+			</ul>
+			{end_form}
+			</div>
+			<div class="line top"></div>
+			<label for="filter" style="margin-top:10px">Lọc theo từ khóa:</label>
+			<input type="text" name="keyword" id="keyword" value="{query}" style="margin-top:10px"> 
+			<select style="margin-top:10px" name="filter" id="type"><option value="0">Tất cả kiểu</option>{option_type}</select>
+			<input type="button" class="button" id="poll_search" style="height:25px;margin-top:12px" class="button" value="Tìm kiếm" />
+			<div class="table">			
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all"></p></td>
+							<td width="35%" class="bdtop bdbottom bdleft"><p>Tên poll</p></td>
+							<td width="15%" class="bdtop bdbottom bdleft"><p>Kiểu lựa chọn</p></td>
+							<td width="15%" class="bdtop bdbottom bdleft"><p>Ngày bắt đầu</p></td>
+							<td width="15%" class="bdtop bdbottom bdleft"><p>Ngày hết hạn</p></td>
+							<td width="15%" class="bdtop bdright bdbottom bdleft"><p>Tùy chọn</p></td>
+						</tr>	
+						<!-- BEGIN LIST -->
+						<tr>
+							<td class="bdtop bdbottom bdleft"><p><input type="checkbox" name="all"></p></td>
+							<td><p>{name}</p></td>
+							<td><p>{type}</p></td>
+							<td><p>{time_created}</p></td>
+							<td><p>{end_time}</p></td>
+							<td><p>
+								<a href="?app=news&page=admin_poll&id={id}&cmd=delete">Xóa</a> |
+								<a href="?app=news&page=admin_poll&id={id}">Sửa</a> |
+								<a href="ajax.php?path=news&fnc=result_poll&poll_id={id}">Xem kết quả</a> 
+							</p></td>
+						</tr>
+						<!-- END LIST -->					
+					</tbody>
+				</table>				
+				
+			</div>
+			<div class="clear"></div>
+		</div>

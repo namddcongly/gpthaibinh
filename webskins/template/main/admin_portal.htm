@@ -1,0 +1,61 @@
+<div class="folder-header">
+	<h1>Danh sách các Application</h1>
+	<div class="header-menu">
+		<ul id="menu_page">
+			<li><a class="header-menu-active" href="?portal=main&page=admin_page"><span>Danh sách</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">	
+	<div id="add" style="margin-bottom:10px;">
+		{begin_form}
+		<ul>
+			<li>
+				<label for="name">Tên Portal</label>
+				<input type="text" style="width:238px;" name="name" class="name"/>	Chỉ gồm các chữ cái từ a-z, và _ 				
+			</li>
+			<li>
+				<label for="name">Tên hiển thị</label>
+				<input type="text" style="width:238px;" name="alias" class="alias"/>	Tên hiển thị của Portal	
+			</li>
+			<li>
+				<label for="name">Mô tả</label>
+				<input type="text" style="width:438px;" name="description" class="description"/> Mô tả Portal quản lý các trang nào trong hệ thống
+			</li>
+			<li>
+				<input type="submit" name="submit" class="button" value="Tạo mới" style="margin-left:153px; width:70px;" /> 
+				<input type="reset" name="reset" class="button" value="Hủy bỏ" />
+			</li>
+		</ul>
+		{end_form}
+		<div class="line top"></div>
+	</div>		
+	<span>Danh sách các portal trong hệ thống. Việc <strong>SỬA/XÓA</strong> các Portal ảnh hưởng nghiêm trọng đến sự phát triển của hệ thống. Bạn phải cân nhắc kỹ lưỡng khi thực hiện.</span>
+	<div class="table">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+			<tbody>
+				<tr align="center" class="table-title">
+					<td width="5%" class="bdtop bdbottom bdleft"><p>ID</p></td>
+					<td width="15%" class="bdtop bdbottom bdleft" align="left"><p>Tên Portal</p></td>
+					<td width="15%" class="bdtop bdbottom bdleft" align="left"><p>Tên hiển thị</p></td>
+					<td width="45%" class="bdtop bdbottom bdleft"><p>Mô tả</p></td>
+					<td width="20%" class="bdtop bdright bdbottom bdleft"><p>Thao tác</p></td>
+				</tr>
+				<!-- BEGIN Portal -->
+				<tr align="center" valign="top" class="{page_class}">
+					<td class="bdleft">{id}</td>
+					<td class="bdleft" align="left"><p style="font-weight:bold"><a href="?app=main&page=admin_page&portal_id={id}&portal_name={name}">{name}</a></p></td>
+					<td class="bdleft" align="left"><p style="font-weight:bold"><a href="javascript:;">{alias}</a></p></td>
+					<td class="bdleft" align="left"><p>{description}</p></td>
+					<td class="bdright bdleft">
+						<p><a href="javascript:;" onclick="delCache('{name}')">Xóa cache</a> | <a href="javascript:;" onclick="delData({id})">Xóa</a> | <a href="javascript:;" onclick="loadData({id})">Sửa</a></p>
+					</td>
+				</tr>		
+				<!-- END Portal -->	
+			</tbody>
+		</table>
+	</div>
+	<div class="clear"></div>
+</div>
+
+		

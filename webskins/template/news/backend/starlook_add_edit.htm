@@ -1,0 +1,91 @@
+{begin_form}
+<div class="folder-header">
+	<h1>Quản trị TOPIC</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a href="?app=news&page=admin_starlook&cmd=admin_starlook&p=1"><span>Danh sách bài đã đăng</span></a></li>
+			<li><a href="?app=news&page=admin_starlook&cmd=admin_starlook&p=0"><span>Danh sách bài chưa đăng</span></a></li>
+			<li><a  class="header-menu-active"  href="?app=news&page=admin_starlook&cmd=add_edit"><span>Thêm/Sửa bài</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TẠO & SỬA bài</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tên đây đủ</label>
+				<input  type="text" style="width:520px;" name="fullname" value="{fullname}" id="fullname"/>
+				<font color="#999999">Tiêu đề không quá 255 kí tự</font>
+			</li>
+			<li>
+				<label>Email</label>
+				<input  type="text" style="width:520px;" name="email" value="{email}" id="email"/>
+			</li>
+			<li>
+				<label>Ngày sinh</label>
+				<input type="text" name="sn" value="{sn}" style="width:520px;">
+			</li>
+			<li>
+				<label>Giới tính</label>
+				<input type="text" name="sex" value="{sex}" style="width:520px;">
+			</li>
+			<li>
+				<label>Nghề nghiệp</label>
+				<input type="text" name="carres" value="{carres}" style="width:520px;">
+			</li>
+			<li>
+				<label>Địa chỉ</label>
+				<input type="text" name="add" value="{add}" style="width:520px;">
+			</li>
+			<li>
+				<label>Điện thoại</label>
+				<input type="text" name="phone" value="{phone}" style="width:520px;">
+			</li>
+			<li>
+				<label>Facebook</label>
+				<input type="text" name="facebook" value="{facebook}" style="width:520px;">
+			</li>
+			<li>
+				<label>Thông tin thêm</label>
+				<textarea name="more" rows="5" cols="100">{more}</textarea>
+			</li>
+			<li>
+				<label style="display:block; float:left">Ảnh đại diện</label>
+                {img}&nbsp;
+                <br>
+			</li>
+			<li>
+				<label style="display:block; float:left">&nbsp;</label>
+				<input type="file"  name="img" id="img" /> (420x 250)
+			</li>
+			<li>
+				<label>&nbsp;</label>
+				<input type="submit"  value="Thêm/Sửa" name="add_edit" class="button"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<input type="hidden" value="{id}" name="id"  />
+{end_form}
+<script type="text/javascript">
+function checkForm()
+{
+	//return true;
+	if($("#fullname").val()=='' || $("#fullname").val()==null)
+	{
+		alert("Bạn phải tên đây đủ");
+		$("#fullname").focus();
+		return false;
+	}
+	if($("#email").val()=='' || $("#email").val()==null)
+	{
+		alert("Bạn phải nhập email");
+		$("#email").focus();
+		return false;
+	}
+	return true;
+}
+</script>

@@ -1,0 +1,40 @@
+<div class="folder-content">
+	<h3>Thông tin & các chỉ số của bạn</h3>
+	<div class="line top"></div><div class="clear"></div>
+	<div class="table">
+		<ul>
+			<li style="text-decoration:underline; color:#990000; font-weight:bold;">Thông tin của bạn</li>
+			<li>- Có <strong>{total_pending_censor}</strong> tin chờ duyệt</li>
+			<li>- Có <strong>{total_pending_public}</strong> tin chờ xuất bản</li>
+			<li>- Có <strong>{total_news_return}</strong> tintrả về</li>
+			<li style="text-decoration:underline; color:#990000; font-weight:bold;">Thông tin trên trang chủ</li>
+			<li>- Có <strong>{total_home_record}</strong> tin đang hiển thị</li>
+			<li>- Có <strong>{home_record_in_day}</strong> tin được cập nhật trong ngày</li>
+			<li>- Có <strong>{home_record_yesterday}</strong> tin được cập nhật trong hôm qua</li>
+			<li style="text-decoration:underline; color:#990000; font-weight:bold;">Thông tin trên trang danh mục</li>
+			<li style="text-decoration:underline; color:#990000; font-weight:bold;">Thông tin kho</li>
+		</ul>	
+	</div>
+</div>
+<script type="application/javascript">
+	function deleteNewsHome(number)
+	{
+		var ok=confirm("Bạn có chắc chắn xóa " + number + ' tin cũ ra khỏi trang chủ hay không?');
+		if(ok==true)
+		{
+			$.post("ajax.php?fnc=admin.news.process&path=news",
+				{'action':'delete-old-home','number':number},
+				function(data)
+				{
+					alert(data);
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+						
+				}			
+			)	
+		}
+		
+	}
+</script>

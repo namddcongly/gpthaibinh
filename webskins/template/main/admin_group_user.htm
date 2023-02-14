@@ -1,0 +1,239 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị User</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=main&page=admin_user&cmd=group"  class="header-menu-active"><span>Danh sách nhóm</span></a></li>
+				<li><a href="?app=main&page=admin_user&cmd=list"><span>Danh sách user</span></a></li>
+				<li><a href="?app=main&page=admin_user&cmd=creat_user"><span>Tạo user</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>	
+<div class="folder" style="margin-top:0px; height:1800px;">
+	<div class="folder-content">
+	<h2>Thêm mới nhóm</h2>
+	<ul id="insert-update-group">
+		<li>
+			<label for="name">Tên nhóm </label>
+			<input type="text" value="" style="width: 150px;" name="name" id="name"> Chỉ gồm các chữ cái từ a-z, và _
+		</li>
+		<li>
+			<label for="name">Mô tả</label>
+			<input type="text" value="" style="width: 238px;" name="description" id="description"> 
+			Mô tả thông tin về nhóm
+		</li>
+		<li><input type="button" onclick="insertData();" style="margin-left: 153px; width: 120px;" value="Thêm mới nhóm" class="button">
+		</li>
+	</ul>	
+	<div class="line top"></div>
+	<p>Danh sách các nhóm người dùng trong hệ thống
+	<!--begin table data-->
+	</p><div class="table">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="bdbottom">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="5%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+				  <td width="11%" class="bdtop bdbottom bdleft"><p>Tên</p></td>
+				  <td width="19%" class="bdtop bdbottom bdleft"><p>Mô tả</p></td>
+				  <td width="27%" class="bdtop bdbottom bdleft"><p>Quyền [<a href="?app=main&page=admin_privilege">Danh sách</a>]</p></td>
+				  <td width="21%" class="bdtop bdbottom bdleft"><p>Thành viên [<a href="?app=main&page=admin_user&cmd=list" target="_blank">Danh sách</a>]</p></td>
+				  <td width="14%" class="bdtop bdbottom bdleft"><p>Thao tác</p></td>
+				</tr>
+				<!-- BEGIN ListRow -->
+					<tr valign="top" align="center">
+					  <td class="bdleft"><p>{stt}</p></td>
+					  <td align="left" class="bdleft"><p><strong>{name}</strong></p></td>
+					  <td align="left" class="bdbottom bdleft"><p>{description}</p></td>
+					  <td class="bdbottom bdleft">
+						 <p>{privilege}</p>
+						 <p>[<a  href="javascript:;" onclick="addPrivilegeToGroup({group_id})">Thêm quyền</a>]</p>
+					  </td>
+					  <td width="21%" class="bdbottom bdleft">
+							<p>{list_user}</p>
+							<p>[<a onclick="addUserToGroup({group_id});" href="javascript:;">thêm user</a> ] </p>
+					  </td>
+					  <td width="14%" class="bdbottom bdleft">
+							<p><a href="javascript:;" onclick="loadGroup('{group_id}')">Sửa</a> | <a href="javascript:;" onClick="delData({group_id})">Xóa </a></p>
+					   </td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+	<!--end table data-->
+</div>	
+</div>
+<script language="javascript" type="text/javascript">
+	function addUserToGroup(group_id)
+	{
+		var user_name = window.prompt("Bạn hãy nhập tên user");
+		if(user_name=='' || user_name == null)
+			return false;
+		else
+		{
+			$.post("ajax.php?fnc=user.process&path=main",
+				{'action':'add-user-to-group','user_name':user_name,'group_id':group_id},
+				function(data)
+				{
+					if(data==1)
+					{
+						window.location.reload();	
+					}
+					else
+					{
+						alert("User không tồn tại, hoặc User đã tồn tại trong nhóm");
+					}
+				}			
+			)
+		}
+	}
+	function addPrivilegeToGroup(group_id)
+	{
+
+		var privilege = window.prompt("Bạn hãy nhập tên quyền");
+		if(privilege=='' || privilege == null)
+			return false;
+		else
+		{
+			$.post("ajax.php?fnc=user.process&path=main",
+				{'action':'add-privilege-to-group','privilege_name':privilege,'group_id':group_id},
+				function(data)
+				{
+					if(data==1)
+					{
+						window.location.reload();	
+					}
+					else
+					{
+						alert("Tên quyền không tồn tại, hoặc quyền đã được cấp cho nhóm");
+					}
+				}			
+			)
+		}
+	}
+	
+	function insertData()
+	{
+		if($("#name").val()==null || $("#name").val()=='')
+		{
+			alert('Bạn phải nhâp tên nhóm');
+			$("#name").focus();
+			return false;
+		}
+		if($("#description").val()== null || $("#description").val()=='')
+		{
+			alert('Bạn phải nhâp mô tả nhóm');
+			$("#description").focus();
+			return false;
+		}
+		$.post("ajax.php?fnc=user.process&path=main",
+			{'action':'insert-group','name':$("#name").val(),'description':$("#description").val()},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+				{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+				}
+			}			
+		)
+	}
+	function delData(id)
+	{
+		var ok=confirm("Bạn có chắc chắn muốn xóa nhóm này ra khỏi hệ thống không?");
+		if(ok==true)
+		{
+			$.post("ajax.php?fnc=user.process&path=main",
+				{'action':'del-group','id':id},
+				function(data)
+				{
+					if(data==1)
+					{
+						window.location.reload();	
+					}
+					else
+					{
+						alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+					}
+				}			
+			)
+		}
+	}
+	function loadGroup(id)
+	{
+		$.post("ajax.php?fnc=user.process&path=main",
+				{'action':'load-group','id':id},
+				function(data)
+				{
+					$("#insert-update-group").html(data);
+				}
+		);	
+	}
+	function updateData(id)
+	{
+		if($("#name").val()==null || $("#name").val()=='')
+		{
+			alert('Bạn phải nhâp tên nhóm');
+			$("#name").focus();
+			return false;
+		}
+		if($("#description").val()== null || $("#description").val()=='')
+		{
+			alert('Bạn phải nhâp mô tả nhóm');
+			$("#description").focus();
+			return false;
+		}
+		$.post("ajax.php?fnc=user.process&path=main",
+			{'action':'update-group','name':$("#name").val(),'description':$("#description").val(),'id':id},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+				{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+				}
+			}			
+		)
+	}
+	function delPrivilege(group_id,privilege_id)
+	{
+		$.post("ajax.php?fnc=user.process&path=main",
+			{'action':'del-privilege','privilege_id':privilege_id,'group_id':group_id},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+				{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+				}
+			}			
+		)
+	}
+	function delUserFromGroup(group_id,user_id)
+	{
+		$.post("ajax.php?fnc=user.process&path=main",
+				{'action':'del-user-from-group','user_id':user_id,'group_id':group_id},
+				function(data)
+				{
+					if(data==1)
+					{
+						window.location.reload();	
+					}
+					else
+					{
+						alert("Tên quyền không tồn tại");
+					}
+				}			
+			)
+	}
+</script>

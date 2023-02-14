@@ -1,0 +1,197 @@
+<div class="folder-content">
+    <h2>TÌM KIẾM TIN</h2>
+    <ul>
+        <li>
+            <label for="name">Tìm từ khóa</label>
+            <input type="text" value="{q}" id="q" name="q" size="50">
+
+        </li>
+        <li>
+            <label for="name">Chọn danh mục</label>
+            <select id="cate_id">
+                <option value="0">Chọn danh mục</option>
+                {option_category}
+            </select>
+        </li>
+        <li>
+            <label for="name">Chọn thuộc tính</label>
+            {property_s} <input type="checkbox" name="s_is_video" value="1" id="s_is_video" {video_check}> Tin Video
+        </li>
+        <li>
+            <label>&nbsp;</label>
+            <input type="button" class="button" value="Tìm kiếm" name="Search" onClick="searchNews()">
+        </li>
+    </ul>
+    <div class="line top"></div>
+    <div class="clear"></div>
+    <!--begin table data-->
+    <div class="table">
+        <div class="pages fr">
+            <ul>{paging}</ul>
+        </div>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <thead>
+            <tr align="center" class="table-title">
+                <th width="3%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="checkboxall"/></p></th>
+                <th width="13%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+                <th width="43%" class="bdtop bdbottom bdleft" align="left"><p>Tên bài viết</p></th>
+                <th width="5%" class="bdtop bdbottom bdleft" align="center"><p><input type="button" class="button" value="Vị trí"
+                                                                                      name="Save" title="Lưu vị trí"
+                                                                                      style="font-weight:bold; cursor:pointer;"
+                                                                                      onclick="saveArrange()"/></p></th>
+                <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Xuất bản</p></th>
+                <th width="10%" class="bdtop bdbottom bdleft" align="left"><p>Người duyệt</p></th>
+                <th class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN ListRow -->
+            <tr style="background-color:{bg}">
+                <td class="bdleft" align="center">{stt}<br/><input type="checkbox" id="checkboxall" name="checkall"
+                                                                   value="{nw_id}"/></td>
+                <td class="bdleft" align="center"><p><img src="{src}" width="120px;"></p></td>
+                <td class="bdleft">
+                    <p><strong><a href="http://congly.com.vn/?app=news&page=congly_detail&id={nw_id}" target="_blank"
+                                  style="font-size: 15px">{title}</a></strong> ({hit} lượt đọc)</p>
+                    <p style="color:#993300">Trong mục: {path}</p>
+                </td>
+                <td class="bdleft" align="center">
+                    <p>
+                        <input type="text" value="{arrange}" style="width:20px; text-align:center;" name="arrange"/>
+                        <input type="hidden" value="{id}" name="home_id"/>
+                    </p>
+                </td>
+                <td class="bdleft" align="center"><p>{time_public}</p></td>
+                <td class="bdleft" align="left"><p>{censer_user_name}</p></td>
+                <td class="bdleft" align="left">
+                    <p>
+                        <a href="?app=news&page=admin_news&cmd=news_create&news_id={nw_id}&from=store">Sửa</a> |
+                        <a href="javascript:;" onclick="delData({nw_id})">Hạ khỏi trang chủ</a>
+                        <br/>{property}</p>
+                </td>
+            </tr>
+            <!-- END ListRow -->
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div style="float:left; margin-top:10px; display: none;">
+            <input id="mask-select" type="text" value="Đặt thuộc tính" onclick="showJQ('table-property')"
+                   style="cursor:pointer" readonly="readonly"/>
+            <table cellpadding="5" cellspacing="2"
+                   style=" border:1px solid #CCC; display:none; position:relative; cursor:pointer;" id="table-property">
+                <tr>
+                    <td style="border-bottom:1px solid #CCC"><strong>Thuộc tính</strong></td>
+                    <td style="border-bottom:1px solid #CCC" align="center"><strong>Thiết lập</strong></td>
+                    <td style="border-bottom:1px solid #CCC" align="center"><strong>Hủy bỏ</strong></td>
+                </tr>
+                <!-- BEGIN Property -->
+                <tr>
+                    <td>{property_desc}</td>
+                    <td align="center"><input type="checkbox" value="{property_value}" name="property_{property_value}"
+                                              id="{property_setup}" onclick="singleCheckbox(this)"/></td>
+                    <td align="center"><input type="checkbox" value="{property_value}" name="property_{property_value}"
+                                              id="{property_cancel}" onclick="singleCheckbox(this)"/></td>
+                </tr>
+                <!-- END Property -->
+                <tr>
+                    <td></td>
+                    <td><input type="button" class="button" value="Thiết lập" onclick="setMultiProperty();"/></td>
+                    <td align="center"><input type="button" class="button" name="cancel" value="Đóng"
+                                              onclick="hideJQ('table-property')"/></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="pages fr">
+            <ul>{paging}</ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function delData(id) {
+
+        var ok = confirm('Bạn có chắc chắn muốn xóa bài này ra khỏi trang chủ không?');
+        if (ok == true) {
+            $.post("ajax.php?fnc=admin.news.process&path=news",
+                {'action': 'delete', 'nw_id': id},
+                function (data) {
+                    if (data == 1)
+                        window.location.reload();
+                    else
+                        alert('Đã có lỗi xảy ra');
+
+                }
+            )
+        }
+    }
+
+    /*
+        Cài đặt hoặc hủy bỏ tin tiều điểm
+    */
+    function setProperty(nw_id, set_property, unset_property) {
+        $.post("ajax.php?fnc=admin.news.process&path=news",
+            {'action': 'set-property', 'nw_id': nw_id, 'set_property': set_property, 'unset_property': unset_property},
+            function (data) {
+                if (data == 1)
+                    window.location.reload();
+                else
+                    alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+            }
+        )
+    }
+
+    function searchNews() {
+        var url = '?app=news&page=admin_news&cmd=home';
+        window.location.href = url + '&q=' + $("#q").val() + '&property=' + getChecked('property_s') + '&is_video=' + $("#s_is_video:checked").val() + '&cate_id=' + $("#cate_id option:selected").val();
+    }
+
+    function setMultiProperty() {
+        var list_news_id = getChecked('checkall');
+        if (list_news_id == null || list_news_id == '') {
+            alert("Bạn phải chọn ít nhất một tin");
+            return false;
+        }
+        var s = getProperty(1);
+        var u = getProperty(0);
+        if (s == 0 && u == 0) {
+            alert("Bạn phải chọn thuộc tính cho tin");
+            return false;
+        }
+        $.post("ajax.php?fnc=admin.news.process&path=news",
+            {'action': 'set-multi-property', 'list_news_id': list_news_id, 'set_property': s, 'unset_property': u},
+            function (data) {
+                if (data == 1)
+                    window.location.reload();
+                else
+                    alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+            }
+        )
+
+    }
+
+    function getValueInput(name, type) {
+        var o = document.getElementsByName(name);
+        var i, s, v;
+        for (i = 0, s = ''; i < o.length; ++i) {
+            v = o.item(i);
+            if (v.type == type) {
+                s += ',' + String(v.value);
+            }
+        }
+        return s.substr(1);//remove leading ,
+    }
+
+    function saveArrange() {
+        var list_home_id = getValueInput('home_id', 'hidden');
+        var list_arrange = getValueInput('arrange', 'text');
+        $.post("ajax.php?fnc=admin.news.process&path=news",
+            {'action': 'save-arrange', 'list_home_id': list_home_id, 'list_arrange': list_arrange},
+            function (data) {
+                if (data == 1) {
+                } else
+                    alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+            }
+        )
+    }
+</script>

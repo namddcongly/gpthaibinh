@@ -1,0 +1,497 @@
+<style>
+    input {
+        height: 25px;
+    }
+
+    select option {
+        padding: 5px 0px 5px 10px;
+    }
+
+    .file_upload {
+        display: none
+    }
+</style>
+{begin_form}
+<input type="hidden" value="{from}" name="from"/>
+<div class="folder-content">
+    <h2>TẠO & SỬA TIN</h2>
+    <div style="text-align: center; border: 1px solid #990000; padding: 5px; margin: 2px;">
+        <span>{get_auto}</span>
+    </div>
+    <div class="line top"></div>
+    <div class="clear"></div>
+    <!--begin table data-->
+    <div class="table">
+        <ul>
+            <li>
+                <label>Tiêu đề bài viết</label>
+                <input type="text" style="width:630px;" name="title" value="{title}" id="title" maxlength="255"/>
+                <span id="check_unique"></span>
+                <font color="#999999">Tiêu đề bài viết không quá 255 kí tự</font>
+            </li>
+            <!--            <li>-->
+            <!--                <label>Tiêu đề SEO</label>-->
+            <!--                <input type="text" style="width:525px;" name="title_seo" value="{title_seo}" id="title_seo"-->
+            <!--                       maxlength="65"/>-->
+            <!--                <font color="#999999">Tiêu đề SEO bài viết không quá 65 kí tự</font>-->
+            <!--            </li>-->
+            <li id="cat">
+                <label>Chọn danh mục chính</label>
+                <select name="data[cate_id1][]" id="cate1" multiple="multiple" style="height:100px;">
+                    <option value="0" style="font-weight: bold">Chọn danh mục cấp 1</option>
+                    {option_cate1}
+                </select>
+                {option_cate2}
+                {option_cate3}
+                {option_cate4}
+            </li>
+            <li id="cat_1" style="display:none;">
+                <label>Chọn danh mục phụ</label>
+                <select name="cate_second_1" id="cate_second_1" onchange="loadCategory();">
+                    <option value="0">Chọn danh mục cấp 1</option>
+                    {option_cate11}
+                </select>
+                <select name="cate_second_level1" id="cate_second_level1">
+                    <option value="0">Chọn danh mục cấp 2</option>
+                    {option_cate12}
+                </select>
+            </li>
+            <li>
+                <script>
+                    var loadFile = function (event) {
+                        var output = document.getElementById('img1');
+                        output.src = URL.createObjectURL(event.target.files[0]);
+                        output.onload = function () {
+                            URL.revokeObjectURL(output.src) // free memory
+                        }
+                    };
+                </script>
+                <label style="display:block; float:left">Ảnh đại diện</label>
+                {img1}
+                <input type="file" accept="image/*" name="img1" id="my_img_file" style="display: none" onchange="loadFile(event)"/>
+            </li>
+            <li style="clear:both;">
+                <label>Sapo</label>
+                <textarea cols="96" rows="5" name="description" id="description"
+                          maxlength="1000">{description}</textarea>&nbsp;<span id="max_len" style="color:#990000">Tối đa 1000 kí tự</span>
+            </li>
+            <li>
+                <label>Chọn nhiều ảnh</label>
+                <input type="button" class="button" value="Duyệt ảnh" name="add_edit" class="button"
+                       onclick="open_KCFinderMulti()"/>
+                <span>Chọn mã mầu:</span>
+                <span style="background-color:#d3d3d3;">#d3d3d3</span>
+                <span style="background-color:#ffa07a;">#ffa07a</span>
+                <span style="background-color:#ffd700;">#ffd700</span>
+                <span style="background-color:#d8d8d8;">#d8d8d8</span>
+            </li>
+            <li>
+                <label>Nội dung bài viết</label>
+                <textarea class="{class_content}" rows="10" cols="100" name="content" id="content">{content}</textarea>
+            </li>
+            <!--            <li>-->
+            <!--                <label>Sapo SEO</label>-->
+            <!--                <textarea cols="96" rows="5" name="description_seo" id="description_seo" maxlength="160">{description_seo}</textarea>-->
+            <!--                <font color="#999999">Sapo SEO 160 kí tự</font>-->
+            <!--            </li>-->
+            <li>
+                <label>Tag bài viết</label>
+                <input type="text" style="width:450px;" name="tag_search" id="tag_search" value=""/>&nbsp;&nbsp;<input
+                    type="button" name="Tìm kiếm tag" value="Tìm kiếm tag" class="button" style="width:100px;"
+                    onclick="searchTag();"/>
+                <label id="report_tag"></label>
+                <ul id="result_relate_tag">
+                    {text_relate_tag}
+                </ul>
+            </li>
+            <li>
+                <label>Tìm bài liên quan</label>
+                <input type="text" style="width:450px;" name="keyword" id="keyword" value=""/>&nbsp;&nbsp;<input
+                    type="button" name="Tìm kiếm" value="Tìm kiếm" class="button" style="width:100px;"
+                    onclick="searchRelate();"/>
+                <label id="report"></label>
+                <ul id="result_relate">
+                    {text_relate}
+                </ul>
+            </li>
+            <!--            <li>-->
+            <!--                <label>Bình luận</label>-->
+            <!--                <a href="ajax.php?path=news&fnc=list_poll" class="thickbox">Chọn poll</a> | <a-->
+            <!--                    href="?app=news&page=admin_poll" target="_blank">Tạo poll</a>-->
+            <!--                <input type="hidden" id="poll" name="poll" value="{poll}"/>-->
+            <!--            </li>-->
+            <li>
+                <input type="hidden" value="{topic}" name="topic_id" id="topic_id"/>
+                <label>Chủ đề bài viết</label>
+                <a href="javascript:;" onclick="loadTopic({topic})">Chọn chủ đề</a> | <a
+                    href="?app=news&page=admin_topic&cmd=add_edit" target="_blank">Tạo chủ đề</a>
+                <div id="list_topic"></div>
+            </li>
+            <li>
+                <label>File (video,doc..)</label>
+                <a onclick="showFromUploadFile()" style="cursor: pointer">Chọn file upload</a>
+            </li>
+            <li class="file_upload">
+                <label></label>
+                1. <input type="file" style="width:200px;" name="file1" id="file1" value="{file1}"/> - {file_uploaded_1}
+                <br/>
+            </li>
+            <li class="file_upload">
+                <label></label>
+                2. <input type="file" style="width:200px;" name="file2" id="file2" value="{file2}"/> - {file_uploaded_2}
+                <br/>
+            </li>
+            <li class="file_upload">
+                <label></label>
+                3. <input type="file" style="width:200px;" name="file3" id="file3" value="{file3}"/> - {file_uploaded_3}
+                <br/>
+            </li>
+            <li class="file_upload">
+                <label></label>
+                4. <input type="file" style="width:200px;" name="file4" id="file4" value="{file4}"/> - {file_uploaded_4}
+                <br/>
+            </li>
+            <li class="file_upload">
+                <label></label>
+                5. <input type="file" style="width:200px;" name="file5" id="file5" value="{file5}"/> - {file_uploaded_5}
+                <br/>
+            </li>
+            <input type="hidden" name="file_old[1]" value="{file1}" id="file_1"/>
+            <input type="hidden" name="file_old[2]" value="{file2}" id="file_2"/>
+            <input type="hidden" name="file_old[3]" value="{file3}" id="file_3"/>
+            <input type="hidden" name="file_old[4]" value="{file4}" id="file_4"/>
+            <input type="hidden" name="file_old[5]" value="{file5}" id="file_5"/>
+            <li>
+                <label>Tác giả/Nguồn</label>
+                <input type="text" style="width:200px;" name="author" id="author" value="{author}"
+                       placeholder="Tác giả"/>&nbsp;&nbsp;
+                <input type="text" style="width:200px;" name="origin" id="origin" value="{origin}" placeholder="Nguồn"/>
+            </li>
+            <li>
+                <label>Loại bài viết</label>
+                <input type="checkbox" value="1" name="is_video" {is_video}/>&nbsp;Tin video
+                &nbsp;
+                <input type="checkbox" value="1" name="is_img" {is_img}/> &nbsp;Tin ảnh
+            </li>
+            <li>
+                <label></label>
+                {type_post}
+            </li>
+            <li>
+                <label></label>
+                Đặt lịch xuất bản bài&nbsp;
+                <input name="minutes" id="minutes" type="text" size="4"
+                       onblur="if (this.value == '') {this.value = '00';}"
+                       onfocus="if (this.value == '00') {this.value = '';}" value="{minutes}"/> &nbsp;
+                <select id="hour_public" name="hour_public">
+                    <option value="Chọn giờ">Chọn giờ</option>
+                    {option_hour}
+                </select>
+                &nbsp;
+                <input type="text" class="date-pick dp-applied" style="width:80px;" id="date_public" name="date_public"
+                       value="{date_public}"/>
+            </li>
+
+            <li>
+                <label>&nbsp;</label>
+                Đang làm&nbsp;<input type="checkbox" value="2" name="status" checked="checked"/>&nbsp;&nbsp;
+                Đóng logo&nbsp;<input type="checkbox" value="1" name="add_logo"/>&nbsp;
+
+            </li>
+            <li>
+                <label>&nbsp;</label>
+                <input type="submit" value="Lưu trữ" id="submit_form" name="add_edit" class="button"
+                       style="font-weight: bold"/><span
+                    id="report_text"></span>&nbsp;<a class="button"
+                                                     href="https://cms.congly.com.vn/?app=news&page=admin_news&cmd=news_store&nw_id={news_id}">Đóng
+                bài viết</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<input type="hidden" value="{news_id}" name="news_id"/>
+{end_form}
+<script type="text/javascript">
+    var autosaveOn = false;
+
+    function myAutosaved() {
+        if (!autosaveOn) {
+            autosaveOn = true;
+            $.base64.utf8encode = true;
+            setInterval(function () {
+                var data = CKEDITOR.instances.content.getData();
+                $.post("ajax.php?fnc=admin.autosave.process&path=news",
+                    {
+                        'edit_content': $.base64.btoa(data),
+                        'title': $("#title").val(),
+                        'description': $("#description").val(),
+                        'tag': $("#tag").val()
+                    },
+                    function (data) {
+                        $("#cate_second_level1").html(data);
+                    }
+                );
+            }, 3600 * 20); //closing tag
+        }
+    }
+
+    myAutosaved();
+
+    function showFromUploadFile() {
+        $('.file_upload').show();
+    }
+
+    $("#img1").click(function() {
+        $("input[id='my_img_file']").click();
+    });
+
+
+    function loadCategory() {
+        var cate_id_1 = $("#cate_second_1 option:selected").val();
+        if (cate_id_1 == 0) return false;
+        $.post("ajax.php?fnc=admin.news.process&path=news",
+            {'action': 'load-category-map', 'cate_id': $("#cate_second_1 option:selected").val()},
+            function (data) {
+                $("#cate_second_level1").html(data);
+            }
+        )
+
+    }
+
+    function deleteFile(id, obj) {
+        $("#file_" + id).val('');
+        $(obj).html('Xóa thành công');
+    }
+
+    function loadTopic(id) {
+        var cate_id = $("#cate1 option:selected").val();
+        $.post("ajax.php?fnc=list.topic&path=news",
+            {'id': id, 'cate_id': cate_id},
+            function (data) {
+                $("#list_topic").html(data);
+            }
+        )
+    }
+
+    var page_topic = 1;
+
+    function showMoreTopic() {
+        for (var i = page_topic * 15; i < (page_topic + 1) * 15; ++i) {
+            $("#topic_" + i).show();
+        }
+        page_topic = page_topic + 1;
+    }
+
+    function updateTopic(id, property) {
+        $.post("ajax.php?fnc=admin.topic.process&path=news",
+            {'action': 'update-property', 'property': property, 'id': id},
+            function (data) {
+                if (data == 1)
+                    window.location.reload();
+                else
+                    alert('Đã có lỗi xảy ra');
+            }
+        )
+    }
+
+    function setRelate(obj, id) {
+
+        if (obj.checked) {
+            $("#" + id).removeClass('no-choose').addClass("choose");
+        } else {
+            $("#" + id).removeClass('choose').addClass("no-choose");
+        }
+    }
+
+    function setTag(obj, id) {
+
+        if (obj.checked) {
+            $("#tag_" + id).removeClass('no-choose').addClass("choose");
+        } else {
+            $("#tag_" + id).removeClass('choose').addClass("no-choose");
+        }
+    }
+
+    function searchRelate() {
+        if ($("#keyword").val() == "" || $("#keyword").val() == null) {
+            alert("Bạn chưa nhập từ khóa");
+            return false;
+        }
+        $(".no-choose").hide();
+        $("#report").html(' Đang tải dữ liệu');
+        $.post("ajax.php?fnc=admin.news.process&path=news",
+            {'action': 'search_relate', 'keyword': $("#keyword").val()},
+            function (data) {
+                $("#report").html("");
+                $("#result_relate").append(data);
+            }
+        )
+    }
+
+    function searchTag() {
+        if ($("#tag_search").val() == "" || $("#tag_search").val() == null) {
+            alert("Bạn chưa nhập từ khóa");
+            return false;
+        }
+        $(".no-choose").hide();
+        $("#report_tag").html(' Đang tải dữ liệu');
+        $.post("ajax.php?fnc=search_tag&path=news",
+            {'tag': $("#tag_search").val()},
+            function (data) {
+                $("#report_tag").html("");
+                $("#result_relate_tag").append(data);
+            }
+        )
+    }
+
+    function copyText(field_root, field_copy) {
+        var text_root = $("#" + field_root).val();
+        $("#" + field_copy).val(text_root);
+    }
+
+    $(document).ready(function () {
+
+        $("#title").blur(function () {
+            $.ajax({
+                url: 'ajax.php?path=news&fnc=check_unique',
+                type: 'post',
+                dataType: 'json',
+                data: {title: $("#title").val()},
+                success: function (data) {
+                    if (data.code == 0) {
+                        alert("Bài viết đã có người khác tạo rồi.");
+                    }
+                },
+                timeout: function () {
+                }
+            });
+
+        });
+
+        $('textarea[maxlength]').keyup(function () {
+            var max = parseInt($(this).attr('maxlength'));
+            if ($(this).val().length > max) {
+                $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+            }
+            $("#max_len").html(' Còn ' + (max - $(this).val().length) + ' kí tự');
+        });
+    });
+
+
+    function checkForm() {
+
+        // if ($("#title_seo").val() == '' || $("#title_seo").val() == null) {
+        //     return true;
+        //     $("#title_seo").focus();
+        //     alert('Bạn phải nhập Tiêu đề SEO');
+        //     return false;
+        // }
+        // if ($("#description_seo").val() == '' || $("#description_seo").val() == null) {
+        //     return true;
+        //     $("#description_seo").focus();
+        //     alert('Bạn phải nhập Sapo SEO');
+        //     return false;
+        // }
+
+        if ($("#title").val() == '' || $("#title").val() == null) {
+            alert("Bạn phải nhập tiêu đề");
+            $("#title").focus();
+            return false;
+        }
+
+        if ($("#cate1").val() == null || $("#cate1 option:selected").val() == 0) {
+            alert("Bạn phải chọn danh mục cấp 1");
+            $("#cate1").focus();
+            return false;
+        }
+
+        var content = CKEDITOR.instances.content.getData();
+        var tag = '';
+        $('#result_relate_tag input[type=checkbox]').each(function () {
+            if (this.checked) {
+                tag += $(this).val() + ',';
+            }
+        });
+
+        // if (tag == '') {
+        //     alert('Bại phải chọn Tag cho bài viết');
+        // }
+        if (content == null || content == '') {
+            alert('Bạn chưa nhập nội dung bài viết');
+        }
+        // var count = (content.match(/href/g) || []).length;
+        // if (count < 2) {
+        //     //alert('Bạn chưa có link nội bộ trong bài viết, ít nhất 2 link!');
+        // }
+
+        if ($("#description").val() == '' || $("#description").val() == null) {
+            alert("Bạn phải nhập trích dẫn");
+            $("#description").focus();
+        }
+
+        $("#submit_form").hide();
+        $("#report_text").html('Đang thực hiện...');
+        return true;
+    }
+
+    $("#cate1").live('change', function (e) {
+        var cate_id = '';
+        $("#cate1 option:selected").each(function () {
+            cate_id += ',' + $(this).val();
+        });
+        cate_id = cate_id.substr(1);
+        $.ajax({
+            url: 'ajax.php?path=news&fnc=change_category_multi&id=' + cate_id + "&level=1",
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code == 1) {
+                    if (data.html != "")
+                        $("#cate2").html(data.html);
+                    else
+                        $("#cate2").html("");
+
+                    $("#cate3").remove();
+                    $("#cate4").remove();
+                    $("#cate5").remove();
+
+                }
+            },
+            timeout: function () {
+            }
+        });
+    });
+    $("#cate2").live('change', function (e) {
+        var cate_id = '';
+        $("#cate2 option:selected").each(function () {
+            cate_id += ',' + $(this).val();
+        });
+        cate_id = cate_id.substr(1);
+        //alert(cate_id);
+        $.ajax({
+            url: 'ajax.php?path=news&fnc=change_category_multi&id=' + cate_id + "&level=2" + ($("#cate3").length > 0 ? "" : "&cmd=1"),
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code == 1) {
+                    if (data.html != "") {
+                        if ($("#cate3").length > 0)
+                            $("#cate3").html(data.html);
+                        else
+                            $("#cat").append(data.html);
+                    } else {
+                        $("#cate3").remove();
+                        $("#cate4").remove();
+                        $("#cate5").remove();
+                    }
+                }
+            },
+            timeout: function () {
+            }
+        });
+    });
+    $(".choice_poll").live("click", function () {
+        $("#poll").val($(this).val());
+    });
+</script>

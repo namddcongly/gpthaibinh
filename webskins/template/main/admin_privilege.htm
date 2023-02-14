@@ -1,0 +1,129 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>QUẢN TRỊ QUYỀN</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=main&page=admin_privilege" class="header-menu-active"><span>Danh sách quyền</span></a></li>
+				<li><a href="?app=main&page=admin_privilege&cmd=allocation_privilege"><span>Cấp quyền</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div> 
+<div class="folder-content">
+	<div id="add-update-data">
+		<ul>
+			<li><span style="width:120px;">Tên quyền </span><input  type="text"  name="name" id="name"/> Tên quyền gồm các chữ cái A-Z_</li>
+			<li><span style="width:120px;">Mô tả quyền</span><input  type="text" name="description" id="description" style="width:350px;"/> Mô tả về quyền</li>
+			<li><span style="width:120px;">&nbsp;</span><input  type="button" value="Thêm quyền" class="button" onclick="insertData();"/></li>
+		</ul>
+	</div>
+	<div class="table">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="bdbottom">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="5%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+				  <td width="25%" align="left" class="bdtop bdbottom bdleft"><p>Tên quyền</p></td>
+				  <td width="50%" align="left" class="bdtop bdbottom bdleft"><p>Miêu tả</p></td>
+				  <td class="bdtop bdbottom bdleft"><p>Điều khiển</p></td>
+				</tr>
+				<!-- BEGIN ListRow -->
+				<tr>
+					<td align="center" class="bdleft">{stt}</td>
+					<td class="bdleft"><p>{name}</p></td>
+					<td class="bdleft"><p>{description}</p></td>
+					<td class="bdleft" align="center"d><p><a href="javascript:;"  onclick="loadData({id});">Sửa</a> | <a href="javascript:;" onclick="delData({id})">Xóa</a></p></td>
+				</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+</div>
+<script language="javascript">
+	function insertData()
+	{
+		if($("#name").val()==null || $("#name").val()=='')
+		{
+			alert('Bạn phải nhập tên quyền');
+			$("#name").focus();
+			return false;
+		}
+		if($("#description").val()==null || $("#description").val()=='')
+		{
+			alert('Bạn phải nhập mô tả quyền');
+			$("#description").focus();
+			return false;
+		}
+		$.post("ajax.php?fnc=privilege.process&path=main",
+			{'action':'insert-data','name':$("#name").val(),'description':$("#description").val()},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+				{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại các thông tin đã nhập!");
+				}
+			}			
+		)
+
+	}
+	function delData(id)
+	{
+		$.post("ajax.php?fnc=privilege.process&path=main",
+			{'action':'delete','id':id},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+				{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+				}
+			}			
+		)
+	}
+	function loadData(id)
+	{
+		$.post("ajax.php?fnc=privilege.process&path=main",
+			{'action':'load-data','id':id},
+			function(data)
+			{
+				$("#add-update-data").html(data);
+			}			
+		)
+	}
+	function updateData(id)
+	{
+		if($("#name").val()==null || $("#name").val()=='')
+		{
+			alert('Bạn phải nhập tên quyền');
+			$("#name").focus();
+			return false;
+		}
+		if($("#description").val()==null || $("#description").val()=='')
+		{
+			alert('Bạn phải nhập mô tả quyền');
+			$("#description").focus();
+			return false;
+		}
+		$.post("ajax.php?fnc=privilege.process&path=main",
+			{'action':'update-data','name':$("#name").val(),'description':$("#description").val(),'id':id},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+				{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại các thông tin đã nhập!");
+				}
+			}			
+		)
+	
+	}
+</script>	

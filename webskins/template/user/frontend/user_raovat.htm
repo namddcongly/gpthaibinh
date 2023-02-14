@@ -1,0 +1,38 @@
+<div class="nav-tool">	
+	<div class="path"><a>Trang cá nhân</a></div>
+</div>
+<div id="bds-main-form">
+	<div class="bds-form-head">
+		<ul>
+			{menu}
+		</ul>
+		
+		<div class="clear"></div>
+	</div>    
+	<div class="user-list">        
+		<ul class="others">
+			<!-- BEGIN ListRow -->
+				<li> <a href="{href}" target="_blank" title="{title}">{title}</a> (<a href="{href_edit}" class="u-edit">sửa</a> | <a href="javascript:;" class="u-del" onclick="delData({id})">xóa</a>) - <font color="#FF0000">{public}</font></li>
+			<!-- END ListRow -->
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	function delData(id)
+	{
+		var ok=confirm("Bạn có chắc chắn xóa tin này không?");
+		if(ok==true)
+			{
+				$.post("ajax.php?fnc=user.process&path=user",
+					{'action':'delete','id':id},
+					function(data)
+					{
+						if(data==1)
+							window.location.reload();
+						else
+							alert("Đã có lỗi xảy ra, trong quá trình xóa");	
+					}
+				);	
+			}
+	}
+</script>

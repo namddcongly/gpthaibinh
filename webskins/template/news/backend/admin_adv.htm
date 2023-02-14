@@ -1,0 +1,97 @@
+<style>
+a
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-header">
+	<h1>Quản trị quảng cáo</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a id="category" class="header-menu-active" href="{url_current}"><span>Danh sách quảng cáo</span></a></li>
+			<li><a id="category"  href="{link_add}"><span>Tạo quảng cáo</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<div class="line top"></div><div class="clear"></div>
+	<div class="table">
+		<div style="float:left; margin-top:15px;"><strong>Bạn có <font color="#990000">{total_rowcount}</font> quảng cáo</strong></div>
+		<div class="pages fr" ><ul>{paging}</ul></div>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p>STT</p></th>
+				  <th width="25%" class="bdtop bdbottom bdleft" align="center"><p>Tên quảng cáo</p></th>
+				  <th width="30%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh quảng cáo</p></th>
+				  <th width="15%" class="bdtop bdbottom bdleft" align="center"><p>Vị trí hiển thị</p></th>
+				  <th width="10%" class="bdtop bdbottom bdleft" align="center"><p>Trang hiển thị</p></th>
+				  <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo</p></th>
+				  <th width="8%" class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>	
+				<tbody>
+				<!-- BEGIN adv -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}</td>
+					  <td class="bdleft">
+						<p><strong><a href="{link}" target="_blank">{title}</a></strong></p>
+					  </td>
+					  <td align="center"><p>{banner}</p></td>
+				      <td class="bdleft" align="center"><p>{position}</p></td>
+					  <td class="bdleft" align="center"><p>{page}</p></td>
+					  <td class="bdleft" align="center"><p>{time_created}</p></td>
+					  <td class="bdleft" align="center"><a onclick="action_status({id},{int_status});">{status}</a><br /><a href="?app=news&page=admin_adv&cmd=create&id={id}">Sửa</a><br /><a onclick="delete_adv({id});">Xóa</a></td>
+					</tr>
+				<!-- END adv -->
+			</tbody>
+	  </table>
+	</div>
+	<div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+     $('#q').bind('keypress', function(e) {
+            if(e.keyCode==13){
+            	searchNews();
+            }
+        });
+    });
+	function action_status(id,status)
+	{
+		$.post("ajax.php?fnc=detail&path=news",
+			{'action':'approve_adv','id': id, 'status': status},
+			function(data)
+			{
+				if(data == 1)
+					window.location.reload();                    
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)
+	}
+    function delete_adv(id)
+	{
+		$.post("ajax.php?fnc=detail&path=news",
+			{'action':'delete_adv','id': id},
+            function(data)
+			{
+				if(data==1)
+					window.location.reload();
+                else if(data == 0)
+                    alert('Không tồn tại quảng cáo để xóa');
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}				
+		)
+	}
+    function searchNews(){
+        var q = $('#q').val();
+        var type_search = $('#type_search').val();
+        var date_begin = $('#date_begin').val();
+        var date_end = $('#date_end').val();
+        window.location.href='?app=news&page=admin_comment&q=' + q +"&type_search=" + type_search + '&date_begin=' + date_begin + '&date_end=' + date_end;
+    }
+</script>

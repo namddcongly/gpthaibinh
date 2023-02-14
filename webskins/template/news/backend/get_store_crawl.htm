@@ -1,0 +1,128 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-header">
+		<h1>Lấy dữ liệu từ site Chính</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=news&amp;page=admin_get_news&amp;src=ngoisao.vn"><span>Dữ liệu NGOISAO.VN</span></a></li>
+				<li><a href="?app=news&amp;page=admin_get_news&amp;src=xahoi.com.vn" class="{active_xahoi}"><span>Dữ liệu XAHOI.COM.VN</span></a></li>
+				<li><a href="?app=news&amp;page=admin_get_news&amp;src=cuophiepgiet.net" class="{active_cuophiepgiet}"><span>Dữ liệu CUOPHIEPGIET.NET</span></a></li>
+				<li><a href="?app=news&amp;page=admin_get_news&amp;src=duluan.com.vn" class="{active_duluan}"><span>Dữ liệu DULUAN.COM.VN</span></a></li>
+				<li><a href="?app=news&amp;page=admin_get_news&amp;src=other.net" class="header-menu-active"><span>Dữ liệu trang khác</span></a></li>
+			</ul>
+		</div>
+	</div>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+			&nbsp;&nbsp;Nguồn<input  type="text" name="origin" id="origin" style="width:150px;" value="{origin}"/>
+		</li>
+		<li>
+			<label>Trong mục cha</label>
+			<select style="width:120px" id="cate_id" onchange="loadCategory();">
+				<option value="0">Chọn danh mục</option>
+				{option_category}
+			</select>&nbsp;			
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<div class="pages fr" ><ul>{paging}</ul></div>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<thead>
+				<tr align="center" class="table-title">
+				  <th width="4%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></th>
+				  <th width="68%" class="bdtop bdbottom bdleft" align="left"><p>Tên bài</p></th>
+				  <th width="14%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>
+			<tbody>	
+				<!-- BEGIN ListRow -->
+					<tr id="{id}">
+					  <td class="bdleft" align="center">{stt}<br/>
+					  <input  type="checkbox" id="checkboxall" name="checkall" value="{id}"/></td>
+					  <td class="bdleft">
+						<p>
+							<strong><a href="{link}" target="_blank">{title}</a></strong> (<i>{date_created}</i>)<br/>
+						</p>
+						<p>{description}</p>
+						<p>
+							<i>Nguồn:<a href="{link}" target="_blank">{link}</a></i>
+						</p>
+					  </td>
+					  <td class="bdleft" align="center"><p><img src="{src}" width="120px;"></p></td>
+					  <td class="bdleft" align="left">
+					  	<p>
+					  		{action_store}
+							<select id="cate_{id}">
+					  			<option value="0">Chọn danh mục</option>
+								{option_category_choose}
+							</select>							
+					  	</p>
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	  
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+
+
+<script type="text/javascript">
+	function showJQ(id)
+	{
+		$("#"+id).show();		
+	}
+	function hideJQ(id)
+	{
+		$("#"+id).hide();
+		
+	}
+	function searchNews()
+	{
+		var url='?app=news&page=admin_crawl';
+		window.location.href=url+'&q='+$("#q").val() + '&cate_id='+$("#cate_id option:selected").val() +'&origin=' + $("#origin").val();
+	}
+	function insertData(id,obj)
+	{
+		$(obj).removeAttr('onclick');
+		$(obj).html('<font color="red">Đang xử lý...</font>');
+		var cate_id = $("#cate_"+id+" option:selected").val();
+		if(cate_id == "0")
+		{
+			alert("Bạn chưa chọn danh mục");
+			return false;
+			
+		}
+		$.post("ajax.php?fnc=get.news.process&path=news",
+				{'action':'get_news','src':'other.net','nw_id':id,'cate_id':cate_id},
+				function(data)
+				{
+					
+					if (data == 1) 
+						hideJQ(id);
+					else {
+						alert(data);
+						alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+					}	
+				}			
+			)	
+	}
+	
+	
+</script>

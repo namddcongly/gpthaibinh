@@ -1,0 +1,82 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị User</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=main&page=admin_user&cmd=group" ><span>Danh sách nhóm</span></a></li>
+				<li><a href="?app=main&page=admin_user&cmd=list" class="header-menu-active"><span>Danh sách user</span></a></li>
+				<li><a href="?app=main&page=admin_user&cmd=creat_user" ><span>Tạo user</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div> 
+<div class="folder-content">
+	<h2>TÌM KIẾM THÀNH VIÊN</h2>
+	<ul>				
+		<li>
+			<label for="name">Tìm từ khóa</label>
+			<input type="text" value="{q}" id="q" name="q">
+			<select name="active" id="active">
+				{action_option}
+			</select>
+			<input type="button"  value="Tìm kiếm  " name="Search" onClick="searchUser()">
+		</li>
+	</ul>
+	<div class="line top"></div>
+	<div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="bdbottom">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+				  <td width="11%" class="bdtop bdbottom bdleft" align="left"><p>Tên</p></td>
+				  <td width="14%" class="bdtop bdbottom bdleft" align="left"><p>Email</p></td>
+				  <td width="10%" class="bdtop bdbottom bdleft" align="left"><p>Điện thoại</p></td>
+				  <td width="19%" class="bdtop bdbottom bdleft" align="left"><p>Địa chỉ</p></td>
+				  <td width="8%" class="bdtop bdbottom bdleft" align="center"><p>CMTND</p></td>
+				  <td width="10%" class="bdtop bdbottom bdleft"><p>ĐK/Login</p></td>
+				  <td  class="bdtop bdbottom bdleft"><p>Điều khiển</p></td>
+				</tr>
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}</td>
+					  <td class="bdleft"><p>{user_name}</p></td>
+					  <td class="bdleft"><p>{email}</p></td>
+					  <td class="bdleft"><p>{mobile_phone}</p></td>
+					  <td class="bdleft"><p>{address}</p></td>
+					  <td class="bdleft" align="center"><p>{CMTND}</p></td>
+					  <td class="bdleft"><p>{time_register}<br/>{time_last_login}</p></td>
+					  <td class="bdleft"><p><a href="?app=main&page=admin_user&user_id={user_id}">Sửa</a> |  <a  class="show-list" rel="reset-password" href="javascript:;" onclick="getInfor('{user_id}','{user_name}')">Thay mật khẩu</a> | {lock}| <a href="?app=main&page=admin_privilege&cmd=allocation_privilege&user_id={user_id}">Phân quyền</a></p></td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+<input type="hidden" value="0" name="user_id" id="user_id"/>
+<div id="reset-password" class="popup-choose" style="width:300px;">
+	<h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Thay đổi mật khẩu<label class="popup-close button-close"><b>X</b></label></h2>
+	
+	<div class="popup-content folder-content" style="border: 1px solid #999999">
+		<ul>
+			<li>
+				<label>Tên tài khoản</label> <strong id="user_name_reset"></strong>
+			</li>
+			<li>
+				<label>Mật khẩu mới (*)</label><input type="password" name="password_new" id="password_new">
+			</li>
+			<li>
+				<label>Xác nhận mật khẩu(*)</label><input type="password" name="password_new_confirm" id="password_new_confirm">
+			</li>
+			<li><label>&nbsp;</label><input  type="button" value="Thay đổi" name="change" style="float:right; margin-right:8px;" onClick="resetPassword()"/></li>
+		</ul>
+	</div>	
+</div>
+<script language="javascript">
+	$(function(){
+		$('#reset-password').jqDrag('.jqDrag');	
+	})
+	
+</script>	

@@ -1,0 +1,202 @@
+<div class="folder-header">
+	<h1>{main_title}</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a id="category" class="user-icon" href="?app=news&page=admin_news_statistic"><span>Danh sách biên tập viên</span></a></li>	
+			<li><a id="category" class="header-menu-active protrans-icon" href="javascript:void(0);"><span>Thống kê nâng cao</span></a></li>			
+		</ul>
+	</div>
+</div>
+
+<div class="folder-content">	
+	<h2>CHỌN THÔNG TIN THỐNG KÊ</h2>
+	<ul>				
+		<li>
+			<label>Ngày tạo từ:</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px; margin:0 5px 0 0;" id="date_begin" value="{date_begin}"/>
+			<br />	
+			<label>Ngày tạo đến:</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px; margin:0 5px 0 0;" id="date_end" value="{date_end}"/>
+		</li>
+		
+		<li>
+			<label>Chọn danh mục:</label>
+			{list_category_html}
+		</li>
+		<style>
+		.result_list{width:305px; margin-left:155px; border:1px solid #CCCCCC; border-top:none;}
+		.overflow{overflow:hidden; overflow-y:auto}
+		.list_user{padding:0; margin:0;}
+		.list_user li{padding:0 10px 0 10px; cursor:pointer;}
+		.list_user li:hover{cursor:pointer; background:#CCCCCC;}
+		</style>
+		
+		<li>
+			<label>Tìm user:</label>
+			<input type="text" value="" name="txtUser" id="txtUser" style="width:300px;" />			
+			<div class="result_list" id="result_user">
+			</div>
+		</li>
+		
+		<li>
+			<label>&nbsp;</label>
+			<input type="hidden" value="0" name="uid" id="uid" />
+			<input type="button" class="button" value="Thống kê" name="Search" id="btn_search" />
+		</li>
+	</ul>
+	
+	<div class="table">
+		<div class="table-new" style="margin-top:20px; display:{display}">
+			<table class="listNews">
+			  <tr class="bar">
+				<td width="30">STT</td>
+				<td width="468">Danh sách bài viết</td>
+				<td width="95">Thống kê</td>
+			  </tr>
+			  
+			  <!-- BEGIN LIST_ARTICLE -->
+			  <tr valign="top" class="item" name="{type_post_color}">
+				<td align="center"><b>{stt}</b></td>
+				
+				<td class="col">
+					<a href="?app=news&page=detail&id={id}" style="color:#333;"><span><b>{title}</b></span></a>
+					<span style="padding:0 0 0 10px;">
+						( Ngày xuất bản: <strong style="color:#993300;">{date_public}</strong>
+						<strong style="color:#333; padding:0 5px 0 5px;">|</strong>
+						Lượt view: <strong style="color:#993300;">{hit}</strong> )
+					</span>
+					<br />
+					<p style="padding:0; margin:0;">{description}</p>
+					<p style="padding: 0pt; margin: 0px 0px 5px; color: rgb(204, 204, 204);"><i>Tag:{tag}</i></p>
+					<span>Trong danh mục: <strong style="color:#993300;">{category}</strong></span>
+				</td>
+				
+				<td class="col">
+				
+					<span>- Loại bài: <b>{type_post}</b></span><br>												
+					<span>- Tin ảnh: <b>{is_video}</b></span><br>
+					<span>- Tin video: <b>{is_img}</b></span>
+				</td>
+			  </tr>	
+			<!-- END LIST_ARTICLE -->	
+									  
+			</table>		
+		</div>
+	</div>	
+	
+	<div class="pages fr" style="display:{display}">					
+		{pagging}					
+	</div>
+	
+		
+	<div style="clear:both;"></div>
+	
+	<div id="wChart" style="display:{display}">		
+		<h1>Biểu đồ thống kê</h1>
+		
+		<div class="jqplot-target" id="chart1">
+			<p>Biểu đồ thống kê Loại tin</p>
+		</div>		
+				
+		<div class="jqplot-target" id="chart2">
+			<p>Biểu đồ thống kê Loại bài</p>
+		</div>					
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+$.noConflict();
+jQuery(function($){			
+	// -------------------------------- CHART ----------------------------------- //
+	// loai tin
+	var data1 = [
+					['Tin video 	(<b>{tin_video}</b>)', 	{tin_video}],
+					['Tin ảnh 		(<b>{tin_img}</b>)', 	{tin_img}],
+					['Tin khác 		(<b>{tin_thuong}</b>)', {tin_thuong}]
+				];
+				
+	var plot1 = $.jqplot ('chart1', [data1], 
+	{ 
+		seriesDefaults: {
+			// Make this a pie chart.
+			renderer: $.jqplot.PieRenderer, 
+			rendererOptions: {
+				// Put data labels on the pie slices.
+				// By default, labels show the percentage of the slice.
+				showDataLabels	: true
+			}
+		}, 
+			legend: { show:true, location: 'e' }
+		}
+
+	);	
+	
+	// loai bai
+	var data2 = [
+					['Bài sưu tầm 		(<b>{bai_suu_tam}</b>)'		, {bai_suu_tam}],
+					['Bài tự viết 		(<b>{bai_tu_viet}</b>)'		, {bai_tu_viet}], 
+					['Bài dịch 			(<b>{bai_dich}</b>)'		, {bai_dich}],
+					['Bài tổng hợp 		(<b>{bai_tong_hop}</b>)'	, {bai_tong_hop}],
+					['Bài thông tấn xã 	(<b>{bai_thong_tan}</b>)'	, {bai_thong_tan}]
+				];
+				
+	var plot2 = $.jqplot ('chart2', [data2], 
+	{ 
+		seriesDefaults: {
+			// Make this a pie chart.
+			renderer: $.jqplot.PieRenderer, 
+			rendererOptions: {
+				// Put data labels on the pie slices.
+				// By default, labels show the percentage of the slice.
+				showDataLabels: true
+			}
+		}, 
+			legend: { show:true, location: 'e' }
+		}
+	);	
+		
+	// -------------------------------- SEARCH ----------------------------------- //
+	// suggestion
+	$("#txtUser").keyup(function(){
+		var keyword = $(this).val();
+		$.get("?app=news&page=admin_news_statistic&cmd=find_user", {'keyword': keyword}, function(data){
+			$("#result_user").html(data);			
+		});
+	});	
+	
+	
+	$("#result_user li").live('click', function(){
+		var uid = $(this).attr("title");
+		$("#uid").attr("value", uid);
+		$("#txtUser").attr("value", $(this).text());
+		$(this).parent().hide();
+	});
+	
+	
+	// button click
+	$("#btn_search").click(function(){		
+		var date_begin 	= $("#date_begin").val();
+		var date_end 	= $("#date_end").val();				
+		var cate_id		= $("#cate_id option:checked").attr("value");
+		var cate_pid	= $("#cate_id option:checked").attr("pid");
+		var uid			= $("#uid").attr("value");
+		var href 		= "?app=news&page=admin_news_statistic&cmd=advan&act=search";
+		href += uid > 0 ? "&uid=" + uid : '';
+		href += "&cate_id=" + cate_id;
+		href += "&cate_pid=" + cate_pid;
+		href += date_begin.length > 0 ? "&date_begin=" + urlencode(date_begin) : '';
+		href += date_end.length > 0 ? "&date_end=" + urlencode(date_end) : '';			
+		window.location.href = href;
+	});	
+});
+
+// url encodee
+function urlencode (str) {					
+	str = (str + '').toString();
+	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+	replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+}
+</script>
+
+

@@ -1,0 +1,111 @@
+<style>
+    th {
+        cursor: pointer;
+    }
+</style>
+<div class="folder-header">
+    <h1>Dữ liệu Crawller</h1>
+    <div class="header-menu">
+        <ul>
+            <li>
+                <a href="?app=news&page=admin_get_news&src=thethao"><span>Vnexpress-Thể thao</span></a>
+            </li>
+            <li>
+                <a href="?app=news&page=admin_get_news&src=congnghe"><span>Vnexpress-Công nghệ</span></a>
+            </li>
+            <li>
+                <a href="?app=news&page=admin_get_news&src=thegioi-dantri"><span>Dantri-Thế giới</span></a>
+            </li>
+            <li>
+                <a href="?app=news&page=admin_get_news&src=thegioi-tuoitre"><span>Tuoitre-Thế giới</span></a>
+            </li>
+            <li>
+                <a href="?app=news&page=admin_get_news&src=congnghe-tuoitre"><span>Tuoitre Công nghệ</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="folder-content">
+    <div class="line top"></div>
+    <div class="clear"></div>
+    <div class="table">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <thead>
+            <tr align="center" class="table-title">
+                <th width="3%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="checkboxall"/></p></th>
+                <th width="55%" class="bdtop bdbottom bdleft" align="left"><p>Tên bài</p></th>
+                <th width="14%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+                <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Nguồn</p></th>
+                <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo</p></th>
+                <th class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN ListRow -->
+            <tr id="nw_{nw_id}">
+                <td class="bdleft" align="center">{stt}<br/><input type="checkbox" id="checkboxall" name="checkall"
+                                                                   value="{nw_id}"/></td>
+                <td class="bdleft">
+                    <p><strong><a href="{href}" target="_blank">{title}</a></strong></p>
+                    <p style="color:#993300">Trong mục: {path}</p>
+                    <p>{description}</p>
+                </td>
+                <td class="bdleft" align="center"><p><img src="{src}" width="120px;"></p></td>
+                <td class="bdleft" align="center"><p>{origin}</p></td>
+                <td class="bdleft" align="center"><p>{time_created}</p></td>
+                <td class="bdleft" align="center">
+                    <p>
+                        <a href="javascript:;" onclick="doGetNews({nw_id},'{src_site}','{href}',this)">Duyệt
+                            bài</a><br/><br/>
+                    </p>
+                </td>
+            </tr>
+            <!-- END ListRow -->
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    function getId(id) {
+        $("#return_id").val(id);
+    }
+    function getIdCensor(id) {
+        $("#return_id_censor").val(id);
+    }
+    function doGetNews(nw_id, src, href, obj) {
+
+        $(obj).removeAttr('onclik');
+        $(obj).html('<font color="red">Đang xử lý...</font>');
+        $.post("ajax.php?fnc=get.crawler.process&path=news",
+                {'action': 'get_news', 'link': href, 'src': src, 'nw_id': nw_id},
+                function (data) {
+                    if (data == 1) {
+                        $("#nw_" + nw_id).hide();
+                    }
+                    else {
+                        alert(data);
+                        alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+                    }
+                }
+        )
+    }
+
+    function searchNews() {
+        var url = '?app=news&page=admin_get_news&src={src_site}';
+        window.location.href = url + '&q=' + $("#q").val() + '&cate_id=' + $("#cate_id option:selected").val() + '&cate_id1=' + $("#cate_id1 option:selected").val() + '&type_post=' + $("#type_post:checked").val();
+    }
+    function deleteData(id) {
+        var ok = confirm("Bạn có chắc chắn muốn xóa tin bài này ra khỏi kho không?");
+        if (ok == true) {
+            $.post("ajax.php?fnc=admin.news.process&path=news", {
+                'action': 'delete-from-store',
+                'nw_id': id
+            }, function (data) {
+
+                window.location.reload();
+            });
+        }
+    }
+
+</script>

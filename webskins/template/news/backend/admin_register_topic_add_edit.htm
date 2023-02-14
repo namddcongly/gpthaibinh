@@ -1,0 +1,90 @@
+{begin_form}
+<div class="folder-header">
+	<h1>Quản trị ĐỀ TÀI</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a   href="?app=news&page=admin_register_topic&cmd=admin_topic"><span>Danh sách đề tài</span></a></li>
+			<li><a class="header-menu-active"><span>Đăng ký đề tài</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TẠO & SỬA ĐỀ TÀI</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tên đề tài</label>
+				<input  type="text" style="width:545px;" name="name_topic" value="{name_topic}" id="name_topic"/>
+			</li>
+                       <li>
+			<label>Ngày đăng ký</label>
+                        <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_start" name="date_start" value="{date_start}"/> &nbsp; Ngày nộp bài <input  type="text" class="date-pick dp-applied" name="date_end" style="width:80px;" id="date_end" value="{date_end}"/>
+                       </li>
+                       <li>
+                            <label>Số kỳ</label>
+                            <input type="text" name="number" value="1" />
+		       </li>
+                       <li>
+                            <label>Nơi tìm hiểu đề tài</label>
+                            <input type="text" style="width:545px;" id="add_topic" value="{add_topic}" name="add_topic" >
+		       </li>
+                       <li>
+				<label>Miểu tả đề tài</label>
+                                <textarea id="description_topic" name="description_topic" rows="5" cols="100">{description_topic}</textarea>
+			</li>
+                        <li>
+				<label>Gửi tới Tổ trưởng</label>
+                                <input type="checkbox" value="1" name="is_public" checked="checked" />
+			</li>
+                        
+			<li>
+				<label>&nbsp;</label>
+				<input type="submit"  value="Đăng ký" name="add_edit" class="button"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<input type="hidden" value="{id}" name="id"  />
+{end_form}
+<script type="text/javascript">
+function checkForm()
+{
+	//return true;
+	if($("#name_topic").val()=='' || $("#name_topic").val()==null)
+	{
+		alert("Bạn phải nhập tên đề tài");
+		$("#name_topic").focus();
+		return false;
+	}
+        if($("#date_start").val()=='' || $("#date_start").val()==null)
+	{
+		alert("Bạn phải nhập ngày đăng ký");
+		$("#date_start").focus();
+		return false;
+	}
+        if($("#date_end").val()=='' || $("#date_end").val()==null)
+	{
+		alert("Bạn phải nhập ngày nộp bài");
+		$("#date_end").focus();
+		return false;
+	}
+        if($("#add_topic").val()== '' || $("#add_topic").val()==null)
+	{
+		alert("Bạn phải nhập địa chỉ");
+		$("#add_topic").focus();
+		return false;
+	}
+        if($("#description_topic").val()=='' || $("#description_topic").val()==null)
+	{
+		alert("Bạn phải nhập tóm tắt đề tài");
+		$("#description_topic").focus();
+		return false;
+	}
+		return true;
+}
+
+  
+   
+</script>

@@ -1,0 +1,204 @@
+<div class="folder-content">
+	<h2>TÌM KIẾM BÌNH LUẬN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchComment()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<strong>Bạn có <font color="#990000">{total_rowcount}</font> bình luận</strong>
+		<br />
+		<br />
+		<div>
+		<input type="button" class="button"  value="Duyệt toàn bộ" name="pending_censor" onClick="censorMultiData(0)" />
+		<input type="button" class="button"  value="Xóa toàn bộ" name="delete" onClick="deleteMultiData()" />
+		
+	</div>
+	<br />
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></td>
+				  <td width="53%" class="bdtop bdbottom bdleft" align="left"><p>Bình luận</p></td>
+				  <td width="14%" class="bdtop bdbottom bdleft" align="center"><p>Email</p></td>
+				  <td width="10%" class="bdtop bdbottom bdleft" align="left"><p>Ngày đăng</p></td>
+				  <td width="9%" class="bdtop bdbottom bdleft" align="left"><p>Người duyệt</p></td>
+				  
+				  <td  class="bdtop bdbottom bdleft"><p>Điều khiển</p></td>
+				</tr>
+				
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{id}"/></td>
+					  <td class="bdleft">
+						<p><strong><a href="javascript:void(0)">{title}</a></strong></p>
+						<div id="{content1}">
+							 {divcontent1}
+						</div>
+						<div style="display:none" id="{content2}">
+							{divcontent2}
+						</div>
+						<p style="color:#993300">Thuộc bài viết: <a href="{href}" target="_blank"><b>{nw_title}</b></a></p>
+						
+					  </td>
+					  <td class="bdleft" align="left"><p>{email}</p></td>
+					  <td class="bdleft" align="center"><p>{time_created}</p></td>
+					  <td class="bdleft" align="left"><p>Duyệt:{censor_id}<br/></td>
+					  
+					  <td class="bdleft" align="left">
+					  	<p>
+					  		<a href="javascript:;" onclick="doCommentCensor('{id}','1')">Duyệt bình luận</a> | <a href="?app=news&page=admin_comment&cmd=edit_comment&comment_id={id}&from=pending_censor">Sửa</a>| <a href="javascript:;" onclick="deleteComment({id})">Xóa bài</a> 
+							
+					  	</p>
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+				
+			</tbody>
+	  </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+	<br />
+	<div>
+		<input type="button" class="button"  value="Duyệt toàn bộ" name="pending_censor" onClick="censorMultiData(1)" />
+		<input type="button" class="button"  value="Xóa toàn bộ" name="delete" onClick="deleteMultiData()" />
+		
+	</div>
+</div>
+<div id="detail-news" class="popup-choose" style="width:800px; position:relative; margin-top:-120px; margin-left:-160px;">
+	<h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Nội dung chi tiết bình luận<label class="popup-close button-close"><b>X</b></label></h2>
+	<div class="popup-content folder-content" style="border: 1px solid #999999; height:150px; overflow:scroll;" id="news-content">
+		
+	</div>	
+</div>
+<script type="text/javascript">
+	
+	function viewContent(title,content){
+	var data;
+	data = '<p style="margin-left:5px;font-weight:bold;">'+title+'</p>';
+	data += '<br />'; 
+	data += content;
+		$("#news-content").html(data);
+	}
+	function searchComment()
+	{
+		var url='?app=news&page=admin_comment&cmd=pending_censor';
+		window.location.href=url+'&q='+$("#q").val() + '&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+	}
+	function deleteComment(id)
+	{
+			var ok=confirm("Bạn có chắc chắn muốn xóa bình luận này không?");
+			if (ok == true) 
+			{
+				$.post("ajax.php?fnc=admin.comment.process&path=news", {
+					'action': 'delete-from-comment',
+					'cmt_id': id
+				}, function(data){
+				
+					window.location.reload();
+				});
+			}
+	}
+	function doCommentCensor(id,public)
+	{
+		$.post("ajax.php?fnc=admin.comment.process&path=news",
+			{'action':'do-comment-censor','cmt_id':id,'public':public},
+			function(data)
+			{
+			    if(data==1)
+					window.location.reload();
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)
+	}
+	function censorMultiData(public)
+	{
+		var checkboxlist = document.getElementsByName('checkall');
+		var cmt_ids='';
+		for(i=0;i<checkboxlist.length;i++)
+		{
+			if (checkboxlist[i].checked)
+			{	
+				if (!cmt_ids)
+					cmt_ids += checkboxlist[i].value;
+				cmt_ids += ',' + checkboxlist[i].value;
+			}
+		}
+		if (!cmt_ids)
+		{
+			alert('Bạn chưa chọn bình luận nào !');
+			return;
+		}
+		$.post("ajax.php?fnc=admin.comment.process&path=news",
+				{'action':'do-comment-censor-multi','cmt_ids':cmt_ids,'public':public},
+				function(data)
+				{
+				    if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+				}			
+			)
+	}
+	function deleteMultiData()
+	{
+		var checkboxlist = document.getElementsByName('checkall');
+		var cmt_ids='';
+		for(i=0;i<checkboxlist.length;i++)
+		{
+			if (checkboxlist[i].checked)
+			{	
+				if (!cmt_ids)
+					cmt_ids += checkboxlist[i].value;
+				cmt_ids += ',' + checkboxlist[i].value;
+			}
+		}
+		if (!cmt_ids)
+		{
+			alert('Bạn chưa chọn bình luận nào !');
+			return;
+		}
+		var ok=confirm("Bạn có chắc chắn muốn xóa bình luận này không?");
+		if (ok == true) 
+		{
+			
+			$.post("ajax.php?fnc=admin.comment.process&path=news",
+					{'action':'delete-comment-multi','cmt_ids':cmt_ids},
+					function(data)
+					{
+					    if(data==1)
+							window.location.reload();
+						else
+							alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+					}			
+				)
+		}
+	}
+	function fullContent(id,isshow)
+	{
+		
+		if (isshow)
+		{
+			 $('#content1'+id).slideUp(400);
+			 $('#content2'+id).slideDown(400);
+			
+		}
+		else
+		{
+			$('#content1'+id).slideDown(400);
+			$('#content2'+id).slideUp(400);
+		}	
+	}
+</script>

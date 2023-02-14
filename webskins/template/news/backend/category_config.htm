@@ -1,0 +1,55 @@
+		<div class="folder-header">
+			<h1>Cấu hình danh mục</h1>
+			<div class="header-menu">
+				<ul>
+					<li><a class="user-icon" href="?app=news&page=admin_news_category"><span>Danh sách danh mục</span></a></li>					
+					<li><a class="protrans-icon" href="?app=news&page=admin_category_property"><span>Thuộc tính</span></a></li>
+					<li><a class="activities-icon header-menu-active" href="?app=news&page=admin_category_configuration"><span>Cấu hình danh mục</span></a></li>
+					<li><a class="activities-icon" href="?app=news&page=admin_focus_config"><span>Tiêu điểm</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">			
+			<span style="color: red; width: 50%; padding: 1px 5px; border: 1px solid #8A2; margin-bottom:8px;{display}">{msg}</span>
+			{begin_form}
+			Chọn danh mục quản lý: 
+			<select name="category" id="category">
+			<option value="0">Chọn danh mục</option>
+			{option_category}
+			</select>
+			<div class="line top"></div>		
+			<div class="table">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all" name="all"></p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Tên danh mục</p></td>	
+							<td width="15%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Vị trí hiển thị</p></td>
+							<td width="30%" class="bdtop bdbottom bdleft"><p>Chọn block</p></td>
+							<td width="15%" class="bdtop bdbottom bdleft"><p>Số block</p></td>
+						</tr>
+						<!-- BEGIN CONFIG -->
+						<tr align="center" valign="top" class="{bg} heightMin">
+							<td class="bdleft"><input type="checkbox" class="checkall" {checked} name="data[{id}][status]" value="1"></td>
+							<td class="bdleft"><p><b>{cate_name}</b></p></td>
+							<td class="bdleft" style="text-align:left"><p><input type="text" name="data[{id}][order_cate]" value="{possition}"></p></td>
+							<td class="bdleft"><p> <input type="text" name="data[{id}][block_home]" value="{block_option}" /> </p></td>						
+							<td class="bdleft">
+								<p>
+								<input type="text" name="data[{id}][number]" value="{number}">
+								<input type="hidden" name="data[{id}][name]" value="{cate_name}">
+								</p>
+							</td>						
+						</tr>
+						<!-- END CONFIG -->
+					</tbody>
+				</table>
+				
+			</div>
+			<div style="margin:10px 0 0 0">
+				<input type="submit" class="button" value="Cập nhật" style="margin-left:10px; width:65px;" /> 
+				<input type="reset" class="button" value="Hủy bỏ" />
+			</div>
+			{end_form}
+			<div class="clear"></div>
+		</div>

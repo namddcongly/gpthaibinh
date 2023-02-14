@@ -1,0 +1,121 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>Trong mục cha</label>
+			<select style="width:120px" id="cate_id" onchange="loadCategory();">
+				<option value="0">Chọn danh mục</option>
+				{option_category}
+			</select>&nbsp;
+			<select style="width:120px" id="cate_id_2">
+				<option value="0">Chọn danh mục</option>
+				{option_category1}
+			</select>				
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<div class="pages fr" ><ul>{paging}</ul></div>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			
+			<thead>
+				<tr align="center" class="table-title">
+				  <th  class="bdtop bdbottom bdleft" align="left"><p><input  type="checkbox" id="checkboxall"/> Tên bài</p></th>
+				 
+				</tr>
+			</thead>
+			<tbody>	
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft">
+						<p><strong><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/> <a href="{href}" target="_blank">{title}</a></strong> ({time_public})</p>
+						<p style="color:#993300">Trong mục: {path}</p>
+						<p><input type="text"  value="{title_seo}" id="title_{nw_id}" style="width:900px;"/></p>
+						<p><textarea cols="145" rows="5" id="description_{nw_id}">{description}</textarea></p>
+						<p style="text-align:left;" id="button_seo_{nw_id}"><input type="button" class="button" value="Cập nhật"  onclick="writeSeo({nw_id})"/></p>
+					 	<p>Thêm link vào box bài viết mỗi link cách nhau đâu "||"</p>
+						<p><textarea cols="145" rows="3" id="link_{nw_id}">{link_exchange}</textarea></p>
+						<p style="text-align:right; margin-right:50px;" id="button_link_{nw_id}"><input type="button" class="button" value="Thêm link"  onclick="addLink({nw_id})"/></p>
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+				
+			</tbody>
+	  </table>
+	  
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+<script type="text/javascript">
+	function searchNews()
+	{
+		var url='?app=news&page=admin_news&cmd=news_write_seo';
+		window.location.href=url+'&q='+$("#q").val() + '&cate_id='+$("#cate_id option:selected").val() +'&cate_id_2='+$("#cate_id_2 option:selected").val()+'&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+	}
+	function loadCategory()
+	{
+		var cate_id_1=$("#cate_id option:selected").val();
+		if(cate_id_1==0) return false;
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'load-category-map','cate_id': $("#cate_id option:selected").val()},
+			function(data)
+			{
+				$("#cate_id_2").html(data);
+			}			
+		)
+		
+	}
+	function addLink(id)
+	{
+		$.post("ajax.php?fnc=admin.write.seo.process&path=news",
+			{'action':'add_link','id':id,'link':$("#link_"+id).val()},
+			function(data)
+			{
+				if(data==1){
+					$("#button_link_"+id).html('<font color="red">Đã xử lý xong</font>');
+				}	
+				else{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại.");
+				}
+						
+			}			
+		)
+	}
+	function writeSeo(id)
+	{
+		$("#button_seo_"+id).html("<font color='red'>Đang thực hiện</font>");
+		$.post("ajax.php?fnc=admin.write.seo.process&path=news",
+			{'action':'write_seo','id':id,'title':$("#title_"+id).val(),"description":$("#description_"+id).val()},
+			function(data)
+			{
+				if(data==1){
+					
+					$("#button_seo_"+id).html('<font color="red">Đã xử lý xong</font>');
+				}	
+				else{
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại.");
+				}
+						
+			}			
+		)
+	}
+</script>

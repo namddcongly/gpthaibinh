@@ -1,0 +1,22 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị tin bài</h1>
+                <div style="border: 1px solid #d9251d; padding: 5px; margin: 10px">
+                    <h2><a href="?app=news&page=admin_register_topic&cmd=admin_topic">THÔNG TIN ĐĂNG KÝ ĐỀ TÀI ( XEM TẤT CẢ ĐỀ TÀI )</a></h2>
+                    {report}<br/>
+                    <!-- BEGIN TOPIC -->
+                    <span> - <b>{user_name}</b> Đăng ký đề tài: {name_topic} ( Ngày đăng ký {date_start} - Ngày nộp bài {date_end})</span> Click <b><a target="_blank" style="color: #d9251d" href="?app=news&page=admin_register_topic&cmd=admin_topic">VÀO ĐÂY</a></b> đề duyệt<br/>
+                    <!-- END TOPIC -->
+                     <!-- BEGIN TOPIC_USER -->
+                    <span> - <b>{user_name}</b> Đã đăng ký đề tài: {name_topic}</span> <b>{status}</b> Click <b><a target="_blank" style="color: #d9251d" href="?app=news&page=admin_register_topic&cmd=admin_topic">VÀO ĐÂY</a></b> đề xem<br/>
+                    <!-- END TOPIC_USER -->
+                </div>
+		<div class="header-menu">
+			<ul>
+                            <!-- BEGIN Tab -->
+                                    <li><a href="{link}" class="{class_active}"><span>{title}</span></a></li>
+                            <!-- END Tab -->
+			</ul>
+		</div>
+	</div>
+</div>

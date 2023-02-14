@@ -1,0 +1,94 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị bài Maket</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a  class="header-menu-active"  href="?app=news&page=administration_maket&cmd=store_maket"><span>Kho bài viết</span></a></li>
+				<li><a href="?app=news&page=administration_maket&cmd=news_store"><span>Danh sách trang</span></a></li>
+				<li><a class="" href="?app=news&page=administration_maket&cmd=news_create"><span>Thêm/Sửa mới trang</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+			&nbsp;&nbsp;Tên PV <input  type="text" name="user_name" id="user_name" style="width:150px;" value="{user_name}"/>
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<div class="pages fr" ><ul>{paging}</ul></div>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<thead>
+				<tr align="center" class="table-title">
+				  <th width="4%" class="bdtop bdbottom bdleft"><p>STT</p></th>
+				  <th width="55%" class="bdtop bdbottom bdleft" align="left"><p>Tiều đề / Sapo bài viết</p></th>
+				  <th width="15%" class="bdtop bdbottom bdleft" align="left"><p>Phóng viên</p></th>
+				  <th width="12%" class="bdtop bdbottom bdleft" align="center"><p>Ngày gửi</p></th>
+				  <th  class="bdtop bdbottom bdleft" align="left"><p>Điều khiển</p></th>
+				</tr>
+			</thead>
+			<tbody>	
+				<!-- BEGIN ListRow -->
+					<tr style="background-color:{bg}">
+					  <td class="bdleft" align="center">{stt}</td>
+					  <td class="bdleft"  align="left">
+					  		<p>
+							<strong><a href="?app=news&page=administration_baogiay&cmd=view_content&nw_id={nw_id}">{title}</a><br/></strong>
+							<span>[ {sub_title} ]</span>
+							</p>
+							<p>{description}</p>
+					  </td>
+					  <td class="bdleft" align="left">
+					  	<p>
+					  		Người viết: {user_name_row}<br/>
+						</p
+					  </td>
+					  <td class="bdleft" align="left">
+					  	<p>{time_post}</p>
+					  </td>
+					  <td class="bdleft" align="left">
+						<p>
+							{function}
+						</p>
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	  
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#reason-return').jqDrag('.jqDrag');	
+	})
+	$(function(){
+		$('#tinnhan-chidao').jqDrag('.jqDrag');	
+	})
+	function searchNews()
+	{
+		var url='?app=news&page=administration_maket&cmd=store_maket';
+		window.location.href=url+'&q='+$("#q").val()  + '&user_name='+ $("#user_name").val() + '&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+	}
+</script>

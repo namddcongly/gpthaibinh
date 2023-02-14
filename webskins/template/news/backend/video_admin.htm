@@ -1,0 +1,130 @@
+<div class="folder-header">
+	<h1>Quản trị video</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a id="category" class="header-menu-active" href="{url_current}"><span>Danh sách video</span></a></li>
+			<li><a id="category"  href="{link_add}"><span>Thêm video</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li> 
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+			&nbsp;&nbsp;Người tạo <input  type="text" name="btv_name" id="btv_name" style="width:150px;" value="{btv_name}"/>
+			
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>Trong mục cha</label>
+			<select style="width:120px" id="cate_id">
+				<option value="0">Chọn danh mục</option>
+				{option_category}
+			</select>			
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<strong>Bạn có <font color="#990000">{total_rowcount}</font> video</strong>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></td>
+				  <td width="13%" class="bdtop bdbottom bdleft" align="left"><p>Tiêu đề</p></td>
+				  <td  class="bdtop bdbottom bdleft" align="center"><p>Video</p></td>
+				  <td width="45%" class="bdtop bdbottom bdleft" align="left"><p>Mã nhúng</p></td>
+				  <td width="5%" class="bdtop bdbottom bdleft" align="left"><p>Danh mục</p></td>
+				  <td width="5%" class="bdtop bdbottom bdleft" align="center"><p>Ngày đăng</p></td>
+				  <td width="8%" class="bdtop bdbottom bdleft"><p>Điều khiển</p></td>
+				</tr>
+				
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/></td>
+					  <td class="bdleft">
+						<p><strong><a href="">{title}</a></strong></p>
+						
+					  </td>
+					  <td class="bdleft" align="center"><p>
+						  <video width="100%"  poster = "{image}" controls="true">
+							  <source src="{video}" type="video/mp4">
+							  Your browser does not support the video tag.
+						  </video>
+
+                      </p>
+					  </td>
+					<td class="bdleft" align="left">
+						<textarea cols="50" rows="12" style="margin:5px;">
+							<center>
+								<p style="text-align: center">
+									<video width="100%" poster = "{image}" controls="true">
+										<source src="{video}" type="video/mp4">
+										Your browser does not support the video tag.
+									</video>
+								</p>
+							</center>
+						</textarea>
+					</td>
+                                            <td class="bdleft" align="left"><p>{path}</td>
+                                            <td class="bdleft" align="center"><p>{time_public}</p></td>
+                                            <td class="bdleft" align="center">
+                                                  <p>
+                                                          {property}
+                                                          <a href="{link_edit}">Sửa</a> | <a href="javascript:;" onclick="deleteData({nw_id})">Xóa</a>
+                                                  </p>
+                                            </td>
+					</tr>
+				<!-- END ListRow -->
+				
+			</tbody>
+	  </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+
+<script type="text/javascript">
+	
+	function searchNews()
+	{
+		var url='?app=news&page=admin_video';
+		window.location.href=url+'&q='+$("#q").val() + '&cate_id='+$("#cate_id option:selected").val() + '&censor_name='+ $("#censor_name").val() +'&btv_name='+$("#btv_name").val()+ '&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+	}
+	function deleteData(id)
+	{
+			var ok=confirm("Bạn có chắc chắn muốn xóa video này không?");
+			if (ok == true) 
+			{
+				$.post("ajax.php?fnc=admin_video&path=news", {
+					'action': 'delete',
+					'id': id
+				}, function(data){
+				
+					window.location.reload();
+				});
+			}
+	}
+	function setProperty(id,property, unset_property)
+	{
+			$.post("ajax.php?fnc=admin_video&path=news", {
+					'action': 'set_property',
+					'id': id,
+					'set_property':property,
+					'unset_property' : unset_property
+				}, function(data){
+					if(data)
+						window.location.reload();
+					else	
+						alert("Đã có lỗi xảy ra bạn vui lòng kiểm tra lại");	
+				});
+	}
+</script>

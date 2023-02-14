@@ -1,0 +1,93 @@
+{begin_form}
+<div class="folder-header">
+    <h1>Quản trị TOPIC</h1>
+    <div class="header-menu">
+        <ul>
+            <li><a href="?app=news&page=admin_topic&cmd=admin_topic"><span>Danh sách Topic</span></a></li>
+            <li><a class="header-menu-active" href="{link_add}"><span>Thêm Topic</span></a></li>
+        </ul>
+    </div>
+</div>
+<div class="folder-content">
+    <h2>TẠO & SỬA TOPIC</h2>
+    <div class="line top"></div>
+    <div class="clear"></div>
+    <!--begin table data-->
+    <div class="table">
+        <ul>
+            <li>
+                <label>Tên chủ đề</label>
+                <input type="text" style="width:520px;" name="name" value="{name}" id="name" maxlength="255"/>
+                <font color="#999999">Tiêu đề không quá 255 kí tự</font>
+            </li>
+            <li id="cat">
+                <label>Chọn danh mục</label>
+                <select name="cate_id" id="cate_id">
+                    <option value="0">Chọn danh mục</option>
+                    {option_cate}
+                </select>
+            </li>
+            <li>
+                <label>Tiêu đề</label>
+                <input type="text" style="width:520px;" name="title" value="{title}" id="title" maxlength="65"/>
+            </li>
+            <li>
+                <label>Từ khóa</label>
+                <textarea name="keyword" rows="5" cols="100" maxlength="160" maxlength="160">{keyword}</textarea> <span style="color:#990000">Tối đa 160 kí tự</span>
+            </li>
+            <li>
+                <label style="display:block; float:left">Ảnh đại diện (200x200)</label>
+                {img}&nbsp;
+                <br>
+            </li>
+            <li>
+                <label>&nbsp;</label>
+                <input type="file" name="img" id="img"/>
+            </li>
+            <li>
+                <label>Miểu tả</label>
+                <textarea name="description"  id="description" rows="5" cols="100">{description}</textarea>
+            </li>
+            <li>
+                <label>Nội dung</label>
+                <textarea name="content" class="ckeditor" id="content" rows="5" cols="100">{content}</textarea>
+            </li>
+
+            <li>
+                <label>Thứ tự</label>
+                <input type="text" style="width:50px;" name="position" value="{position}" id="position"/>
+            </li>
+            <li>
+                <label>Tìn nhiều kỳ?</label>
+                <input type="checkbox" value="1" name="type" {check}/>
+            </li>
+            <li>
+                <label>&nbsp;</label>
+                <input type="submit" value="Thêm/Sửa" name="add_edit" class="button"/>
+            </li>
+        </ul>
+    </div>
+</div>
+<input type="hidden" value="{id}" name="id"/>
+{end_form}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('textarea[maxlength]').keyup(function(){
+            var max = parseInt($(this).attr('maxlength'));
+            if($(this).val().length > max){
+                $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+            }
+            $("#max_len").html(' Còn ' + (max - $(this).val().length) + ' kí tự');
+        });
+    });
+    function checkForm() {
+        //return true;
+        if ($("#name").val() == '' || $("#name").val() == null) {
+            alert("Bạn phải nhập tiêu đề");
+            $("#name").focus();
+            return false;
+        }
+        return true;
+    }
+
+</script>

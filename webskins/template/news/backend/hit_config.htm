@@ -1,0 +1,70 @@
+<div class="folder-header">
+	<h1>Trang giải trí</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a class="user-icon" href="?app=news&page=admin_news_category"><span>Danh sách danh mục</span></a></li>					
+			<li><a class="protrans-icon" href="?app=news&page=admin_category_property"><span>Thuộc tính</span></a></li>
+			<li><a class="activities-icon" href="?app=news&page=admin_category_configuration"><span>Cấu hình danh mục</span></a></li>
+			<li><a class="header-menu-active activities-icon" href="?app=news&page=admin_focus_config"><span>Tiêu điểm</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">			
+	<div class="line top"></div>	
+	<h2>Tìm kiếm</h2>			
+	<ul>
+	<li>
+		<label for="name">Chọn danh mục</label>
+			<select name="cate" id="cate" style="width:250px;"><option value="0">Chọn Danh Mục</option>{cate_option}</select>
+		</li>				
+		<li><label for="name">&nbsp;</label><input type="button" class="button" value="Tin tiêu điểm" id="focus"></li>
+	</ul>
+	{begin_form}
+	<div class="table">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">		
+			<tbody>			    
+				<tr align="center" class="table-title">
+					<td width="10%" class="bdtop bdbottom bdleft" style="text-align:left"><p>STT</p></td>
+					<td width="60%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Tên bài viết</p></td>
+					<td width="15%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Vị Trí</p></td>
+					<td width="15%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Lượt xem</p></td>
+				</tr>			
+				<!-- BEGIN HIT -->	
+				<tr align="center" valign="top" class="{bg} heightMin">
+					<td class="bdleft"><input type="checkbox" name="data[{id}][check]" value="1"></td>
+					<td class="bdleft" style="text-align:left"><p><b>{title}</b></p></td>										
+					<td class="bdleft" style="text-align:left"><p><input type="text" name="data[{id}][{arrange}]" value="{arrange}"></p></td>										
+					<td class="bdleft" style="text-align:left"><p><b>{hit}</b></p></td>										
+				</tr>
+			    <!-- END HIT -->
+			</tbody>
+		</table>		
+	</div>
+	<br>
+	<input type="submit" class="button" value="Cập nhật" style="margin-left:153px; width:70px;" />
+		<input type="reset" class="button" value="Hủy bỏ" />
+	{end_form}
+	<div class="clear"></div>
+</div>
+<script type="text/javascript"><!--
+$(document).ready(function(){
+	$("#focus").click(function(){
+		window.location.href = "?app=news&page=admin_focus_config&cate_id="+$("#cate option:selected").val();
+	});
+	/*$("#cate").change(function(){
+		$.ajax({
+            url: 'ajax.php?path=news&fnc=get_region&cate_id='+$("#cate option:selected").val(),
+            type:'GET',
+            dataType:'json',            
+            success:function(data)
+            {
+            	if(data.code == 1)
+            	{
+            		$("#region").html(data.html);
+            	}
+            },
+            timeout:function(){}
+        });
+	}); */
+});
+</script>

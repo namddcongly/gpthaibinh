@@ -1,0 +1,172 @@
+{begin_form}
+<input type="hidden" value="0" name="user_id" />
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị User</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=main&page=admin_user&cmd=group" ><span>Danh sách nhóm</span></a></li>
+				<li><a href="?app=main&page=admin_user&cmd=list"><span>Danh sách user</span></a></li>
+				<li><a href="?app=main&page=admin_user&cmd=creat_user"  class="header-menu-active"><span>Tạo user</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="folder-content">
+	<div>
+		<h2>TẠO TÀI KHOẢN USER</h2>
+		<hr color="#990000">
+		<table cellpadding="2" cellspacing="5">
+			<tr>
+				<td align="right">Tên đăng nhập</td>
+				<td><strong><input  type="text" name="user_name" value="" style="width:230px; height:30px;" id="user_name"/></strong></td>
+			</tr>
+			<tr>
+				<td align="right">Email đăng ký</td>
+				<td><input  type="text" name="email" value="" style="width:230px; height:30px;" id="email"/></td>
+			</tr>
+			<tr>
+				<td align="right">Địa phương</td>
+				<td><input  type="text" name="zone_name" value="N/A" style="width:230px; height:30px;" id="zone_name"/></td>
+			</tr>
+			<tr>
+				<td align="right">Mật khẩu</td>
+				<td><input  type="password" name="password" value="" style="width:230px; height:30px;" id="password"/></td>
+			</tr>
+			<tr>
+				<td align="right">Nhập lại mật khẩu</td>
+				<td><input  type="password" name="password_confirm" value="" style="width:230px; height:30px;" id="password_confirm"/></td>
+			</tr>
+			
+			
+			<tr>
+				<td align="right">Tên đầy đủ</td>
+				<td><strong><input  type="text" name="full_name" value="" style="width:230px; height:30px;" id="full_name"/></strong></td>
+			</tr>
+			
+			<tr>
+				<td align="right">Ngày sinh</td>
+				<td><input  type="text" name="birthday" value="" style="width:230px; height:30px;" id="birthday"/></td>
+			</tr>
+			<tr>
+				<td align="right">Giới tính</td>
+				<td><input  name="gender" type="radio" value="0"> Nữ  <input  name="gender" type="radio" value="1" checked="checked"> Nam </td>
+			</tr>
+			<tr>
+				<td align="right">CMTND</td>
+				<td><input  type="text" name="CMTND" value="" style="width:230px; height:30px;" id="CMTND"/></td>
+			</tr>
+			<tr>
+				<td align="right">Số điện thoại di động</td>
+				<td><input  type="text" name="mobile_phone" value="" style="width:230px; height:30px;" id="mobile_phone"/></td>
+			</tr>
+			
+			<tr>
+				<td align="right">Điện thoại cố định</td>
+				<td><input type="text" value="" name="phone" style="width:230px; height:30px;" id="phone"/></td>
+			</tr>
+			<tr>
+				<td align="right">Địa chỉ</td>
+				<td><input  type="text" value=""  name="address" style="width:230px; height:30px;" id="address"/></td>
+			</tr>
+			<tr>
+				<td align="right">Nick Yahoo</td>
+				<td><input type="text" value="" style="width:230px; height:30px;" name="nick_yahoo" id="nick_yahoo"/></td>
+			</tr>
+			<tr>
+				<td align="right">Nick Skype</td>
+				<td><input  type="text" value="" style="width:230px; height:30px;" name="nick_skype" id="nick_skype"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="submit"  value="Tạo user" name="submit"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+{end_form}
+<div id="change-pass" class="popup-choose" style="width:300px;">
+	<h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Thay đổi password<label class="popup-close button-close"><b>X</b></label></h2>
+	<div class="popup-content folder-content" style="border: 1px solid #999999">
+		<ul>
+			<li>
+				<label>Tên tài khoản</label> <strong>{user_name}</strong>
+			</li>
+			<li>
+				<label>Mật khẩu cũ (*)</label><input type="password" name="password_old"  id="password_old">
+			</li>
+			<li>
+				<label>Mật khẩu mới (*)</label><input type="password" name="password_new" id="password_new">
+			</li>
+			<li>
+				<label>Xác nhận mật khẩu(*)</label><input type="password" name="password_new_confirm" id="password_new_confirm">
+			</li>
+			<li><label>&nbsp;</label><input  type="button" value="Thay đổi" name="change" style="float:right; margin-right:8px;" onClick="changePassword({user_id})"/></li>
+		</ul>
+		
+		
+	</div>	
+</div>
+<script language="javascript">
+	function checkData()
+	{
+		if($("#user_name").val()==null || $("#user_name").val()=='')
+		{
+			alert('Bạn phải nhập User name');
+			$("#user_name").focus();
+			return false;
+		}
+		if($("#email").val()==null || $("#user_name").val()=='')
+		{
+			alert('Bạn phải nhập User name');
+			$("#email").focus();
+			return false;
+		}
+		if($("#password").val()==null || $("#password").val()=='')
+		{
+			alert('Bạn phải nhập User name');
+			$("#password").focus();
+			return false;
+		}
+		if($("#password_confirm").val()==null || $("#password_confirm").val()=='')
+		{
+			alert('Bạn phải nhập mật khẩu');
+			$("#password_confirm").focus();
+			return false;
+		}
+		if($("#full_name").val()==null || $("#full_name").val()=='')
+		{
+			alert('Bạn phải nhập tên đây đủ');
+			$("#full_name").focus();
+			return false;
+		}
+		if($("#CMTND").val()==null || $("#CMTND").val()=='')
+		{
+			alert('Bạn phải nhập số CMTND');
+			$("#CMTND").focus();
+			return false;
+		}
+		if($("#mobile_phone").val()==null || $("#mobile_phone").val()=='')
+		{
+			alert('Bạn phải nhập số điệnt thoại');
+			$("#mobile_phone").focus();
+			return false;
+		}
+		if($("#address").val()==null || $("#address").val()=='')
+		{
+			alert('Bạn phải địa chỉ');
+			$("#address").focus();
+			return false;
+		}
+		if($("#nick_yahoo").val()==null || $("#nick_yahoo").val()=='')
+		{
+			alert('Bạn phải nick yahoo');
+			$("#nick_yahoo").focus();
+			return false;
+		}
+		return true;
+	}
+	$(function(){
+		$('#change-pass').jqDrag('.jqDrag');	
+	})
+</script>	

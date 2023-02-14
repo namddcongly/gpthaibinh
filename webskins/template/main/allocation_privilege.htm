@@ -1,0 +1,81 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>QUẢN TRỊ QUYỀN</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?app=main&page=admin_privilege"><span>Danh sách quyền</span></a></li>
+				<li><a href="?app=main&page=admin_privilege&cmd=allocation_privilege" class="header-menu-active"><span>Cấp quyền</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div> 
+<div class="folder-content">
+	<div id="add-update-data">
+		<ul>
+			<li><span style="width:120px;">Tên người dùng</span><input  type="text"  name="user_name" id="user_name" style="width:160px;"/> Nhập tên người dùng, Click "Tìm kiếm" để biết thông tin các quyền đã được cấp phát</li>
+			<li><span style="width:120px;">&nbsp;</span><input  type="button" value="Tìm kiếm" class="button" onclick="searchUser()"/></li>
+		</ul>
+	</div>
+	<div class="table">
+		<h3>Các quyền của <font color="#990000"><strong>{user_name}</strong></font> trong nhóm</h3>
+		<hr  style="color:#990000"/>
+		<div>
+			<ul>
+				<!-- BEGIN ListRowGroup -->
+				<li>{stt_g}. {name_g}: {description_g}</li>
+				<!-- END ListRowGroup -->
+			</ul>
+		</div><br/>
+		<h3>Các quyền khác của <font color="#990000"><strong>{user_name}</strong></font></h3>
+		<hr  style="color:#990000"/>		
+		<div>
+			<ul>
+				<li><input type="checkbox" id="checkboxall">&nbsp;<input  type="button" class="button" name="set_privilege" value="Cấp quyền" onclick="setAllPrivilege({user_id},1)"/> &nbsp;<input  type="button"  name="set_privilege" value="Hủy quyền" class="button" onclick="setAllPrivilege({user_id},0)"/></li>
+				<!-- BEGIN ListRow -->
+					<li>{stt}. <input type="checkbox"  value="{id}" {checked} name="checkall"  title="Click vào để chọn tất cả"/> {name} : {description}</li>
+				<!-- END ListRow -->
+			</ul>
+		</div>		
+		
+	</div>
+</div>
+<script language="javascript">
+	
+	function searchUser()
+	{
+		var url='?app=main&page=admin_privilege&cmd=allocation_privilege';
+		if($("#user_name").val()=='' || $("#user_name").val()==null) 
+		{
+			$("#user_name").focus();	
+			return false;
+		}
+		window.location.href=url+'&user_name='+$("#user_name").val();
+	}
+	/*type = 0  huy quyen type =1 cap quyen*/
+	function setAllPrivilege(user_id,type)
+	{
+		var privilege_ids=getChecked('checkall');
+		if(privilege_ids=='' || privilege_ids==null)
+		{
+			alert('Bạn phải chọn ít nhất một quyền');
+			return false;
+		}
+		$.post("ajax.php?fnc=privilege.process&path=main",
+			{'action':'set-privilege','privilege_ids':privilege_ids,'user_id':user_id,'type':type},
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else if(data==-1)
+				{
+					alert("Bạn đã cấp toàn bộ quyền đã chọn cho user");
+				}
+				else
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+			}			
+		)
+		
+	}
+</script>	

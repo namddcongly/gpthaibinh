@@ -1,0 +1,50 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:200px;"/>
+			&nbsp;&nbsp;Người tạo <input  type="text" name="btv_name" id="btv_name" style="width:150px;" value="{btv_name}"/>
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>Trong mục cha</label>
+			<select style="width:120px" id="cate_id" onchange="loadCategory();">
+				<option value="0">Chọn danh mục</option>
+				{option_category}
+			</select>&nbsp;
+			<select style="width:120px" id="cate_id_2">
+				<option value="0">Chọn danh mục</option>
+				{option_category1}
+			</select>				
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		{txt_hit}<br/>
+		{statistic}<br/>
+		{s}
+	</div>
+</div>
+
+<script type="text/javascript">
+function searchNews()
+{
+	var url='?app=news&page=admin_news&cmd=news_store';
+	window.location.href=url+'&q='+$("#q").val() + '&cate_id='+$("#cate_id option:selected").val() +'&cate_id_2='+$("#cate_id_2 option:selected").val()+'&censor_name='+ $("#censor_name").val() +'&btv_name='+$("#btv_name").val()+ '&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+}
+</script>

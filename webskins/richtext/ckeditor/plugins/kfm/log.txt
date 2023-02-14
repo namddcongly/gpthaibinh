@@ -1,0 +1,3 @@
+folder: Images 
+fullfolder: data\Images\ 
+fileFolder: E:\xampplite\htdocs\ckeditor\data\Images\9rules.png 

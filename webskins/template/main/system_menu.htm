@@ -1,0 +1,75 @@
+<div class="folder top">
+	<!--begin title-->
+	<div class="folder-header">
+		<h1>quản trị Menu </h1>
+		<div class="header-menu">
+			<ul>
+				<li><a class="header-menu-active" href="{list_link}"><span>Danh sách menu </span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+	<!--end title-->
+<div class="folder-content">
+	<div id="AdminMenuForm">
+	<h2>Thêm mới Menu</h2>
+	<ul>
+		 <li>
+			<label for="name">Tên (*) </label>
+			<input type="text" id="name" name="name"  style="width:230px;" value="" />
+		</li>
+		 <li>
+			<label for="name">Url </label>
+			<input type="text" id="url" name="url"  style="width:230px;" value="" />
+			&nbsp;Đường dẫn của menu
+		</li>			
+		<li>		
+			<label for="name">Tên quyền sử dụng (*) </label>
+			<input type="text"  id="privilege_name" name="privilege_name" style="width:230px;" value="" />&nbsp;&nbsp;Quyền sử dụng menu&nbsp;&nbsp;[<a href="#" target="_blank">Danh sách quyền</a>]</li>
+		<li>
+			<label for="name">Menu mức cao </label>
+			<select  style="width:238px;"  id="parent_id" name="parent_id" ><option  value="0" >Chọn menu</option> 
+			{menu_option}
+			</select> 
+			&nbsp;Menu (cha) mức cao hơn
+		</li>
+		<li>
+			<label for="name">Portal (*)</label>		
+			<select  style="width:238px;"  id="portal_id" name="portal_id" ><option  value="0" >Chọn portal</option> {portal_option}</select>
+			&nbsp;Portal menu sử dụng
+		</li>            
+		<li>
+			<label for="name">Page (*)</label>		
+			<select  style="width:238px;"  id="page_id" name="page_id" ><option  value="0" >Chọn page</option> {page_option}</select> 
+			&nbsp;Trang menu sử dụng
+		</li>
+		<li>
+			<label for="name">Thứ tự (*) </label>
+			<input type="text" id="position" name="position"  style="width:30px;" value="0" rel="num" /> Thứ tự hiển thị trong hệ thống
+		</li>		
+		<li>
+			<input type="button" class="button" value="Thêm mới" style="margin-left:153px; width:80px;" onclick="insertData();"/>
+		</li>
+	</ul>
+	</div>
+	<div class="line top"></div>
+	<p>Danh sách các Menu </p>
+	<!--begin table data-->
+	<div class="table">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="5%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+				  <td width="39%" align="left" class="bdtop bdbottom bdleft"><p>Tên</p></td>
+				  <td width="11%" align="left" class="bdtop bdbottom bdleft"><p>Portal</p></td>
+				  <td width="12%" align="left" class="bdtop bdbottom bdleft"><p>Page</p></td>
+				  <td width="14%" align="left" class="bdtop bdbottom bdleft"><p>Quyền truy cập </p></td>
+				  <td width="9%"  align="center" class="bdtop bdbottom bdleft"><p>Vị trí</p></td>
+				  <td width="11%" class="bdtop bdbottom bdleft"><p>Thao tác</p></td>
+				</tr>
+				{text_html}
+			</tbody>
+	  </table>
+	</div>
+	<!--end table data-->
+</div>

@@ -1,0 +1,24 @@
+<style>
+	.table img
+	{
+		max-width:980px;
+		display:block;
+		margin:0 auto;
+	}
+	
+</style>
+<div class="folder-content">
+	<h2>XEM NỘI DUNG CHI TIẾT BÀI VIẾT <span style="float:right; margin-right:10px"><a onclick="window.history.go(-1)" href="javascript:;">Trở lại trang trước</a></span></h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<h3>{title}</h3>
+		<span style="color:#CCC">{sub_title}</span>
+		<p>Ngày tạo: {time_created}</p>
+		<p style="margin:10px 0px 0px 0px; font-weight:bold;">{description}</p>
+		<p class="content">{content}</p>
+		<p style="float:right;margin-right:10px"><strong>Tác giả: {user_name}</strong></p>
+	</div>
+</div>
+<input  type="hidden" value="{status}" name="status" />
+<input  type="hidden" value="{news_id}" name="news_id" />

@@ -1,0 +1,50 @@
+@font-face {
+    font-family: font1;
+    src: url('PalatinoLinotype/AldusNovaPro-Book.otf');
+}
+
+
+
+@font-face {
+    font-family: FontStyle;
+    src: url(Baomoi/Font_gdi.eot?v=1);
+    src: local('☺'),url(Baomoi/Font_gdi.eot?#iefixv=1) format('embedded-opentype'),url(Baomoi/Font_gdi.ttf?v=1) format('truetype');
+}
+
+@font-face {
+    font-family: FontStyle;
+    src: url(Baomoi/Font-Italic_gdi.eot?v=1);
+    src: local('☺'),url(Baomoi/Font-Italic_gdi.eot?#iefixv=1) format('embedded-opentype'),url(Baomoi/Font-Italic_gdi.ttf?v=1) format('truetype');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: FontStyle;
+    src: url(Baomoi/Font-SemiBold_gdi.eot?v=1);
+    src: local('☺'),url(Baomoi/Font-SemiBold_gdi.eot?#iefixv=1) format('embedded-opentype'),url(Baomoi/Font-SemiBold_gdi.ttf?v=1) format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: FontStyle;
+    src: url(Baomoi/Font-SemiBoldItalic_gdi.eot?v=1);
+    src: local('☺'),url(Baomoi/Font-SemiBoldItalic_gdi.eot?#iefixv=1) format('embedded-opentype'),url(Baomoi/Font-SemiBoldItalic_gdi.ttf?v=1) format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: Palatino;
+    src: url(pala.ttf);
+}
+
+@font-face {
+    font-family: 'iconfont'; /* project id 659557 */
+    src: url('/assets/iconfont/font_659557_c6lf8l6vurb.eot');
+    src: url('/assets/iconfont/font_659557_c6lf8l6vurb.eot?#iefix') format('embedded-opentype'), url('/assets/iconfont/font_659557_c6lf8l6vurb.woff2') format('woff2'), url('/assets/iconfont/font_659557_c6lf8l6vurb.woff') format('woff'), url('/assets/iconfont/font_659557_c6lf8l6vurb.ttf') format('truetype'), url('/assets/iconfont/font_659557_c6lf8l6vurb.svg#iconfont') format('svg');
+}
+
+.iconfont {
+    font-family: iconfont;
+}

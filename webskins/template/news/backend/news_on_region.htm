@@ -1,0 +1,51 @@
+		<div class="folder-header">
+			<h1>Tin trong vùng "{region_name}"</h1>
+			<div class="header-menu">
+				<ul>
+					<li><a id="category" class="user-icon" href="?app=news&page=admin_news_region"><span>Danh sách vùng</span></a></li>	
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">	
+			<div class="line top"></div>
+			<div class="table">		
+			{begin_form}	
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all"></p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Tên vùng</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Tên danh mục</p></td>
+							<td width="15%" class="bdtop"><p>Skin hiển thị</p></td>
+							<td width="10%" class="bdtop"><p>SL tin hiển thị</p></td>
+							<td width="10%" class="bdtop"><p>Vị trí sắp xếp</p></td>
+							<td width="15%" class="bdtop"><p>Thao tác</p></td>
+						</tr>
+						<!-- BEGIN LIST -->
+						<tr align="center" valign="top" class="{bg} heightMin">
+							<td class="bdleft"><p><input type="checkbox" name="status[{id}][id]" class="checkall" value="{stt}"></p></td>
+							<td style="text-align:left" class="bdleft"><p><b><a href="?app=news&page=news_on_region&id={stt}">{name}</a></b><br />{description}</p></td>
+							<td style="text-align:left" class="bdleft"><p>{cate_name}</p></td>							
+							<td class="bdleft"><p><input style="width:100px" type="text" name="update[{id}][skins_type]" value="{skin_name}"></p></td>							
+							<td class="bdleft"><p><input style="width:50px" type="text" name="update[{id}][number_record]" value="{number_record}"></p></td>							
+							<td class="bdleft"><p><input style="width:50px" type="text" name="update[{id}][arrange]" value="{arrange}"></p></td>							
+							<td style="text-align:left" class="bdleft">
+								<p>
+									<a href="javascript:;" id="region_delete" rel="{link_delete}">Xóa</a> | 
+									<a href="?app=news&page=admin_news_region&id={stt}">Sửa</a> | 
+									<a href="javascript:;" id="region_publish" rel="{link_publish}">{publish}</a>
+								</p>
+							</td>
+						</tr>				
+						<!-- END LIST -->	
+					</tbody>
+				</table>		
+				<li>
+					<input type="submit" name="update_region" class="button" value="Cập nhật" style="width:70px;" />
+					<input type="reset" class="button" value="Hủy bỏ" />
+				</li>				
+				{end_form}
+			</div>
+			<div class="clear"></div>
+		</div>
+		

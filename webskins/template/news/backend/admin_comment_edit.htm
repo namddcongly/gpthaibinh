@@ -1,0 +1,72 @@
+{begin_form}
+<input type="hidden" value="{from}"  name="from" />
+<div class="folder-content">
+	<h2>SỬA BÌNH LUẬN</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tiêu đề bình luận</label>
+				<input  type="text" style="width:520px;" name="title" value="{title}" id="title"/>
+				<font color="#999999">Tiêu đề bình luận không quá 255 kí tự</font>
+			</li>
+			 <li>
+				<label>Email</label>
+				<input readonly="readonly"  type="text" style="width:300px;" name="email" id="email" value="{email}"/>
+			</li>
+			 <li>
+				<label>Nội dung bình luận</label>
+				<textarea cols="120" rows="8"  name="content" id="content">{content}</textarea>
+				
+			</li>
+			<li>
+				<label>Duyệt bình luận</label>
+				<input  type="checkbox" value="1" name="is_censor" {is_censor}/>
+			</li>
+			<li>
+				<label>Ngày đăng</label>
+				<input readonly="readonly"  type="text" style="width:180px;" name="time_created" id="time_created" value="{time_created}"/>
+			</li>
+			<li>
+				<br />
+			</li>
+			<li>
+				<label></label>
+				<input type="submit"  value="Sửa" name="add_edit" class="button"/>
+			</li>
+			 
+		</ul>
+	</div>
+</div>
+<input  type="hidden" value="{comment_id}" name="comment_id" />
+<input  type="hidden" value="{already_censor}" name="already_censor" />
+<input  type="hidden" value="{time_public}" name="time_public" />
+<input  type="hidden" value="{censor_id}" name="censor_id" />
+{end_form}
+<script type="text/javascript">
+function checkForm()
+{
+	return true;
+	if($("#title").val()=='' || $("#title").val()==null)
+	{
+		alert("Bạn phải nhập tiêu đề");
+		$("#title").focus();
+		return false;
+	}
+	
+
+	
+	if($("#content").val()=='' || $("#content").val()==null)
+	{
+		alert("Nội dung");
+		$("#title").focus();
+		return false;
+	}
+
+	return true;
+}
+
+  
+   
+</script>

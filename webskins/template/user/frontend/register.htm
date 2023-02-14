@@ -1,0 +1,103 @@
+<div style="padding-left:100px;">
+<style>
+	.input_register{
+		width:250px;
+	}	
+	.label{
+		float:right;
+	}
+	.red{
+		color:red;
+	}
+</style>
+<form  id="registerForm" >
+
+	<div><h1>Đăng ký thành viên mới</h1></div>
+    <div id="register-warning" style="color:red;">&nbsp;</div>
+    <table class="table-form" id="register-content" cellpadding="5" cellspacing="5">
+        <tr>
+            <td class="label">Tên đăng nhập <span class="red">(*)</span></td>
+            <td class="form-element"><input id="username" name="user_name"  type="text" class="input_register"/></td>
+        </tr>
+        <tr>
+            <td class="label">Mật khẩu <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="password" name="password" type="password" class="input_register"/></td>
+        </tr>
+        <tr>
+            <td class="label">Xác nhận mật khẩu <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="verifyPassword" name="verify_password" type="password" class="input_register"/></td>
+        </tr>
+        <tr>
+            <td class="label">Họ tên <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="fullname" name="full_name"  type="text" class="input_register"/></td>
+        </tr>
+    
+        <tr>
+            <td class="label">Email <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="email" name="email"  type="text" class="input_register"/></td>
+        </tr>
+        
+         <tr>
+            <td class="label">Điện thoại <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="phone" name="phone"  type="text" class="input_register"/></td>
+        </tr>
+         <tr>
+            <td class="label">Địa chỉ <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="address" name="address"  type="text" class="input_register"/></td>
+        </tr>
+          <tr>
+            <td class="label">Mã xác minh <span  class="red">(*)</span></td>
+            <td class="form-element"><input id="captcha_code" name="captcha_code"  type="text" size="4"/> <span id="captcha"><img src="{captcha}" alt="captchar" class="img-capcha" /></span><a class="re-code" title="Lấy lại mã" href="javascript:;" onclick="refreshCaptcha()">Lấy lại mã</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" class="bds-button" value="Đăng ký" name="submit">
+            </td>
+        </tr>
+    </table>
+    
+</form>
+<div id="register-success" class="register-success-box" style="display:none;">Chúc mừng bạn đã đăng ký thành viên thành công.
+        
+</div>
+</div>
+<script>
+	$("#registerForm").submit(function(){
+		var value = $(this).serialize();
+		$.post("ajax.php?fnc=register&path=user&cmd=submit",
+			value,
+			function(data)
+			{
+				if(data != 1){
+					$('#register-warning').html(data);
+					refreshCaptcha();
+					$("#captcha_code").val('');
+					return false;
+				}
+				else
+				{
+					$('#register-warning').html('');
+					$('#register-content').hide();
+					$('#register-success').show();
+					return false;
+				}
+			}			
+		);	
+		return false;
+	});
+$('#register-finished').click(function(){
+        location.reload();
+    });	
+
+	function refreshCaptcha()
+	{
+		$.post("ajax.php?fnc=news.process&path=news",
+			{'action':'refresh_captcha', 'type':'user_register'},
+			function(data)
+			{
+				$("#captcha").html(data);
+			}			
+		)
+	}	
+</script>

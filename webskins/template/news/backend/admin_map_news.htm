@@ -1,0 +1,160 @@
+<div class="folder-content">
+<div class="table" style="border:1px solid #999999; padding:5px;">
+	<h2>TÌM KIẾM TIN</h2>
+	<input type="text" value="{q}" id="q" name="q"  style="width:200px; float:left; margin-right:5px;"/>&nbsp;
+	<select style="float:left; margin-right:5px;" id="cate_id" onchange="loadRegion('cate_id');loadCategory();">
+		<option value="0">Danh mục cấp 1</option>
+		{option_category}
+	</select>
+	<select style="float:left; margin-right:5px;" id="cate_id_2" onchange="loadRegion('cate_id_2');">
+		<option value="0">Danh mục cấp 2</option>
+		{option_category_1}
+	</select>
+	<input type="button" class="button"  class="button" value="Tìm kiếm" name="Search" onClick="searchNews()" style="height:25px;float:left;">
+	<input  type="button" class="button" class="button" value="Map vùng" name="map" onclick="mapNewsRegion();" style="float:left;  height:25px; margin-left:160px;"/>
+	<div style="clear:both"></div>
+	<div style="overflow:scroll; height:500px; width:49%; float:left; border:1px solid #999999; margin-right:15px;">
+		<table cellspacing="0" cellpadding="0" border="0" id="paging_region">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdbottom bdleft"><input type="checkbox" name="all" id="all"></td>
+				  <td width="45%" class="bdbottom bdleft" align="left">&nbsp;Danh sách các bài viết</td>
+				</tr>
+				<!-- BEGIN ListNews -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" class="checkall" id="check_news" name="check_news" value="{nw_id}"/></td>
+					  <td class="bdleft">
+						<p><strong><a href="#">{title}</a></strong></p>
+						<p style="color:#993300">Trong mục: {path}</p>
+						<p>{description}</p>
+						<p><i>Tag: {tag}</i></p>
+					  </td>
+					</tr>
+				<!-- END ListNews -->
+			</tbody>
+		</table>
+	</div>
+	<div class="pages fr" style="float:left;clear:both; margin-left:-10px;" id="paging_ajax">{paging}</div>
+	<div style="overflow:scroll; height:500px; width:49%;border:1px solid #999999;" id="region_content">
+	  <table cellspacing="0" cellpadding="0" border="0" >
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdbottom bdleft">STT</td>
+				  <td width="45%" class="bdbottom bdleft" align="left">&nbsp;Danh sách các vùng</td>
+				</tr>
+				<!-- BEGIN ListRegion -->
+				<tr>
+					<td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="check_region" name="check_region" value="{region_id}"/></td>
+					<td class="bdleft">
+						<p><strong><a href="javascript:;">{name}</a></strong></p>
+						<p style="color:#993300">Trong mục: {cate_name}</p>
+						<p>{description}</p>
+					</td>
+				</tr>
+				<!-- END ListRegion -->
+			</tbody>
+	  </table>
+  <div>
+</div>
+</div>
+</div>
+</div>
+<script language="javascript">
+	$(document).ready(function(){
+	    $(".ajax").live("click", function(e){   		       		
+			var urls=$(this).attr('href');       			   		
+       		$.ajax({
+    	            url: urls,
+    	            type:'POST',
+    	            dataType:'json',            
+    	            data:{action: 'page_news_region'},            
+    	            success:function(data)
+    	            {
+    	            	
+        				$('#paging_region').html(data.text);
+        				
+        				$('#paging_ajax').html(data.paging);
+    	            },
+    	            timeout:function(){}
+    	        });
+    	    return false;
+       });	
+	    $("#all").live("click", function(e){
+	    	var temp = $(this).attr("checked");
+	    	
+	    	$(".checkall").each(function(){
+	    		$(this).attr("checked", temp);
+	    	});
+	    });
+	});	
+	
+	function mapNewsRegion()
+	{
+		var region_id=getChecked('check_region');
+		var news_id=getChecked('check_news');
+		if(news_id==null || news_id=='')
+		{
+			alert('Bạn chưa chọn tin');
+			return false;
+		}
+		if(region_id==null || region_id=='')
+		{
+			alert('Bạn chưa chọn vùng!');
+			return false;
+		}
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'map-news-region','list_news_id':news_id,'list_region_id':region_id},
+			function(data)
+			{
+				
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Bản tin đã được map vào vùng đã chọn, Bạn vui lòng kiểm tra lại!');
+			}			
+		)	
+	}
+	function delMapNewsregion(nw_id,region_id)
+	{
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'del-map-news-region','nw_id':nw_id,'region_id':region_id},
+			function(data)
+			{
+				
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)
+	}
+	function searchNews()
+	{
+		var url='?app=news&page=admin_map_news_region&cmd=news_map_region';
+		window.location.href=url+'&q='+$("#q").val() + '&cate_id='+$("#cate_id option:selected").val() + '&cate_id_2=' +$("#cate_id_2 option:selected").val();
+	}
+	function loadRegion(cate_id)
+	{
+		if($("#"+cate_id+" option:selected").val()==0) return false;
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'load-region-map','cate_id': $("#"+cate_id+" option:selected").val()},
+			function(data)
+			{
+				$("#region_content").html(data);
+			}			
+		)
+	}
+	function loadCategory()
+	{
+		var cate_id_1=$("#cate_id option:selected").val();
+		if(cate_id_1==0) return false;
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'load-category-map','cate_id': $("#cate_id option:selected").val()},
+			function(data)
+			{
+				$("#cate_id_2").html(data);
+			}			
+		)
+		
+	}
+</script>

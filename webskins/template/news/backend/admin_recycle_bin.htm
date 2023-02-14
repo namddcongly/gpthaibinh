@@ -1,0 +1,199 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-content">
+	<div class="line top"></div><div class="clear"></div>
+	<div class="table">
+		<strong>Có <font color="#990000">{total_rowcount}</font> tin đã xóa !</strong>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></th>
+				  <th width="42%" class="bdtop bdbottom bdleft" align="left"><p>Tên bài</p></th>
+				  <th width="14%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+				  <th width="8%" class="bdtop bdbottom bdleft" align="left"><p>Nguồn</p></th>
+				  <th width="10%" class="bdtop bdbottom bdleft" align="left"><p>Tên BTV</p></th>
+				  <th width="6%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo</p></th>
+				  <th width="6%" class="bdtop bdbottom bdleft" align="center"><p>Ngày xóa</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>	
+				<tbody>
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/></td>
+					  <td class="bdleft">
+						<p><strong><a target="_blank">{title}</a></strong> (<a  onclick="viewContent({nw_id})" rel="detail-news" class="show-list" href="javascript:;">Chi tiết</a>)</p>
+						<p style="color:#993300">Trong mục: {path}</p>
+						<p>{description}</p>
+						<p><i>Tag: {tag}</i></p>
+					  </td>
+					  <td class="bdleft" align="center"><p><img src="{src}" width="120px;"></p></td>
+					  <td class="bdleft" align="left"><p>{origin}</p></td>
+					  <td class="bdleft" align="left">
+					  		<p>Người tạo:{censer_user_name}</p>
+							<p>Người sửa lần cuồi:{edit_user_name}</p>
+					  </td>
+					  <td class="bdleft" align="center"><p>{time_created}</p></td>
+					  <td class="bdleft" align="center"><p>{time_delete}</p></td>
+					  <td class="bdleft" align="left">
+					  	<p>					  		
+							<a href="?app=news&page=admin_news&cmd=news_create&from=recycle&recycle_id={recycle_id}">Khôi phục</a>
+						</p>
+					</td>
+					</tr>
+				<!-- END ListRow -->
+				
+			</tbody>
+	  </table>
+	</div>
+	<div>
+		<div class="pages fr" ><ul>{paging}</ul></div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#detail-news').jqDrag('.jqDrag');	
+	})
+	$(function(){
+		$('#reason-return').jqDrag('.jqDrag');	
+	})
+	function getId(id)
+	{
+		$("#return_id").val(id);
+	}
+	function newsReturn()
+	{
+		
+		var reason =$("#reason").val();
+		var id=$("#return_id").val();
+		if(reason=='' || reason == null)
+			return false;
+		else
+		{
+			$.post("ajax.php?fnc=admin.news.process&path=news",
+				{'action':'news-return','nw_id':id,'reason':reason},
+				function(data)
+				{
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+						
+				}			
+			)	
+		}
+	}
+	function postNews(id,obj)
+	{	
+			$(obj).removeAttr('onclik');
+			$(obj).html('<font color="red">Đang xử lý...</font>');
+			$.post("ajax.php?fnc=admin.news.process&path=news",
+				{'action':'post_news','nw_id':id},
+				function(data)
+				{
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+				}			
+			)	
+
+	}
+	function viewContent(id)
+	{
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+				{'action':'view-content-to-review','nw_id':id},
+				function(data)
+				{
+					$("#news-content").html(data);
+						
+				}			
+			)	
+	}
+	function delData(id)
+	{
+		var ok=confirm('Bạn có chắc chắn muốn xóa bài này ra khỏi trang chủ không?');
+		if(ok==true){
+			$.post("ajax.php?fnc=admin.news.process&path=news",
+				{'action':'delete-review','nw_id':id},
+				function(data)
+				{
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+						
+				}			
+			)	
+		}	
+	}
+	/*
+		Cài đặt hoặc hủy bỏ tin tiều điểm
+	*/
+	function setProperty(nw_id,set_property,unset_property)
+	{
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'censor-set-property','nw_id':nw_id,'set_property': set_property,'unset_property':unset_property},
+			function(data)
+			{
+				
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)	
+	}
+	function searchNews()
+	{
+		var url='?app=news&page=admin_news&cmd=news_private';
+		window.location.href=url+'&q='+$("#q").val() + '&cate_id='+$("#cate_id option:selected").val()+ '&date_begin='+$("#date_begin").val()+'&date_end='+$("#date_end").val();
+	}
+	function setMultiProperty()
+	{
+		var list_news_id=getChecked('checkall');
+		var public=getChecked('public');
+		var censor=getChecked('censor');
+		
+		if(list_news_id == null || list_news_id == '')
+		{
+			alert("Bạn phải chọn ít nhất một tin");
+			return false;
+		}
+		var s=getProperty(1);
+		
+		if(s==0 && (public=='' || public==null) && (censor=='' || censor==null))
+		{
+			alert("Bạn phải chọn thuộc tính cho tin");
+			return false;
+		}
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'censor-set-multi-property','list_news_id':list_news_id,'set_property': s,'censor':censor,'public':public},
+			function(data)
+			{
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)	
+	}
+	function doCensor(review_id,public)
+	{
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'do-censor','review_id':review_id,'public':public},
+			function(data)
+			{
+			    if(data==1)
+					window.location.reload();
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)
+	}
+</script>
+

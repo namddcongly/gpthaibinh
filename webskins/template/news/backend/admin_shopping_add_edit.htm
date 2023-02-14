@@ -1,0 +1,167 @@
+<div class="folder-header">
+		<h1>quản trị tin bài</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a id="category" href="?app=news&page=admin_category_shopping"><span>Danh mục Shopping</span></a></li>
+				<li><a href="?app=news&amp;page=admin_shopping&amp;cmd=store_shopping&tab=store"><span>Kho dữ liệu</span></a></li>
+				<li><a class="" href="?app=news&amp;page=admin_shopping&amp;cmd=store_shopping&tab=store_pendding"><span>Chở xuất bản/duyệt</span></a></li>
+				<li><a class="header-menu-active"  href="?app=news&amp;page=admin_shopping&amp;cmd=create_shopping"><span>Tạo mới bài</span></a></li>
+			</ul>
+		</div>
+</div>
+{begin_form}
+<input type="hidden" value="{from}"  name="from" />
+<div class="folder-content">
+	<h2>TẠO & SỬA TIN</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tiều để bài viết</label>
+				<input  type="text" style="width:520px;" name="title" value="{title}" id="title" maxlength="255"/>
+				<font color="#999999">Tiêu đề bài viết không quá 255 kí tự</font>
+			</li>
+			<li id="cat">
+				<label>Chọn danh mục</label>
+				<select name="cate1" id="cate1" onchange="loadCate()">
+					<option value="0">Chọn danh mục cấp 1</option>
+					{option_cate1}
+				</select>
+				<select name="cate2" id="cate2">
+					<option value="0">Chọn danh mục cấp 2</option>
+					{option_cate2}
+				</select>
+			</li>
+			<li>
+				<label>Chọn tỉnh/TP</label>
+				<select id="province_id" name="province_id" onchange="loadDistrict()">
+				<option>Tỉnh/TP</option>
+				{option_province}
+				</select>
+				&nbsp;
+				<select id="district_id" name="district_id">
+				<option>Quận/huyện</option>
+				{option_district}
+				</select>
+				
+			</li>
+			<li style="clear:both;">
+				<label>Địa chỉ</label>
+				<input  type="text" style="width:520px;" name="address" id="address" value="{tag}"/>&nbsp;<font color="#999999">(Không quá 150 kí tự)</font>
+				
+			</li>
+			<li style="clear:both;">
+				<label>Điện thoại</label>
+				<input  type="text" style="width:520px;" name="phone" id="phone" value="{tag}"/>
+			</li>
+			<li style="clear:both;">
+				<label>Website</label>
+				<input  type="text" style="width:520px;" name="website" id="website" value="{tag}"/>
+			</li>
+			<li style="clear:both;">
+				<label>Email</label>
+				<input  type="text" style="width:520px;" name="email" id="email" value="{tag}"/>
+			</li>
+			<li>
+				<label style="display:block; float:left">Ảnh đại diện</label>
+				<table style="border:none;float:left">
+					<tr>
+						<td style="border:0px;">
+						{img1}
+						<br>
+						<input type="file"  name="img1" id="img1"/>&nbsp;<font color="#999999">(Ảnh dại diện)</font>
+						</td>
+					</tr>
+				</table>
+			</li>
+			<li style="clear:both;">
+				<label>Tag bài viết</label>
+				<input  type="text" style="width:520px;" name="tag" id="tag" value="{tag}"/>&nbsp;<font color="#999999">(Không quá 150 kí tự)</font>
+			</li>
+			
+			<li>
+				<label>Tác giả</label>
+				<input  type="text" style="width:200px;" name="author" id="author" value="{author}"/>
+			</li>
+			<li>
+				<label>Nguồn</label>
+				<input  type="text" style="width:200px;" name="origin" id="origin" value="{origin}"/>
+			</li>
+			
+			<li>
+				<label>Nội dung bài viết</label>
+				<textarea  class="ckeditor" name="content" id="content">{content}</textarea>
+			</li>
+			<li>
+				<label>&nbsp;</label>
+				<input type="submit"  value="Thêm/Sửa" name="add_edit" class="button"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<input  type="hidden" value="{id}" name="id" />
+{end_form}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('textarea[maxlength]').keyup(function(){
+	        var max = parseInt($(this).attr('maxlength'));
+	        if($(this).val().length > max){
+	            $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+	        }
+        	$("#max_len").html(' Còn ' + (max - $(this).val().length) + ' kí tự');
+	    });
+	});
+function checkForm()
+{
+	if($("#title").val()=='' || $("#title").val()==null)
+	{
+		alert("Bạn phải nhập tiêu đề");
+		$("#title").focus();
+		return false;
+	}
+	if(parseInt($("#cate1 option:selected").val())  > 0){}
+	else
+	{
+		alert("Bạn phải chọn danh mục cấp 1");
+		$("#cate1").focus();
+		return false;
+	}
+	if(parseInt($("#province_id option:selected").val())  > 0){}
+	else
+	{
+		alert("Bạn phải chọn Thành phố");
+		$("#province_id").focus();
+		return false;
+	}
+	if($("#content").val()==null || $("#content").val()=='')
+	{
+		alert("Bạn phải nhập nội dung");
+		$("#content").focus();
+		return false;
+	}
+	return true;
+}
+function loadCate()
+{
+	var cate_id=$("#cate1").val();
+	$.post("ajax.php?fnc=admin.shop.process&path=news",
+		{'action':'load-cate','cate_id':cate_id},
+		function(data)
+		{
+			$("#cate2").html(data);
+		}			
+	)	
+}
+function loadDistrict()
+{
+	var province_id=$("#province_id").val();
+	$.post("ajax.php?fnc=admin.shop.process&path=news",
+		{'action':'load-district','province_id':province_id},
+		function(data)
+		{
+			$("#district_id").html(data);
+		}			
+	)	
+}
+</script>

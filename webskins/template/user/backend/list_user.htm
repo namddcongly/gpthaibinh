@@ -1,0 +1,80 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị User</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?portal=main&page=admin_user&cmd=list" class="header-menu-active"><span>Danh sách user</span></a></li>
+				
+			</ul>
+		</div>
+	</div>
+</div> 
+<div class="folder-content">
+	<h2>TÌM KIẾM THÀNH VIÊN</h2>
+	<ul>				
+		<li>
+			<label for="name">Tìm từ khóa</label>
+			<input type="text" value="{q}" id="q" name="q">
+			<select name="active" id="active">
+				{action_option}
+			</select>
+			<input type="button"  value="Tìm kiếm  " name="Search" onClick="searchUser()">
+		</li>
+	</ul>
+	<div class="line top"></div>
+	<div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="bdbottom">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+				  <td width="11%" class="bdtop bdbottom bdleft" align="left"><p>Tên</p></td>
+				  <td width="14%" class="bdtop bdbottom bdleft" align="left"><p>Email</p></td>
+				  <td width="10%" class="bdtop bdbottom bdleft" align="left"><p>Điện thoại</p></td>
+				  <td width="19%" class="bdtop bdbottom bdleft" align="left"><p>Địa chỉ</p></td>
+				
+				  <td width="10%" class="bdtop bdbottom bdleft"><p>ĐK/Login</p></td>
+				  <td  class="bdtop bdbottom bdleft"><p>Điều khiển</p></td>
+				</tr>
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}</td>
+					  <td class="bdleft"><p>{user_name}</p></td>
+					  <td class="bdleft"><p>{email}</p></td>
+					  <td class="bdleft"><p>{phone}</p></td>
+					  <td class="bdleft"><p>{address}</p></td>
+					  
+					  <td class="bdleft"><p>{time_register}<br/>{time_last_login}</p></td>
+					  <td class="bdleft"><p><a href="?portal=main&page=admin_user_customer&cmd=edit&user_id={user_id}">Sửa</a> |  <a href="ajax.php?path=user&fnc=change_password_admin&width=300&height=120&user_id={user_id}" class="thickbox" title="Đổi mật khẩu" >Thay mật khẩu</a> | {lock}</p></td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+
+<script>
+function searchUser()
+{
+	var url = "?portal=main&page=admin_user_customer&cmd=list";
+	url += '&active='+$('#active option:selected').val();
+	url += '&q='+$('#q').val();
+	window.location.href = url;
+}
+function lock(id,type)
+{
+	$.post("ajax.php?fnc=user.admin&path=user",
+		{'action':'lock','id':id,'type':type},
+		function(data)
+		{
+			
+			if(data==1)
+				window.location.reload();
+			else
+				alert('Đã có lỗi xảy ra');
+		}			
+	);
+}
+</script>

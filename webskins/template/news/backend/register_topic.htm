@@ -1,0 +1,157 @@
+<div class="folder-header">
+	<h1>Quản trị TOPIC</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a  class="header-menu-active"  href="?app=news&page=admin_register_topic&cmd=admin_topic"><span>Danh sách ĐỀ TÀI</span></a></li>
+			<li><a  href="?app=news&page=admin_register_topic&cmd=add_edit"><span>Đăng ký ĐỀ TÀI</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TÌM KIẾM ĐỀ TÀI</h2>
+	<ul>				
+		<li>
+			<label for="name">Tìm từ khóa</label>
+			<input type="text" value="{q}" id="q" name="q" size="50">
+			
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div>
+	<div class="clear"></div>
+	<div class="table">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p>STT</p></th>
+				  <th width="48%" class="bdtop bdbottom bdleft" align="left"><p>Tên đề tài\Tóm tắt\Số kỳ\Địa chỉ</p></th>
+				  <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Ngày đăng ký</p></th>
+                                  <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Ngày nộp bài</p></th>
+                                  <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Người đăng ký</p></th>
+                                  <th width="8%" class="bdtop bdbottom bdleft" align="center"><p>Người/Ngày duyệt</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>	
+                            <tbody>
+                                    <!-- BEGIN ListRow -->
+                                    <tr title="{reason}" style="background-color: {bg}">
+                                          <td class="bdleft" align="center">{stt}</td>
+                                          <td class="bdleft">
+                                                <p><strong>{name_topic}</strong></p>
+                                                <p>Tóm tắt:{description_topic}</p>
+                                                <p>Số kỳ:<b>{number}</b> kỳ</p>
+                                                <p>Địa chỉ:<b>{add_topic}<b/></p>
+                                                <p>Ý kiến chỉ đạo:{censor_noties}</p>
+                                          </td>
+                                          <td class="bdleft" align="center"><p>{date_start}</p></td>
+                                          <td class="bdleft" align="center"><p>{date_end}</p></td>
+                                          <td class="bdleft" align="center"><p>{user_name}</p></td>
+                                          <td class="bdleft" align="center"><p>{censor_name}/{date_censor}</p></td>
+                                          <td class="bdleft" align="center">
+                                              <p>{action}</p>
+                                              {delete}
+                                          </td>
+                                        </tr>
+                                    <!-- END ListRow -->
+                            </tbody>
+                    </table>
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+	</div>
+<div id="reason-return" class="popup-choose" style="position:relative; margin-top:-120px; z-index: 9999">
+    <h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Lý do không duyệt ĐỀ TÀI<label class="popup-close button-close"><b>X</b></label></h2>
+    <textarea cols="85" rows="5" style="background-color:#FFFFFF;" id="reason"></textarea>
+    <input type="hidden" value="" name="return_id" id="return_id" />
+    <input  type="button" class="button" name="Trả về" value="Trả về" onclick="doNotCensor()" style="float:right"/>
+</div>
+<div id="reason-censor" class="popup-choose" style="position:relative; margin-top:-120px; z-index: 9999">
+    <h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Ý kiến chỉ đạo<label class="popup-close button-close"><b>X</b></label></h2>
+    <textarea cols="85" rows="5" style="background-color:#FFFFFF;" id="censor"></textarea>
+    <input type="hidden" value="" name="censor_id" id="censor_id" />
+    <input  type="button" class="button" name="Đồng ý" value="Đồng ý" onclick="doCensor()" style="float:right"/>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#detail-news').jqDrag('.jqDrag');	
+	})
+	$(function(){
+		$('#reason-return').jqDrag('.jqDrag');	
+	})
+	function getId(id)
+	{
+		$("#return_id").val(id);
+	}
+        function getIdCensor(id)
+	{
+		$("#censor_id").val(id);
+	}
+        function doCensor(id,status)
+	{
+            var id = $("#censor_id").val();
+            var censor =$("#censor").val();
+            $.post("ajax.php?fnc=admin.register.topic&path=news",
+                    {'action':'censor','id':id,'status':status,'censor':censor},
+                    function(data)
+                    {
+                            if(data==1)
+                                window.location.reload();
+                            else
+                                alert('Đã có lỗi xảy ra');
+
+                    }			
+            )	
+            
+	}
+        function deleteRow(id)
+        {
+             var ok=confirm('Bạn có chắc chắn muốn xóa đề tài này không?');
+            if(ok==true)
+            {
+                    $.post("ajax.php?fnc=admin.register.topic&path=news",
+                            {'action':'delete','id':id},
+                            function(data)
+                            {
+                                if(data==1)
+                                    window.location.reload();
+                                else
+                                    alert('Đã có lỗi xảy ra');
+
+                            }			
+                    )	
+            }
+        }
+        function doNotCensor(id,status)
+	{
+		
+		var reason =$("#reason").val();
+		var id=$("#return_id").val();
+		if(reason=='' || reason == null)
+			return false;
+		else
+		{
+			$.post("ajax.php?fnc=admin.register.topic&path=news",
+				{'action':'no-censor','id':id,'reason':reason},
+				function(data)
+				{
+                                        if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra');
+						
+				}			
+			)	
+		}
+	}
+	/*
+		Cài đặt hoặc hủy bỏ tin tiều điểm
+	*/
+	
+	function searchNews()
+	{
+		var url='?app=news&page=admin_topic&cmd=admin_topic';
+		window.location.href=url+'&q='+$("#q").val()+ '&cate_id='+$("#cate_id option:selected").val();
+	}
+</script>

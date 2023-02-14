@@ -1,0 +1,47 @@
+<div class="nav-tool">	
+	<div class="path"><a>Trang cá nhân</a></div>
+</div>
+{begin_form}
+ <!-- bds-main-form -->
+    <div id="bds-main-form">
+    	<div class="bds-form-head">
+        	<ul>
+            	{menu}
+            </ul>
+            
+            <div class="clear"></div>
+        </div>    
+        <div class="bds-form-detail">        
+        	<p>
+            	<label>Tên đăng nhập</label>
+                <strong>{user_name} </strong>
+            </p>
+            <p>
+            	<label>Mật khẩu</label>
+                <a href="ajax.php?path=user&fnc=change_password&width=300&height=120" title="Đổi mật khẩu" class="thickbox">Đổi mật khẩu</a>
+            </p>
+            <p>
+            	<label>Họ tên (<font color="red">*</font>)</label>
+              <input type="text" value="{full_name}" name="full_name" class="txt" style="width:250px;"/> 
+            </p>
+            <p>
+            	<label>Email(<font color="red">*</font>)</label>
+                <input type="text" value="{email}" name="email" class="txt" style="width:250px;"/>
+            </p>
+            <p>
+            	<label>Điện thoại</label>
+                <input type="text" value="{phone}" name="phone" class="txt" style="width:250px;"/>
+            </p>
+             <p>
+            	<label>Địa chỉ</label>
+                <input type="text" value="{address}" name="address" class="txt" style="width:250px;"/>
+            </p>
+             <p><label>&nbsp;</label>
+             <input type="submit" class="bds-button" value="Cập nhật" name="submit">
+             </p>
+            <div class="clear"></div>
+        </div>
+       
+    </div>
+    <!-- END: bds-main-form -->    
+{end_form}

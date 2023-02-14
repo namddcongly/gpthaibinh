@@ -1,0 +1,291 @@
+.slide-b {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+    .slide-b .img {
+        overflow: hidden;
+        position: absolute;
+        transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s, z-index 0.4s;
+    }
+
+        .slide-b .img img {
+            width: calc(100% - 14px);
+            height: calc(100% - 14px);
+            margin: 7px;
+            border:5px solid #fff;
+            border-radius:20px;
+        }
+
+.slide-bt {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 10;
+    cursor:pointer;
+}
+
+    .slide-bt span {
+        width: 8px;
+        height: 8px;
+        background: #c9caca;
+        float: left;
+        margin: 5px;
+        border-radius: 4px;
+    }
+
+.slide-b .slide-bt .on {
+    background: #35a713;
+    width: 24px;
+}
+
+.slide-b .img1 {
+    width: 0;
+    top: 12%;
+    left: -50%;
+    z-index: 1;
+}
+
+.slide-b .img2 {
+    width: 35%;
+    top: 12%;
+    left: 0;
+    z-index: 2;
+}
+
+.slide-b .img3 {
+    width: 50%;
+    top: 0;
+    left: 25%;
+    z-index: 3;
+    border-radius:15px;
+}
+
+.slide-b .img4 {
+    width: 35%;
+    top: 12%;
+    right: 0;
+    z-index: 2;
+}
+
+.slide-b .img5 {
+    width: 0;
+    top: 12%;
+    left: 110%;
+    z-index: 1;
+}
+
+.banner-images {
+    max-width: 1300px;
+    margin: 30px auto;
+    position: relative;
+}
+
+.banner {
+    width: 100%;
+    overflow: hidden;
+    background:url('../img/bg.jpg') repeat-x;
+    background-position:0 -10px;
+    border-bottom:1px solid #e0e0e0;
+}
+
+.change-banner-left {
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    z-index: 20;
+    transform: translateY(-50%);
+}
+
+.change-banner-right {
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    z-index: 20;
+    transform: translateY(-50%);
+}
+
+.arrow {
+    font-size: 100px;
+    color: #bedab7;
+    cursor: pointer;
+}
+
+    .arrow:hover {
+        color: #13b40e
+    }
+
+.logosidebar{
+    height:36px;
+    margin-top:7px;
+}
+
+
+.suyniem .left {
+    width: calc(70% - 15px);
+
+}
+
+.suyniem .right {
+    width: 30%;
+}
+
+
+.suyniem .left ul.list li a::before {
+    font-family: "Font Awesome 5 Pro";
+    content: "\f192";
+    padding-right: 5px;
+    color: #568A0F;
+    font-size: 12px;
+}
+
+.suyniem .left ul.list li:first-child {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.suyniem .left ul.list li {
+    border-top: 1px dotted #dbdbdb;
+    margin-top: 7px;
+    padding-top: 7px;
+}
+
+@media (min-width:999px) {
+    .logosidebar{
+       display: none;
+    }
+}
+
+
+.video {
+    position: relative;
+    padding-bottom: 60%;
+    overflow: hidden;
+    margin-bottom:20px
+}
+
+    .video iframe, {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+
+.tailieu {
+
+}
+
+.tailieu iframe {
+    width: 100%;
+    height: 700px !important;
+}
+
+.social-top-bar {
+	position: absolute;
+    right: 0;
+    top: 98px;
+    margin: 0;
+    z-index: 9999;
+}
+
+.social-bottom-bar li {
+	float: left;
+}
+
+.social-bottom-bar {
+	display: inline-block;
+    margin-bottom: 0;
+}
+
+.social-bottom-bar li {
+    margin: 0 5px;
+}
+
+.social-bar li img {
+	width: 35px;
+	height: 35px;
+}
+
+.news .left .article-detail .info {
+	clear: none !important;
+}
+
+@media (max-width:1000px) {
+	.social-top-bar {
+		display: none;
+	}
+}
+
+@media (max-width:768px) {
+
+    .banner {
+        background: none;
+        background-position: 0;
+        border-bottom: 0px;
+    }
+    .banner-images {
+        padding-top: 5px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .change-banner-left {
+        display: none;
+    }
+
+    .change-banner-right {
+        display: none;
+    }
+
+    .slide-b .img img {
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+
+    .slide-b .img1 {
+        width: 0;
+        top: 12%;
+        left: -50%;
+        z-index: 1;
+    }
+
+    .slide-b .img2 {
+        width: 100%;
+        top: 0;
+        left: -100%;
+        z-index: 3;
+    }
+
+    .slide-b .img3 {
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 3;
+    }
+
+    .slide-b .img4 {
+        width: 100%;
+        top: 0;
+        right: -100%;
+        z-index: 3;
+    }
+
+    .slide-b .img5 {
+        width: 0;
+        top: 12%;
+        left: 110%;
+        z-index: 1;
+    }
+}
+
+.addnew {
+    float: right;
+    cursor: pointer;
+}
+.btn-r{float:right; display:inline-block;padding-right:5px;}
+.btn-r span {padding-left:5px;}

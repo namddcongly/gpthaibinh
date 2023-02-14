@@ -1,0 +1,111 @@
+		<div class="folder-header">
+			<h1>Danh sách các trang</h1>
+			<div class="header-menu">
+				<ul id="menu_page">
+					<li><a class="header-menu-active" href="?app=main&page=admin_page"><span>Danh sách</span></a></li>
+					<li><a href="javascript:;" id="add_page"><span>Thêm trang mới</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">	
+		<span style="color:red">{msg}</span>
+			<div id="add" style="display:none">
+			{begin_form}
+				<ul>
+					<li>
+						<label for="name">Tên</label>
+						<input type="text" style="width:238px;" name="data[name]"/>	Chỉ gồm các chữ cái từ a-z, và _ 				
+					</li>
+					<li>
+						<label for="name">Mô tả</label>
+						<input type="text" style="width:238px;" name="data[description]"/> Mô tả chức năng hoạt động của trang 
+					</li>
+					<li>
+						<label for="name">Kiểu trang</label>
+						<select style="width:246px;" name="data[type]"/>
+							<option value="0">Trang thông thường</option>
+							<option value="1">Trang master_page</option>
+						</select> Kiểu trang sử dụng
+					</li>
+					<li>
+						<label for="name">Chọn trang kế thừa</label>
+						<select style="width:246px;" name="data[master_id]"/>
+							<option value="0">Chọn trang master_page</option>
+							{select_master_page}
+						</select> Kế thừa từ Master Page 
+					</li>
+					<li>
+						<label for="name">Chọn layout</label>
+						<select style="width:246px;" name="data[layout_id]"/>
+							<option value="0">Chọn layout</option>
+							{select_layout}
+						</select> 
+						
+						Layout bố cục của trang 
+					</li>
+					<li>
+						<input type="hidden" name="data[portal_id]" value="{portal_id}">
+						<input type="hidden" name="data[portal_name]" value="{portal_name}">
+						<input type="submit" name="submit" class="button" value="Tạo mới" style="margin-left:153px; width:70px;" /> 
+						<input type="reset" name="reset" class="button" value="Hủy bỏ" />
+					</li>
+				</ul>
+				{end_form}
+				<div class="line top"></div>
+			</div>		
+			<h2 class="top">Chọn portal để quản trị trang.</h2>
+			<!-- BEGIN PORTAL -->
+			<a href="{portal_link}">{portal_alias}</a> | 
+			<!-- END PORTAL -->
+			<br />Danh sách các trang của portal: <b>{portal_name}</b>
+			<div class="table">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p>ID</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft" align="left"><p>Tên Trang</p></td>
+							<td width="32%" class="bdtop bdbottom bdleft"><p>Mô tả</p></td>
+							<td width="16%" class="bdtop bdbottom bdleft"><p>Thuộc layout</p></td>
+							<td class="bdtop bdright bdbottom bdleft"><p>Thao tác</p></td>
+						</tr>
+						
+						<!-- BEGIN PAGE -->
+							<tr align="center" valign="top" class="{page_class}">
+								<td  class="bdleft">{page_stt}</td>
+								<td  class="bdleft" align="left"><p style="font-weight:bold"><a href="{page_link}">{page_name}</a></p></td>
+								<td  class="bdleft" align="left"><p>{page_desc}</p></td>
+								<td  class="bdleft"><p>{page_layout}</p></td>
+								<td  class="bdright bdleft">
+									<p>
+										<a href="">Xóa cache</a> | 
+										<a href="{page_link}">Xem trang</a> | 
+										<a href="javascript:;" class="page_delete" onclick="deletePage({id})">Xóa</a> | 
+										<a href="{page_edit_link}">Cắm module/Sửa</a>
+									</p>
+								</td>
+							</tr>		
+						<!-- END PAGE -->	
+					</tbody>
+				</table>
+			</div>			
+		</div>
+		<script type="text/javascript">
+			function deletePage(id)
+			{
+				var ok=confirm('Bạn c chắc chắn muốn xóa trang này không ra khỏi hệ thống không?');
+				if(ok==true){
+					$.post("ajax.php?fnc=page.process&path=main",
+						{'page_id':id},
+						function(data)
+						{
+							if(data==1)
+							{
+								window.location.reload();
+							}
+							else
+								alert("Xóa không thành công, bạn vui lòng kiểm tra lại");
+						}			
+					)	
+				}
+			}
+		</script>

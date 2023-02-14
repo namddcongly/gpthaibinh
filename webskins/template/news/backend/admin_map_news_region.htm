@@ -1,0 +1,104 @@
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<select style="width:150px" id="cate_id" onchange="loadRegion()">
+				<option value="0">Chọn danh mục</option>
+				{option_category}
+			</select>
+			&nbsp;
+			<select style="width:150px" id="region_id">
+				<option value="0">Chọn vùng</option>
+				{option_region}
+			</select>
+			&nbsp;<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews();">
+		</li>
+	</ul>
+	<div class="table">
+		<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>
+				<tr align="center" class="table-title">
+				  <td width="3%" class="bdbottom bdleft"><p>STT</p></td>
+				  <td width="70%" class="bdbottom bdleft" align="left"><p>Danh sách các bài viết đã được Map</p></td>
+				  <td class="bdbottom bdleft" align="left"><p>Trong vùng</p></td>
+				</tr>
+				<!-- BEGIN ListNewsMap -->
+				<tr>
+				  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="check_news" name="check_news" value="{nw_id}"/></td>
+				  <td class="bdleft">
+					<p><strong><a href="{nw_id}">{title}</a></strong></p>
+					<p style="color:#993300">Trong mục: {path}</p>
+					<p>Xuất bản: {time_public}<p>
+					<p>{description}</p>
+					<p><i>Tag: {tag}</i></p>
+				  </td>
+				  <td> 
+				  	<p>
+						{region_name}
+					</p>
+				  </td>
+				</tr>
+				<!-- END ListNewsMap -->				
+			</tbody>
+		  </table>	
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>	
+<script language="javascript">
+	function loadRegion()
+	{
+		if($("#cate_id option:selected").val()==0) return false;
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'load-region','cate_id': $("#cate_id option:selected").val()},
+			function(data)
+			{
+				$("#region_id").html(data);
+			}			
+		)
+	}
+	function searchNews()
+	{
+		var url='?app=news&page=admin_map_news_region&cmd=news_region';
+		window.location.href=url+'&region_id='+$("#region_id option:selected").val();
+	}
+	function mapNewsRegion()
+	{
+		var region_id=getChecked('check_region');
+		var news_id=getChecked('check_news');
+		if(news_id==null || news_id=='')
+		{
+			alert('Bạn chưa chọn tin');
+			return false;
+		}
+		if(region_id==null || region_id=='')
+		{
+			alert('Bạn chưa chọn vùng!');
+			return false;
+		}
+		
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'map-news-region','list_news_id':news_id,'list_region_id':region_id},
+			function(data)
+			{
+				
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Bản tin đã được map vào vùng đã chọn, Bạn vui lòng kiểm tra lại!');
+			}			
+		)	
+	}
+	function delMapNewsregion(nw_id,region_id)
+	{
+		$.post("ajax.php?fnc=admin.news.process&path=news",
+			{'action':'del-map-news-region','nw_id':nw_id,'region_id':region_id},
+			function(data)
+			{
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Đã có lỗi xảy ra, Bạn vui lòng kiểm tra lại!');
+			}			
+		)
+	}
+</script>	

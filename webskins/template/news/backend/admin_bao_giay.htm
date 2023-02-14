@@ -1,0 +1,148 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder top">
+	<div class="folder-header">
+		<h1>quản trị bài Báo giấy</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a class="header-menu-active"><span>Danh sách trang</span></a></li>
+				<li><a class="" href="?app=news&page=admin_baogiay&cmd=news_create"><span>Thêm/Sửa mới trang</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label>Số báo</label>
+			<select style="width:120px" id="cate_id" onchange="loadCategory();">
+				<option value="0">Chọn số</option>
+				{option_category}
+			</select>&nbsp;
+			<input type="text" name="add_cate" id="add_cate"  value="" maxlength="2"  style="width:30px;"/>
+			<input type="button" class="button" value="Thêm số báo mới"  onclick="addCate()" style="cursor:pointer;"/> &nbsp;(Nhập số  từ 1-9)
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<div class="pages fr" ><ul>{paging}</ul></div>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			
+			<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></th>
+				  <th width="14%" class="bdtop bdbottom bdleft" align="left"><p>Thứ tự trang</p></th>
+				  <th width="15%" class="bdtop bdbottom bdleft" align="center"><p><a href="?app=news&page=admin_baogiay&cmd=news_store" >Sắp thứ tự trang</a></p></th>
+				  <th width="30%" class="bdtop bdbottom bdleft" align="center"><p>Ảnh đại diện</p></th>
+				  <th width="9%" class="bdtop bdbottom bdleft" align="left"><p>Người duyệt</p></th>
+				  <th width="10%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>
+			<tbody>	
+				<!-- BEGIN ListRow -->
+					<tr style="background-color:{bg}">
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/></td>
+					  <td class="bdleft">
+						<p><strong><a target="_blank">Trang số {page}</a></p>
+						<p style="color:#993300">Trong số báo {path}</p>
+					  </td>
+					  <td class="bdleft"  align="center">
+					  		<input type="text" style="width:20px;" value="{page}" maxlength="2" id="{nw_id}">&nbsp;<input type="button" class="button"  value="Cập nhât" onclick="updatePage('{nw_id}')" style="cursor:pointer;"/><br/><font id="rp_{nw_id}" color="#990000"></font>
+					  </td>
+					  <td class="bdleft" align="center"><p><img src="{img}" width="200px;"></p></td>
+					  <td class="bdleft" align="left">
+					  	<p>Tạo:<strong>{name_btv}</strong></p>
+					  </td>
+					  <td class="bdleft" align="center"><p>{time_created}</p></td>
+					  <td class="bdleft" align="center">
+					  	<p>
+					  		<a href="?app=news&page=admin_baogiay&cmd=news_create&news_id={nw_id}">Sửa</a> | <a onclick="deleteData('{nw_id}')" href="javascript:void;">Xóa</a>
+					  	</p>
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+				
+			</tbody>
+	  </table>
+	  
+	</div>
+	<div class="pages fr" ><ul>{paging}</ul></div>
+</div>
+<script type="text/javascript">
+	
+	function addCate()
+	{
+		var cate_name=$("#add_cate").val();
+		if(cate_name == "" || cate_name == null)
+		{
+			alert("Bạn phải nhập số báo");
+			return false;
+		}
+		$.post("ajax.php?fnc=admin.news.baogiay.process&path=news", {
+					'action': 'add-cate',
+					'cate_name': cate_name
+		}, function(data){
+				if(data==1)
+					window.location.reload();
+				else
+					alert('Không thêm được nhóm');	
+		});
+	}
+	function searchNews()
+	{
+		var url='?app=news&page=admin_baogiay&cmd=news_store';
+		window.location.href=url+ '&cate_id='+$("#cate_id option:selected").val();
+	}
+	function deleteData(id)
+	{
+			var ok=confirm("Bạn có chắc chắn muốn xóa tin bài này ra khỏi kho không?");
+			if (ok == true) 
+			{
+				$.post("ajax.php?fnc=admin.news.baogiay.process&path=news", {
+					'action': 'delete-from-store',
+					'nw_id': id
+				}, function(data){
+					//alert(data);
+					window.location.reload();
+				});
+			}
+	}
+	
+	function updatePage(news_id)
+	{
+		$("#rp_"+news_id).html('đang xử lý...');
+		$.post("ajax.php?fnc=admin.news.baogiay.process&path=news", {
+			'action': 'update-page',
+			'nw_id': news_id,
+			'page':$("#"+news_id).val()
+		}, function(data){
+			if(data == 1)
+				$("#rp_"+news_id).html('đã xử lý xong');
+			else
+				$("#rp_"+news_id).html('có lỗi');	
+			//window.location.reload();
+		});
+	}
+	$(document).ready(function(){
+	 $("#checkboxall").click(function()
+	  {	  
+		   var checked_status = this.checked;
+		   
+		   $("input[name=checkall]").each(function()
+		   {
+			this.checked = checked_status;
+		   });
+	  });	 
+});
+</script>

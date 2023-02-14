@@ -1,0 +1,89 @@
+<style>
+    th {
+        cursor: pointer;
+    }
+</style>
+<div class="folder-content">
+    <h2>Sét Meta cho link tag</h2>
+    <div class="line top"></div>
+    <div class="clear"></div>
+    <!--begin table data-->
+    <div class="table">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <thead>
+            <tr align="center" class="table-title">
+                <th class="bdtop bdbottom bdleft" align="right" width="20%">Tên Tag &nbsp;</th>
+                <th class="bdtop bdbottom bdleft" align="left"><p>Meta(Title || Keyword || Content)</p></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="border-right:0px;">
+                <td align=right style="border-right:0px;">
+                    <input type="text" value="" name="tag_0" id="tag_0" style="width:120px; text-align:right"
+                           placeholder="Link Tag"/>&nbsp;<br/><br/>
+                    <input type="text" value="" name="name_0" id="name_0" style="width:120px; text-align:right"
+                           placeholder="Name Tag"/>&nbsp;<br/>
+                </td>
+                <td class="bdleft">
+                    <textarea rows="5" cols="115" name="meta_0" id="meta_0"
+                              style="width:93%; margin-left: 5px;"/></textarea><br/>
+                    <input type="button" class="button" id="tag_0" style="float:right;margin:0 42px 0px 0px" value="Thêm mới"
+                           name="save" onclick="addEditMeta('0')"/>
+
+                </td>
+            </tr>
+            <!-- BEGIN ListRow -->
+            <tr style="border-right:0px;">
+                <td align=right style="border-right:0px;">
+                    <input type="text" value="{tag}" name="tag_{id}" id="tag_{id}" style="width:120px; text-align:right"
+                           readonly="true"/>&nbsp;<br/><br/>
+                    <input type="text" value="{name}" name="name_{id}" id="name_{id}"
+                           style="width:120px; text-align:right"/>&nbsp;
+                </td>
+                <td class="bdleft">
+                    &nbsp;<textarea rows="5" cols="115" type="text" value="{meta}" name="meta_{id}" style="width:93%"
+                                    id="meta_{id}"/>{meta}</textarea><br/>
+                    <input style="float:right;margin:0 42px 0px 0px" id="button_{id}" type="button" class="button" value="Sửa Meta"
+                           name="save" onclick="addEditMeta('{id}')"/>
+                </td>
+            </tr>
+            <!-- END ListRow -->
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    function addEditMeta(id) {
+        $("#button_" + id).removeAttr('onclick');
+
+        if (id == 0) action = 'add';
+        else action = 'edit';
+		if($("#name_" + id).val() == '' || $("#name_" + id).val() == null){
+			alert('Bạn phải nhập tên Tag');
+			$("#name_"+ id).focus();
+			return false;
+		}
+        $.post("ajax.php?fnc=admin.tag.process&path=news",
+            {
+                'action': action,
+                'id': id,
+                'tag': $("#tag_" + id).val(),
+                'name': $("#name_" + id).val(),
+                'meta': $("#meta_" + id).val(),
+                'link': $("#link_" + id).val()
+            },
+            function (data) {
+                if (data == 1) {
+                    window.location.reload();
+                }
+                else {
+                    alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại.");
+                }
+
+            }
+        )
+    }
+</script>

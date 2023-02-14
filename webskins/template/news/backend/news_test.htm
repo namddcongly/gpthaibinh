@@ -1,0 +1,21 @@
+		<tr valign="top">
+			<td>Mô tả chi tiết</td>
+			<td id="frame"><textarea class="news_editor_full" name ="content" id="content" style="width:500px; height:300px"></textarea></td>
+		</tr>
+<a href="javascript:;" onclick="insertNote()">Tạo chú thích</a>
+<script>
+function insertNote()
+{
+var oEditor = CKEDITOR.instances.content;
+var value = '<table align="right"><tr><td>Copy text</td></tr></table>';
+
+// Check the active editing mode.
+if ( oEditor.mode == 'wysiwyg' )
+{
+	// Insert as plain text.
+	oEditor.insertHtml( value );
+}
+else
+	alert( 'You must be on WYSIWYG mode!');
+}
+</script>

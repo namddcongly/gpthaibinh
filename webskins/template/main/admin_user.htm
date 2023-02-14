@@ -1,0 +1,117 @@
+{begin_form}
+<input type="hidden" value="{user_id}" name="user_id">
+<div style="border:1px solid #CCCCCC; padding:10px;">
+	<div>
+		<h2>THÔNG TIN TÀI KHOẢN</h2>
+		<hr color="#990000">
+		<table cellpadding="2" cellspacing="5">
+			<tr>
+				<td align="right">Tên đăng nhập</td>
+				<td><strong>{user_name}</strong></td>
+			</tr>
+			<tr>
+				<td align="right">Email đăng ký</td>
+				<td>{email}</td>
+			</tr>
+			<tr>
+				<td align="right">Địa phương</td>
+				<td>{zone_name}</td>
+			</tr>
+			<tr>
+				<td align="right">Mật khẩu</td>
+				<td><a href="javascript:;" style="color:#6598CB" class="show-list" rel="change-pass">Đổi mật khẩu</a></td>
+			</tr>
+		</table>
+		<br/>
+		<h2>THÔNG TIN CÁ NHÂN</h2>
+		<hr color="#990000">
+		<table cellpadding="2" cellspacing="5">
+			<tr>
+				<td align="right">Tên đầy đủ</td>
+				<td><strong><input  type="text" name="full_name" value="{full_name}" style="width:220px; height:14px;"/></strong></td>
+			</tr>
+			
+			<tr>
+				<td align="right">Ngày sinh</td>
+				<td><input  type="text" name="birthday" value="{birthday}" style="width:220px; height:14px;"/></td>
+			</tr>
+			<tr>
+				<td align="right">Giới tính</td>
+				<td><input  name="gender" type="radio" value="0" {woman} /> Nữ  <input  name="gender" type="radio" value="1"  {man}/> Nam </td>
+			</tr>
+			<tr>
+				<td align="right">CMTND</td>
+				<td><input  type="text" name="CMTND" value="{CMTND}" style="width:220px; height:14px;"/></td>
+			</tr>
+			<tr>
+				<td align="right">Số điện thoại di động</td>
+				<td><input  type="text" name="mobile_phone" value="{mobile_phone}" style="width:220px; height:14px;"/></td>
+			</tr>
+			
+			<tr>
+				<td align="right">Điện thoại cố định</td>
+				<td><input type="text" value="{phone}" name="phone" style="width:220px; height:14px;"/></td>
+			</tr>
+			<tr>
+				<td align="right">Địa chỉ</td>
+				<td><input  type="text" value="{address}"  name="address" style="width:220px; height:14px;"/></td>
+			</tr>
+			<tr>
+				<td align="right">Nick Yahoo</td>
+				<td><input type="text" value="{nick_yahoo}" style="width:220px; height:14px;" name="nick_yahoo"/></td>
+			</tr>
+			<tr>
+				<td align="right">Nick Skype</td>
+				<td><input  type="text" value="{nick_skype}" style="width:220px; height:14px;" name="nick_skype"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="submit" class="button" value="Cập nhật" name="submit"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+{end_form}
+<div id="change-pass" class="popup-choose" style="width:300px; position: absolute; top: 185px; left: 200px !important;">
+	<h2 style="padding-left:5px; border-bottom:1px solid #990000"  class="jqDnR jqDrag">Thay đổi mật khẩu<label class="popup-close button-close"><b>X</b></label></h2>
+	<div class="popup-content folder-content" style="border: 1px solid #999999">
+		<ul>
+			<li>
+				<label>Tên tài khoản</label> <strong>{user_name}</strong>
+			</li>
+			<li>
+				<label>Mật khẩu cũ (*)</label><input type="password" name="password_old"  id="password_old">
+			</li>
+			<li>
+				<label>Mật khẩu mới (*)</label><input type="password" name="password_new" id="password_new">
+			</li>
+			<li>
+				<label>Xác nhận mật khẩu(*)</label><input type="password" name="password_new_confirm" id="password_new_confirm">
+			</li>
+			<li><label>&nbsp;</label><input  type="button" value="Thay đổi" class="button" name="change" style="text-align:center;margin-right:8px;" onClick="changePassword({user_id})"/></li>
+		</ul>
+		
+		
+	</div>	
+</div>
+<script language="javascript">
+	$(function(){
+		$('#change-pass').jqDrag('.jqDrag');	
+	})
+	function changePassword(id)
+	{
+		$.post("ajax.php?fnc=user.process&path=main",
+			{'action':'change_pass','password_old':$("#password_old").val(),'password_new':$("#password_new").val(),'password_new_confirm':$("#password_new_confirm").val(),'id':id},
+		
+			function(data)
+			{
+				if(data==1)
+				{
+					window.location.reload();	
+				}
+				else
+					alert("Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại");
+			}			
+		)
+	}
+</script>	

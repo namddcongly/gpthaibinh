@@ -1,0 +1,38 @@
+<div id="TP_inner">
+    <div id="TP_left_panel" class="TP_toolbar_item">
+        <!--
+        <h3 style="color:#000000;font-size:19px"><font color="#990000">BÁO CÔNG LÝ</font></h3>
+        -->
+        <h3 style="color:#000000;font-size:19px"><font color="#990000">CMS</font></h3>
+        <p style="font-size:11px; margin:0px 0 15px 0;">{date_of_week}</p>
+    </div>
+    <div id="TP_feed" class="TP_toolbar_item">
+    </div>
+    <!-- BEGIN Login -->
+    <div id="TP_right_panel" class="TP_toolbar_item">
+        <p>
+            <a href="#">Trang chủ</a> |
+            <a href="?app=main&page=admin_user">Thông tin tài khoản</a> |
+            <a href="?app=main&page=admin_login&cmd=logout">Logout</a> (<span style="color:#d9251d;">{login_name}</span>)
+        </p>
+    </div>
+    <!-- END Login -->
+
+    <div id="menuBar">
+        <ul id="ja-cssmenu">
+            <li class="havechild"><a class="first" href="">Trang chủ</a></li>
+            {text_html}
+        </ul>
+        <div id="sub_menuBar">
+            <div id="navigator">
+                <ul>
+                    <li><a href="{url_parent}">{path_menu_parent}</a></li>
+                </ul>
+                <em>»</em>
+                <ul>
+                    <li><a href="javascript:;" style="color:#990000">{path_menu_child}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

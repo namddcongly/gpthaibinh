@@ -1,0 +1,96 @@
+<div class="folder-header">
+	<h1>Trang giải trí</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a class="user-icon" href="?app=news&page=admin_news_category"><span>Danh sách danh mục</span></a></li>					
+			<li><a class="protrans-icon" href="?app=news&page=admin_category_property"><span>Thuộc tính</span></a></li>
+			<li><a class="activities-icon" href="?app=news&page=admin_category_configuration"><span>Cấu hình danh mục</span></a></li>
+			<li><a class="activities-icon header-menu-active" href="?app=news&page=admin_entertainment_configuration"><span>Giải trí</span></a></li>
+			<li><a class="activities-icon " href="?app=news&page=admin_football_configuration"><span>Bóng đá</span></a></li>
+			<li><a class="activities-icon" href="?app=news&page=admin_region_config"><span>Tin trong vùng</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">			
+	<div class="line top"></div>	
+	<h2>Sửa tin</h2>	
+	{begin_form}		
+	<ul>
+	<li>
+		<label for="name">ID bài viết</label>
+			<input type="text" name="data[nw_id]" id="news_id" style="width:250px;" value="{news_id}"/>						
+		</li>
+		<li>
+			<label for="name">Tên bài viết</label>
+			<input type="text" name="data[title]" id="title" style="width:250px;" value="{news_title}"/>
+		</li>
+		<li>
+			<label for="name">Vị trí sắp xếp hiển thị</label>
+			<input type="text" id="arrange" name="data[arrange]" style="width:250px;" value="{news_arrange}"/>		
+			Vị trí tin trong slide	
+		</li>
+		<li>
+		    <label for="name">Vị trí sắp xếp của tiêu đề</label>
+			<input type="text" id="arrange" name="data[arrange_title]" style="width:250px;" value="{news_arrange_title}"/>		
+			nhập số từ 1->6
+		</li>	
+		<li>
+			<label for="name">Kiểu hiển thị</label>
+			<select name="data[type]" >{option}</select>
+		</li>
+			
+		<li>
+			<label for="name">Upload ảnh</label>
+			<input type="file" name="upload" style="width:250px;" />		
+			Kích thước tùy ý
+			<input type="hidden" id="image" name="data[tmp_image]" value="{news_image}">		
+		</li>			
+		<li><input type="submit" class="button" value="Cập nhật" style="margin-left:153px; width:70px;" />
+		<input type="reset" class="button" value="Hủy bỏ" /></li>
+	</ul>
+	{end_form}
+	<div class="table">	
+		<p style="margin:10px 0"><select name="type" id="type"><option value="-1">Chọn kiểu</option>{option}</select> 
+		<input type="button" class="button" name="search" id="search_type" value="search"></p>
+		{begin_form_update}
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">		
+			<tbody>			    
+				<tr align="center" class="table-title">
+					<td width="20%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all" name="all"></p></td>
+					<td width="35%" class="bdtop bdbottom bdleft"><p>Tên bài viết</p></td>	
+					<td width="15%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Vị trí</p></td>
+					<td width="20%" class="bdtop bdbottom bdleft"><p>Tùy chọn</p></td>
+				</tr>			
+				<!-- BEGIN SLIDE -->	
+				<tr align="center" valign="top" class="{bg} heightMin">
+					<td class="bdleft"><img src="{image}" width="150"></td>
+					<td class="bdleft"><p><b id="t_{id}">{title}</b></p></td>
+					<td class="bdleft" style="text-align:left"><p>
+					Hiển thị: <span id="a_{id}"><input type="text" value="{arrange}" name="update[{id}]"></span> <br>
+					Tiêu đề: <span id="p_{id}">{position_title}</span>
+					</p></td>
+					<td class="bdleft">
+						<p>
+						<a href="?app=news&page=admin_entertainment_configuration&id={id}">Sửa</a> | 
+                        <a href="?app=news&page=admin_entertainment_configuration&eid={id}&cmd=delete">Xóa</a>
+						</p>
+						<input type="hidden" name="image" id="image_{id}" value="{image}">
+					</td>						
+				</tr>
+			    <!-- END SLIDE -->			    
+			</tbody>
+		</table>
+		<br>
+		<input type="submit" name="updates" value="Update">
+		{end_form_update}
+	</div>
+	
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#search_type").click(function(){	
+		window.location.href = "?app=news&page=admin_entertainment_configuration&type="+$("#type option:selected").val();
+	});	
+});
+</script>

@@ -1,0 +1,58 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-header">
+	<h1>Điều hành chỉ đạo nội dung</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a class="" href=""><span>Chủ đề đã duyệt</span></a></li>
+			<li><a class="" href=""><span>Chủ đề chưa duyệt</span></a></li>
+			<li><a class="" href=""><span>Đăng ký chủ đề</span></a></li>
+		</ul>
+	</div>			
+</div>
+<div class="folder-content">
+	<div class="line top"></div><div class="clear"></div>
+	<div class="table">
+		<strong>Có <font color="#990000">{total_rowcount}</font>chủ đề đăng ký trong hôm nay</strong>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></th>
+				  <th width="42%" class="bdtop bdbottom bdleft" align="left"><p>Tên chủ đề</p></th>
+				  <th width="15%" class="bdtop bdbottom bdleft" align="left"><p>Người đăng ký</p></th>
+				  <th width="15%" class="bdtop bdbottom bdleft" align="center"><p>Ngày đăng ký</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>	
+				<tbody>
+				<!-- BEGIN ListRow -->
+					<tr>
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/></td>
+					  <td class="bdleft">	
+						<p>{title}</p>
+						<p>{description}</p>
+					  </td>
+					 
+					  <td class="bdleft" align="left"><p>{user_name}</p></td>
+					  <td class="bdleft" align="left">
+					  		<p>{time_registered}</p>
+							
+					  </td>
+					  <td class="bdleft" align="left">
+					  	<p>Duyệt</p>
+					</td>
+					</tr>
+				<!-- END ListRow -->
+				
+			</tbody>
+	  </table>
+	</div>
+	<div>
+		<div class="pages fr" ><ul>{paging}</ul></div>
+	</div>
+</div>
+

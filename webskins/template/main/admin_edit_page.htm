@@ -1,0 +1,95 @@
+		<div class="folder-header">
+			<h1>Danh sách các trang</h1>
+			<div class="header-menu">
+				<ul id="menu_page">
+					<li><a  href="?app=main&page=admin_page"><span>Danh sách trang</span></a></li>
+					<li><a class="header-menu-active" href="javascript:;" id="add_page"><span>Sửa Trang</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">	
+		<span style="color:red">{msg}</span>
+			<div id="add">
+			{begin_form}
+				<ul>
+					<li>
+						<label for="name">Tên</label>
+						<input type="text" style="width:238px;" value="{name}" name="data[name]"/>	Chỉ gồm các chữ cái từ a-z, và _ 				
+					</li>
+					<li>
+						<label for="name">Mô tả</label>
+						<input type="text" style="width:238px;" value="{description}" name="data[description]"/> Mô tả chức năng hoạt động của trang 
+					</li>
+					<li>
+						<label for="name">Kiểu trang</label>
+						<select style="width:246px;" name="data[type]"/>
+						{select_page_type}
+						</select> Kiểu trang sử dụng
+					</li>
+					<li>
+						<label for="name">Chọn trang kế thừa</label>
+						<select style="width:246px;" name="data[master_id]"/>
+							<option value="0">Chọn trang master_page</option>
+							{select_master_page}
+						</select> Kế thừa từ Master Page 
+					</li>
+					<li>
+						<label for="name">Chọn layout</label>
+						<select style="width:246px;" name="data[layout_id]"/>
+							<option value="0">Chọn layout</option>
+							{select_layout}
+						</select> 
+						
+						Layout bố cục của trang 
+					</li>
+					<li>
+						<input type="hidden" name="data[portal_id]" value="{portal_id}">
+						<input type="hidden" name="data[portal_name]" value="{portal_name}">
+						<input type="submit" name="submit" class="button" value="Cập nhật" style="margin-left:153px; width:70px;" /> 
+						<input type="reset" name="reset" class="button" value="Hủy bỏ" />
+					</li>
+				</ul>
+				{end_form}
+				<div class="line top"></div>
+			</div>		
+			
+			<br />Danh sách các Module đang cắm trên trang: <b><a href="?app={portal_name}&page={name}">{name}</a></b> thuộc portal: <b><a href="?app={portal_name}&page=admin_page">{portal_name}</a></b>
+			<div class="table">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p>ID</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Vùng trong layout</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Thao tác</p></td>
+							<td width="55%" class="bdtop bdbottom bdleft"><p>Các Module đang có trên Page</p></td>
+						</tr>						
+						<!-- BEGIN BLOCK -->
+							<tr align="center" valign="top" class="{page_class}">
+								<td class="bdleft">{stt}</td>
+								<td class="bdleft"><p style="font-weight:bold">{layout_name}</p></td>								
+								<td class="bdleft">
+									<p>
+										<a href="{link_add_module}">Cắm thêm module mới</a></p>
+									<p>
+										<a href="javascript:;" class="delete_all_module" rel="{link_delete_all}">Xóa tất cả module hiện có</a>
+									</p>
+								</td>
+								<td class="bdright bdleft">									
+									{module_in}										
+									
+								</td>
+							</tr>		
+						<!-- END BLOCK -->	
+					</tbody>
+				</table>
+			</div>			
+			<div class="clear"></div>
+		</div>
+<!-- BEGIN MODULE -->
+	<p>
+	<a href="javascript:;" title="{module_path}">{module_name}</a> | 
+	<a href="javascript:;" class="delete_module" rel="{link_delete}">(X)</a> | 
+	<a href="javascript:;" class="change_possition" rel="{link_up}">Lên</a> | 
+	<a href="javascript:;" class="change_possition" rel="{link_down}">Xuống</a>
+	</p>
+<!-- END MODULE -->		

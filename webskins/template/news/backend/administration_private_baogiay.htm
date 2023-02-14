@@ -1,0 +1,64 @@
+<style>
+th
+{
+	cursor:pointer;
+}
+</style>
+<div class="folder-content">
+	<h2>TÌM KIẾM TIN</h2>
+	<ul>				
+		<li>
+			<label for="name">Từ khóa cần tìm</label>
+			<input type="text" value="{q}" id="q" name="q"  style="width:272px;"/>
+		</li>
+		<li>
+			<label>Ngày tạo từ</label>
+			<input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_begin" value="{date_begin}"/> &nbsp; Ngày tạo đến <input  type="text" class="date-pick dp-applied" style="width:80px;" id="date_end" value="{date_end}"/>
+		</li>
+		<li>
+			<label>&nbsp;</label>
+			<input type="button" class="button"  value="Tìm kiếm" name="Search" onClick="searchNews()">
+		</li>
+	</ul>
+	<div class="line top"></div><div class="clear"></div>
+	<div class="table">
+		<strong>Bạn có <font color="#990000">{total_rowcount}</font> tin riêng!</strong>
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<thead>
+				<tr align="center" class="table-title">
+				  <th width="3%" class="bdtop bdbottom bdleft"><p><input  type="checkbox" id="checkboxall"/></p></th>
+				  <th width="70%" class="bdtop bdbottom bdleft" align="left"><p>Tiều đề / Sapo bài viết</p></th>
+				  <th width="12%" class="bdtop bdbottom bdleft" align="center"><p>Ngày tạo</p></th>
+				  <th  class="bdtop bdbottom bdleft"><p>Điều khiển</p></th>
+				</tr>
+			</thead>
+			<tbody>	
+				<!-- BEGIN ListRow -->
+					<tr style="background-color:{bg}">
+					  <td class="bdleft" align="center">{stt}<br/><input  type="checkbox" id="checkboxall" name="checkall" value="{nw_id}"/></td>
+					  <td class="bdleft"  align="left">
+					  		<p>
+							<strong><a href="?app=news&page=administration_baogiay&cmd=view_content&nw_id={nw_id}">{title}</a><br/></strong>
+							[ <span>{sub_title}</span> ]
+							</p>
+							<p>{description}</p>
+					  </td>
+					  <td class="bdleft" align="center">
+					  	<p>{time_created}</p>
+					  </td>
+					  <td class="bdleft" align="center">
+					  		<p>
+					  			<a href="javascript:;" onclick="postNews('{nw_id}','pv_post_news',this);">Gửi bài cho TÒA SOẠN</a>
+								<br>
+								<a href="?app=news&page=administration_baogiay&cmd=news_create&news_id={nw_id}">Sửa</a> | <a href="javascript:;" onclick="delData('{nw_id}')">Xóa</a>
+					  		</p>
+					  </td>
+					</tr>
+				<!-- END ListRow -->
+			</tbody>
+	  </table>
+	</div>
+	<div>
+		<div class="pages fr" ><ul>{paging}</ul></div>
+	</div>
+</div>

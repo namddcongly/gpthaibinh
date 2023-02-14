@@ -1,0 +1,78 @@
+		<div class="folder-header">
+			<h1>Thuộc tính danh mục</h1>
+			<div class="header-menu">
+				<ul>
+					<li><a class="user-icon" href="?app=news&page=admin_news_category"><span>Danh sách danh mục</span></a></li>
+					
+					<li><a class="protrans-icon header-menu-active" href="?app=news&page=admin_category_property"><span>Thuộc tính</span></a></li>
+					<li><a class="activities-icon" href="?app=news&page=admin_category_configuration"><span>Cấu hình danh mục</span></a></li>
+					<li><a class="activities-icon" href="?app=news&page=admin_entertainment_configuration"><span>Giải trí</span></a></li>
+					<li><a class="activities-icon " href="?app=news&page=admin_football_configuration"><span>Bóng đá</span></a></li>
+					<li><a class="activities-icon" href="?app=news&page=admin_region_config"><span>Tin trong vùng</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="folder-content">
+			<h2>Thuộc tính danh mục</h2>
+			<span style="color: red; width: 50%; padding: 1px 5px; border: 1px solid #8A2; {display}">{msg}</span>
+			{begin_form}
+			<ul>
+				<li>
+					<label for="name">Tên thuộc tính</label>
+					<input type="text" style="width:238px;" name="data[name]" value="{names}"/>
+				</li>
+				<li>
+					<label for="name">Giá trị thuộc tính</label>
+					<input type="text" style="width:238px;" name="data[value]" value="{values}"/>
+				</li>
+				<li>
+					<label for="name">Chọn nhóm</label>
+					<select name="data[groups]" style="width:150px">
+						<option value="0">Chọn nhóm</option>
+						{group_option}
+					</select>
+				</li>
+				<li>
+					<label for="name">Kiểu hiển thị</label>
+					<select name="data[type]" style="width:150px">
+					{type_option}
+					</select>
+				</li>
+				<li>
+					<label for="name">Tên thẻ thuộc tính</label>
+					<input type="text" style="width:238px;" name="data[alias]" value="{alias}"/>
+				</li>
+				<li>
+					<label for="name">Style thẻ thuộc tính</label>
+					<input type="text" style="width:238px;" name="data[styles]" value="{styles}"/>
+				</li>
+				<li><input type="submit" class="button" value="{submit}" style="margin-left:153px; width:65px;" /> 
+				<input type="submit" class="button" value="Hủy bỏ" /></li>
+			</ul>
+			{end_form}
+			<div class="line top"></div>
+			
+			<div class="table">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+					<tbody>
+						<tr align="center" class="table-title">
+							<td width="5%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Tên Group</p></td>	
+							<td width="30%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Tên thuộc tính</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Kiểu hiển thị</p></td>
+							<td width="20%" class="bdtop bdbottom bdleft"><p>Thao tác</p></td>
+						</tr>
+						<!-- BEGIN PROPERTY -->
+						<tr align="center" valign="top" class="{bg} heightMin">
+							<td class="bdleft">{stt}</td>
+							<td class="bdleft"><p><b>{group}</b></p></td>
+							<td class="bdleft" style="text-align:left"><p>{name}</p></td>	
+							<td class="bdleft"><p> {type} </p></td>						
+							<td class="bdleft"><p><a class="delete_property" href="javascript:;" rel="{stt}">Xóa</a> | <a href="?app=news&page=admin_category_property&id={stt}">Sửa</a> </p></td>						
+						</tr>
+						<!-- END PROPERTY -->
+					</tbody>
+				</table>
+			</div>
+			<div class="clear"></div>
+		</div>

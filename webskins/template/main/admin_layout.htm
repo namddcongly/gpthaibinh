@@ -1,0 +1,36 @@
+<div class="folder-header">
+    <h1>Danh sách các layout</h1>
+    <div class="header-menu" style="height:1px"></div>
+</div>
+<div class="folder-content">
+    {begin_form}
+    {msg}
+    <ul>
+        <li>
+            <input type="submit" class="button" name="submit" value="Scan Layout on Local" style="width:140px;"/>
+            <input type="submit" class="button" name="submit_server" value="Scan Layout on Server"
+                   style="width:140px;"/>
+        </li>
+    </ul>
+    {end_form}
+    <div class="line top"></div>
+    <div class="table">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+            <tbody>
+            <tr align="center" class="table-title">
+                <td width="5%" class="bdtop bdbottom bdleft"><p>STT</p></td>
+                <td width="20%" class="bdtop bdbottom bdleft"><p>Tên Layout</p></td>
+                <td width="75%" class="bdtop bdbottom bdleft"><p>Các Page/Master sử dụng layout</p></td>
+            </tr>
+            <!-- BEGIN LAYOUT -->
+            <tr align="center" valign="top" class="{layout_class}">
+                <td width="5%" class="bdleft">{layout_id}</td>
+                <td width="25%" class="bdleft"><p>{layout_name} [<a
+                        href="?app=main&page=admin_layout&layout_name={layout_name}">Refresh</a>]</p></td>
+                <td width="70%" class="bdleft"><p>{page_using_layout}</p></td>
+            </tr>
+            <!-- END LAYOUT -->
+            </tbody>
+        </table>
+    </div>
+</div>

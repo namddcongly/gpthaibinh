@@ -1,0 +1,75 @@
+<div id="register-warning" style="color:red;">&nbsp;</div>
+<style>
+	.input_register{
+		width:200px;
+	}	
+</style>
+<form  id="registerForm" >
+<table class="table-form" id="register-content">
+    <tr>
+        <td class="label">Tên đăng nhập:</td>
+        <td class="form-element"><input id="username" name="user_name"  type="text" class="input_register"/></td>
+    </tr>
+    <tr>
+        <td class="label">Mật khẩu:</td>
+        <td class="form-element"><input id="password" name="password" type="password" class="input_register"/></td>
+    </tr>
+    <tr>
+        <td class="label">Xác nhận mật khẩu:</td>
+        <td class="form-element"><input id="verifyPassword" name="verify_password" type="password" class="input_register"/></td>
+    </tr>
+    <tr>
+        <td class="label">Họ tên:</td>
+        <td class="form-element"><input id="fullname" name="full_name"  type="text" class="input_register"/></td>
+    </tr>
+
+    <tr>
+        <td class="label">Email:</td>
+        <td class="form-element"><input id="email" name="email"  type="text" class="input_register"/></td>
+    </tr>
+    
+     <tr>
+        <td class="label">Điện thoại:</td>
+        <td class="form-element"><input id="phone" name="phone"  type="text" class="input_register"/></td>
+    </tr>
+     <tr>
+        <td class="label">Địa chỉ:</td>
+        <td class="form-element"><input id="address" name="address"  type="text" class="input_register"/></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input type="submit" class="bds-button" value="Đăng ký" name="submit">
+        </td>
+    </tr>
+</table>
+</form>
+<div id="register-success" class="register-success-box" style="display:none;">Chúc mừng bạn đã đăng ký thành viên thành công.
+        <p><a id="register-finished" href="javascript:;" class="small orange awesome"><span>Đóng &raquo;</span></a></p>
+</div>
+<script>
+	$("#registerForm").submit(function(){
+		var value = $(this).serialize();
+		$.post("ajax.php?fnc=register&path=user&cmd=submit&type=ajax",
+			value,
+			function(data)
+			{
+				if(data != 1){
+					$('#register-warning').html(data);
+					return false;
+				}
+				else
+				{
+					$('#register-warning').html('');
+					$('#register-content').hide();
+					$('#register-success').show();
+					return false;
+				}
+			}			
+		);	
+		return false;
+	});
+$('#register-finished').click(function(){
+        location.reload();
+    });	
+</script>

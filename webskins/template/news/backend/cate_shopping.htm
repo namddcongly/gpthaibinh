@@ -1,0 +1,116 @@
+<div class="folder-header">
+	<h1>Quản trị danh mục</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a id="category" class="header-menu-active" href="?app=news&page=admin_category_shopping"><span>Danh mục Shopping</span></a></li>
+			<li><a href="?app=news&amp;page=admin_shopping&amp;cmd=store_shopping&tab=store"><span>Kho dữ liệu</span></a></li>
+			<li><a class="" href="?app=news&amp;page=admin_shopping&amp;cmd=store_shopping&tab=store_pendding"><span>Chở xuất bản/duyệt</span></a></li>
+			<li><a href="?app=news&amp;page=admin_shopping&amp;cmd=create_shopping"><span>Tạo mới bài</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<div>
+	<h2>Thêm danh mục (tối đa 2 cấp)</h2>			
+	<ul id="data">
+		<li>
+			<label for="name">Tên danh mục</label>
+			<input type="text" name="name" style="width:250px;" value="" id="name"/>		
+			Tên danh mục			
+		</li>
+		<li>
+			<label for="name">Chọn danh mục</label>
+			<select name="parent_id" id="parent_id">
+				<option value="0">Chọn danh mục cấp 1</option>						
+				{option_cate1}
+			</select>
+		</li>
+		<li>
+			<label for="name">Thứ tự hiển thị</label>
+			<input type="text" name="arrange" style="width:20px;" value="" id="arrange"/>
+		</li>
+		<li style="padding:0px;">
+			<label for="name">&nbsp;</label>
+			<input type="button" class="button" value="Thêm mới" class="button" style="height: 25px; margin-top: 12px;" name="them mo"  onclick="postData(0)">
+		</li>
+	</ul>
+	</div>
+	<div class="line top"></div>
+	<div class="table">
+		<strong>{cate_name}</strong>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">
+			<thead style="height:30px;">
+				<tr>
+					<th width="5%" class="bdtop bdbottom bdleft" style="text-align:center;">STT</th>
+					<th width="65%" class="bdtop bdbottom bdleft" style="text-align:left;"><p>Tên danh mục</p></th>
+					<th width="8%" class="bdtop bdright bdbottom bdleft" style="text-align:center;"><p>Vị trí</p></th>
+					<th width="20%" class="bdtop bdright bdbottom bdleft" style="text-align:center;"><p>Thao tác</p></th>
+				</tr>
+			</thead>	
+				<tbody>
+				<!-- BEGIN LIST -->
+				<tr align="center" valign="top" class="{bg} heightMin">
+					<td class="bdleft">
+						<p>{stt}</p>
+					</td>
+					<td style="text-align:left" class="bdleft">
+						<p style="font-weight:bold"><a class="directory" href="{href}">{name}</a></p>
+					</td>
+					<td class="bdleft">
+						<input type="text" style="width:25px" name="" value="{arrange}" style="text-align:center;" />
+					</td>
+					<td class="bdleft">
+						<p>
+							<a href="javascript:;" onclick="loadData({id})">Sửa</a> | 
+							<a href="javascript:;" onclick="delData({id});" class="category_delete">Xóa</a> 
+						</p>
+					</td>	
+				</tr>				
+				<!-- END LIST -->	
+			</tbody>
+		</table>
+		<input type="submit" name="update" style="height:25px;margin-top:12px" class="button" value="Cập nhật" />
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	function loadData(id)
+	{
+		$("#data").html('Đang tải dữ liệu...');
+		$.post("ajax.php?fnc=admin.cate.shop.process&path=news", {
+					'action': 'load-data','id':id
+				}, function(data){
+				
+				$("#data").html(data);
+			});
+	}
+	function postData(id)
+	{
+		$.post("ajax.php?fnc=admin.cate.shop.process&path=news", {
+					'action': 'add-edit','name':$("#name").val(),'parent_id':$("#parent_id option:selected").val(),'arrange':$("#arrange").val(),'id':id
+				}, function(data){
+					if(data==1)
+						window.location.reload();
+					else
+						alert('Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại');	
+		});
+	}
+	function delData(id)
+	{
+		var ok=confirm("Bạn có chắc chắn xóa nhóm này không?");
+		if(ok==true)
+		{
+			$.post("ajax.php?fnc=admin.cate.shop.process&path=news", {
+					'action': 'del','id':id
+				}, function(data){
+					if(data==1)
+						window.location.reload();
+					else if(data==2)
+						alert('Không xóa được nhóm, bạn phải xóa các nhóm con trước');
+					else	
+						alert('Đã có lỗi xảy ra, bạn vui lòng kiểm tra lại');	
+			});
+		}
+	}
+	
+</script>

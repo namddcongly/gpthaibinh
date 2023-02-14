@@ -1,0 +1,81 @@
+{begin_form}
+<div class="folder-header">
+	<h1>Quản trị video</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a id="category"  href="{url_current}"><span>Danh sách video</span></a></li>
+			<li><a id="category" class="header-menu-active"  href="{link_add}"><span>Thêm video</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">
+	<h2>TẠO & SỬA VIDEO</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tiều để bài Video</label>
+				<input  type="text" style="width:520px;" name="title" value="{title}" id="title"/>
+				<font color="#999999">Tiêu đề không quá 255 kí tự</font>
+			</li>
+                        <li>
+				<label>Sapo video</label>
+				<textarea cols="96" rows="5" name="description" id="description" maxlength="255" >{description}</textarea>&nbsp;<span id="max_len" style="color:#990000">Tối đa 255 kí tự</span>
+				
+			</li>
+			<li id="cat">
+				<label>Chọn danh mục</label>
+				<select name="cate_id" id="cate">
+					<option value="0">Chọn danh mục</option>
+					{option_cate1}
+				</select>
+				
+			</li>
+			
+			<li>
+				<label style="display:block; float:left">Ảnh nền</label>
+				
+                <img src="{img1}"  width="100px;"/>&nbsp;
+                <br>
+                <label style="display:block; float:left">&nbsp;</label><input type="file"  name="img1" id="img1"/>&nbsp;<font color="#999999"></font>
+						
+			</li>
+            <li>
+				<label style="display:block; float:left">File video</label>
+				
+						
+						<input type="file"  name="video" id="video"/>&nbsp;<font color="#999999"></font>
+						
+			</li>
+			
+			<li>
+				<label>&nbsp;</label>
+				Tiếp tục ?<input  type="checkbox" value="1" name="continue" {check-disabled}/>&nbsp;<input type="submit"  value="Thêm/Sửa" name="add_edit" class="button"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<input  type="hidden" value="{news_id}" name="news_id" />
+{end_form}
+<script type="text/javascript">
+function checkForm()
+{
+	//return true;
+	if($("#title").val()=='' || $("#title").val()==null)
+	{
+		alert("Bạn phải nhập tiêu đề");
+		$("#title").focus();
+		return false;
+	}
+	if($("#cate option:selected").val()==0)
+	{
+		alert("Bạn phải chọn danh mục cấp 1");
+		$("#cate1").focus();
+		return false;
+	}
+	
+
+	return true;
+}   
+</script>

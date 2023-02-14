@@ -1,0 +1,80 @@
+{begin_form}
+<input type="hidden" value="{from}"  name="from" />
+<div class="folder-content">
+	<h2>TẠO & SỬA TIN</h2>
+	<div class="line top"></div><div class="clear"></div>
+	<!--begin table data-->
+	<div class="table">
+		<ul>
+			<li>
+				<label>Tiêu đề chính</label>
+				<input  type="text" style="width:520px;" name="title" value="{title}" id="title" maxlength="255" />
+				<span id="check_unique"></span>
+				<font color="#999999">Tiêu đề chính không quá 255 kí tự</font>
+			</li>
+			<li>
+				<label>Tiêu đề phụ</label>
+				<input  type="text" style="width:520px;" name="sub_title" value="{sub_title}" id="sub_title" maxlength="255" />
+				<font color="#999999">Tiêu đề phụ không quá 255 kí tự</font>
+			</li>
+			<li>
+				<label>Sapo bài viết</label>
+				<textarea cols="96" rows="5" name="description" id="description" maxlength="500" onkeypress="copyText('description','description_seo')" onkeydown="copyText('description','description_seo')" onkeyup="copyText('description','description_seo')">{description}</textarea>&nbsp;<span id="max_len" style="color:#990000">Tối đa 255 kí tự</span>
+				
+				
+			</li>
+			<li>
+				<label>Chọn nhiều ảnh</label>
+				<input type="button" class="button"  value="Duyệt ảnh" name="add_edit" class="button" onclick="open_KCFinderMulti()" />
+				
+			</li>
+			<li>
+				<label>Nội dung bài viết</label>
+				<textarea  class="ckeditor" name="content" id="content">{content}</textarea>
+			</li>
+			<li>
+				<label>&nbsp;</label>
+				<input type="submit"  value="Lưu trữ" name="add_edit" class="button"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<input  type="hidden" value="{status}" name="status" />
+<input  type="hidden" value="{news_id}" name="news_id" />
+{end_form}
+<script type="text/javascript">
+	$(document).ready(function(){
+	$('textarea[maxlength]').keyup(function(){
+	        var max = parseInt($(this).attr('maxlength'));
+	        if($(this).val().length > max){
+	            $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+	        }
+        	$("#max_len").html(' Còn ' + (max - $(this).val().length) + ' kí tự');
+	    });
+	});
+function checkForm()
+{
+	
+	if($("#title").val()=='' || $("#title").val()==null)
+	{
+		alert("Bạn phải nhập tiêu đề");
+		$("#title").focus();
+		return false;
+	}	
+	if($("#sub_title").val()=='' || $("#sub_title").val()==null)
+	{
+		alert("Bạn phải nhập tiêu đề phụ");
+		$("#sub_title").focus();
+		return false;
+	}
+	if($("#description").val()=='' || $("#description").val()==null)
+	{
+		alert("Bạn phải nhập trích dẫn");
+		$("#description").focus();
+		return false;
+	}
+	return true;
+}
+
+ 
+</script>

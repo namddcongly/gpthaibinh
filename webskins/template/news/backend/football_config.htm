@@ -1,0 +1,240 @@
+<div class="folder-header">
+	<h1>File dữ liệu bóng đá</h1>
+	<div class="header-menu">
+		<ul>
+			<li><a class="user-icon" href="?app=news&page=admin_news_category"><span>Danh sách danh mục</span></a></li>					
+			<li><a class="protrans-icon" href="?app=news&page=admin_category_property"><span>Thuộc tính</span></a></li>
+			<li><a class="activities-icon" href="?app=news&page=admin_category_configuration"><span>Cấu hình danh mục</span></a></li>
+			<li><a class="activities-icon" href="?app=news&page=admin_entertainment_configuration"><span>Giải trí</span></a></li>
+			<li><a class="activities-icon header-menu-active" href="?app=news&page=admin_football_configuration"><span>Bóng đá</span></a></li>
+			<li><a class="activities-icon" href="?app=news&page=admin_region_config"><span>Tin trong vùng</span></a></li>
+		</ul>
+	</div>
+</div>
+<div class="folder-content">			
+	<div class="line top"></div>	
+	<h2>Sửa tin</h2>	
+	{begin_form}		
+	<ul>
+	<li>
+		<label for="name">Tên file</label>
+			<input type="text" name="data[file_name]" id="news_id" style="width:250px;" value="{filename}"/>						
+		</li>
+		<li>
+		<label for="name">Chọn Tab</label>
+			<select name="tab" id="tab" onchange="submitC()">
+				<option value="0">Chọn Tab</option>
+				<option value="1">Kết quả</option>
+				<option value="2">Lịch thi đấu</option>
+				<option value="3">Bảng xếp hạng</option>
+				<option value="4">Top ghi bàn</option>
+			</select>
+		</li>
+		<li>
+			<label for="name">Mã HTML [Code]</label>
+			<textarea name="data[code]" id="text" style="width:750px;height:300px">{code_html}</textarea>
+		</li>
+			
+		<li><input type="submit" class="button" value="Cập nhật" style="margin-left:153px; width:70px;" />
+		<input type="reset" class="button" value="Hủy bỏ" /></li>
+	</ul>
+	{end_form}
+	<div class="table">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bdbottom">		
+			<tbody>
+			    
+				<tr align="center" class="table-title">
+					<td width="5%" class="bdtop bdbottom bdleft"><p><input type="checkbox" id="all" name="all"></p></td>
+					<td width="20%" class="bdtop bdbottom bdleft"><p>Tên file</p></td>	
+					<td width="35%" class="bdtop bdbottom bdleft" style="text-align:left"><p>Đường dẫn file</p></td>
+					<td width="20%" class="bdtop bdbottom bdleft"><p>Tùy chọn</p></td>
+				</tr>			
+				<!-- BEGIN SLIDE -->	
+				<tr align="center" valign="top" class="{bg} heightMin">
+					<td class="bdleft"><input type="checkbox" /></td>
+					<td class="bdleft"><p><b>{file_name}</b></p></td>
+					<td class="bdleft" style="text-align:left"><p>
+					Path: <span>{file_path}</span>					
+					</p></td>
+					<td class="bdleft">
+						<p>
+						<a href="?app=news&page=admin_football_configuration&file_name={file_name}">Sửa</a> | 
+						<a href="?app=news&page=admin_football_configuration&file_name={file_name}&cmd=delete">Xóa</a>
+						</p>
+
+					</td>						
+				</tr>
+			    <!-- END SLIDE -->			    
+			</tbody>
+		</table>
+		
+	</div>
+	
+	<div class="clear"></div>
+</div>
+<div id="text0" style="display:none"></div>
+<div id="text1" style="display:none"><table width="100%" class="fb-session">                         
+    <tr class="background-0">
+        <td colspan="3" class="fb-tearm-name">Giải nhà nghề JOC</td>
+    </tr>   
+    <tr class="background-1">
+        <td class="fb-session-name1">
+            <h4>Real Madrid</h4>
+            <ul>
+                <li>Ronaldo (24, 58, pen 90+2)</li>
+                <li>Benzema (77)</li>
+            </ul>
+         </td>
+        <td class="fb-session-ratio">4-0 <br /> (HT 1-0)</td>
+        <td class="fb-session-name2">
+            <h4>Getafe</h4>
+        </td>
+    </tr>
+    <tr class="background-2">
+        <td class="fb-session-name1">
+            <h4>Racing Santander</h4>
+            <ul>
+                <li>Bakircioglu (38)</li>
+                <li>Rosenberg (48)</li>
+            </ul>
+         </td>
+        <td class="fb-session-ratio">2-1 <br /> (HT 1-1)</td>
+        <td class="fb-session-name2">
+            <h4>Atletico Madrid</h4>
+            <ul>
+                <li>Mario Suarez (11)</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</div>
+<div id="text2" style="display:none"><table width="100%" class="fb-calendar">
+    <tr>
+        <th>Ngày/Giờ</th>
+        <th>Cặp đấu</th>
+        <th colspan="3">Tỷ lệ Châu Á</th>
+        <th colspan="3">Tỷ lệ Châu Âu</th>
+        <th>Lịch Tivi</th>
+    </tr> 
+    <tr class="background-0">
+        <td colspan="9" class="fb-tearm-name">Coppa Italia - Ý 10-11</td>                                
+    </tr>   
+    <tr class="background-1">
+        <td>12/5 <br /> 01:45</td>
+        <td>Inter Milan vs AS Roma</td>
+        <td>2.025</td>
+        <td>3/4 : 0</td>
+        <td>1.875</td>
+        <td>5.26</td>
+        <td>3.77</td>
+        <td>1.64</td>
+        <td class="tivi">TT: K+</td>
+    </tr>
+    <tr class="background-2">
+        <td>12/5 <br /> 01:45</td>
+        <td>Inter Milan vs AS Roma</td>
+        <td>2.025</td>
+        <td>3/4 : 0</td>
+        <td>1.875</td>
+        <td>5.26</td>
+        <td>3.77</td>
+        <td>1.64</td>
+        <td class="tivi">TT: K+</td>
+    </tr>
+</table>
+</div>
+<div id="text3" style="display:none">
+         <div class="fb-league-logo">
+             <img src="webskins/skins/news/images/bongda/logo-laliga.jpg" alt="Laliga - Tây Ban Nha" title="Laliga - Tây Ban Nha" />
+         </div>
+         <div class="fb-league-info">
+             <h3>Bảng xếp hạng bóng đá Tây Ban Nha <br />Laliga {season1}</h3>
+             <span class="fb-league-time">{time_update}</span>
+             <p class="fb-league-note">Cập nhật ngay sau khi có sự thay đổi <br />trong bảng xếp hạng giải Laliga - Tây Ban Nha {season2}</p>
+         </div>	
+         <table width="100%" class="fb-table">
+                            <tr>
+                                <th class="tt">TT</th>
+                                <th class="name">Đội tuyển</th>
+                                <th>ST</th>
+                                <th>T</th>
+                                <th>H</th>
+                                <th>B</th>
+                                <th>TG</th>
+                                <th>TH</th>
+                                <th>Điểm</th>
+                            </tr> 
+                            <tr class="background-0">
+                            	<td colspan="9">Bảng A</td>
+                            </tr>
+                            <tr class="background-1 tearm-open">
+                                <td>1</td>
+                                <td class="name">Cristiano Ronaldo</td>
+                                <td>7</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                            </tr> 
+                             <tr class="background-2 tearm-open">
+                                <td>1</td>
+                                <td class="name">Cristiano Ronaldo</td>
+                                <td>7</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>16</td>
+                            </tr>
+                            </table>
+         <div class="clear"></div>
+     </div>
+
+<div id="text4" style="display:none"><div class="fb-league-head">
+    <div class="fb-league-logo">
+        <img src="webskins/skins/news/images/bongda/logo-laliga.jpg" alt="Laliga - Tây Ban Nha" title="Laliga - Tây Ban Nha" />
+    </div>
+    <div class="fb-league-info">
+        <h3>Top ghi bàn bóng đá Tây Ban Nha <br />Laliga {season1}</h3>
+        <span class="fb-league-time">{time_update}</span>
+        <p class="fb-league-note">Cập nhật ngay sau khi có sự thay đổi <br />trong bảng xếp hạng giải Laliga - Tây Ban Nha {season2}</p>
+    </div>	
+    
+    <div class="clear"></div>
+</div>
+    
+<div class="fb-league">                        	
+    <table width="100%">
+    <tr>
+       <th class="fb-top-number">TT</th>
+       <th class="name">Tên cầu thủ</th>
+       <th class="name-club">Câu lạc bộ</th>
+       <th class="fb-top-total">Số bàn</th>
+   </tr> 
+   <tr class="background-1 tearm-open">
+       <td class="fb-top-number">1</td>
+       <td class="name">Cristiano Ronaldo</td>
+       <td class="name-club">Real Madrid CF</td>
+       <td>16</td>
+   </tr>  
+   <tr class="background-2 tearm-open">
+       <td class="fb-top-number">2</td>
+       <td class="name">Lionel Messi</td>
+       <td class="name-club">FC Barcelona</td>
+       <td>16</td>
+   </tr> 
+   </table>
+</div>
+</div>
+
+<script>
+function submitC()
+{
+	var tab = $("#tab option:selected").val();
+	
+	$("#text").html($("#text"+tab).html());			
+}
+</script>

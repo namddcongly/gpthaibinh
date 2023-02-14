@@ -1,0 +1,33 @@
+<div class="folder top">
+	<div class="folder-header">
+		<h1>QUẢN TRỊ QUYỀN</h1>
+		<div class="header-menu">
+			<ul>
+				<li><a href="?portal=main&page=admin_privilege"><span>Danh sách quyền</span></a></li>
+				<li><a href="?portal=main&page=admin_privilege&cmd=allocation_privilege" class="header-menu-active"><span>Cấp quyền</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div> 
+<div class="folder-content">
+	<div>
+		<ul>
+			<li><span style="width:120px;">Tên người dùng</span><input  type="text"  name="user_name" id="user_name" style="width:160px;"/> Nhập tên người dùng, Click "Tìm kiếm" để biết thông tin các quyền đã được cấp phát</li>
+			<li><span style="width:120px;">&nbsp;</span><input  type="button" value="Tìm kiếm" class="button" onclick="searchUser()"/></li>
+		</ul><br/>
+		<strong>Không tồn tại tài khoàn mà bạn tìm kiếm, Bạn vui lòng tìm với tài khoản khác!</strong>
+	</div>
+	
+</div>
+<script language="javascript">
+function searchUser()
+{
+	var url='?app=main&page=admin_privilege&cmd=allocation_privilege';
+	if($("#user_name").val()=='' || $("#user_name").val()==null) 
+	{
+		$("#user_name").focus();	
+		return false;
+	}
+	window.location.href=url+'&user_name='+$("#user_name").val();
+}
+</script>	
