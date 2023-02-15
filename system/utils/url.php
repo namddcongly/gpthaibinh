@@ -151,7 +151,16 @@ class Url
             $data['cate_alias'] = $data['cate_alias'] . '/infographic/';
         }
 
-        return self::link($data, 'news', 'congly_detail');
+        return self::link($data, 'news', 'detail');
+    }
+
+    static function news_detail($data)
+    {
+    }
+
+    static function news_cate($data)
+    {
+
     }
 }
 

@@ -1,7 +1,3 @@
-<input type="hidden" id="idCategory" value="355"/>
-<input type="hidden" id="pageIndex" value="1"/>
-<input type="hidden" id="pageSize" value="20"/>
-<input type="hidden" id="totalArticle" value="4649"/>
 <div class="nav-item link-map">
     <div class="container">
         <div class="link-map-item">
@@ -11,18 +7,15 @@
         </div>
         <i class="fas fa-chevron-right"></i>
         <div class="link-map-item">
-            <a href="list.html">Tin tức</a>
+            <a href="{href_cate_parent}">{cate_parent_name}</a>
             <ul class="link-map-menu">
+                <!-- BEGIN SubCate -->
                 <li class="item">
-                    <a class="item-link"
-                       href="list.html">Tin
-                        Giáo Phận</a>
+                    <a class="item-link" href="{cate_href}">
+                        {cate_name}
+                    </a>
                 </li>
-                <li class="item">
-                    <a class="item-link"
-                       href="list.html">Tin
-                        Giáo Hội</a>
-                </li>
+                <!-- END SubCate -->
             </ul>
         </div>
         <i class="fas fa-chevron-right"></i>
@@ -50,134 +43,38 @@
                 <div class="container-article-2">
                     <div class="container-title">
                         <h1 class="title">Tin Giáo Hội</h1>
-
                     </div>
-
                     <div class="box-article">
                         <div class="box-main">
                             <div class="main-article">
                                 <div class="img">
-                                    <a
-                                            href="news-detail.html">
-                                        <img
-                                                src="http://giaophanthaibinh.org/upload/article/duc-tgm-georg-song-va-rao-giang-duc-tin-vao-thien-chua-la-dieu-quan-trong-nhat-noi-duc-bien-duc.jpeg?width=600&height=400&quality=100&bgcolor=efefef"
-                                                alt="Đức TGM Georg: Sống
-                                                        và rao giảng đức tin vào
-                                                        Thiên Chúa là điều quan
-                                                        trọng nhất nơi Đức Biển
-                                                        Đức"/></a>
+                                    <a href="{f_href}"><img src="{f_img}" alt=""/></a>
                                 </div>
                                 <h3 class="article-title">
-                                    <a
-                                            href="news-detail.html">Đức
-                                        TGM Georg: Sống và rao giảng
-                                        đức tin vào Thiên Chúa là
-                                        điều quan trọng nhất nơi Đức
-                                        Biển Đức</a>
+                                    <a href="{f_href}">{f_title}</a>
                                 </h3>
-                                <p>
-                                <p class="MsoNormal">Đức Tổng
-                                    Gi&aacute;m Mục Georg
-                                    G&auml;nswein, Thư k&yacute;
-                                    ri&ecirc;ng của Đức
-                                    nguy&ecirc;n Gi&aacute;o
-                                    ho&agrave;ng Biển Đức XVI,
-                                    khẳng định Đức Biển Đức
-                                    lu&ocirc;n n&oacute;i
-                                    &ldquo;C&oacute; nhiều đề
-                                    t&agrave;i quan trọng, nhưng
-                                    điều quan trọng nhất
-                                    l&agrave; đức tin nơi
-                                    Thi&ecirc;n Ch&uacute;a.
-                                    Đ&oacute; l&agrave; trung
-                                    t&acirc;m, cần thiết. Những
-                                    người kh&aacute;c c&oacute;
-                                    thể l&agrave;m những điều
-                                    kh&aacute;c, nhưng mục
-                                    ti&ecirc;u ch&iacute;nh,
-                                    nhiệm vụ ch&iacute;nh của
-                                    Gi&aacute;o ho&agrave;ng
-                                    l&agrave; đức tin v&agrave;
-                                    rao giảng đức tin&rdquo;.</p>
-                                </p>
+                                <p class="MsoNormal">{f_description}</p>
                             </div>
                         </div>
                         <div class="scroll-article">
                             <div class="article-list">
                                 <div class="article-item">
-
                                     <div>
-                                        <a
-                                                href="news-detail.html">
-                                            <img
-                                                    src="http://giaophanthaibinh.org/upload/article/nhung-loi-sau-cung-cua-duc-nguyen-giao-hoang-bien-duc-“lay-chua-con-yeu-men-chua-”.jpeg?width=600&height=400&quality=100&bgcolor=efefef"
-                                                    alt="Những lời sau
-                                                            cùng của Đức nguyên
-                                                            Giáo hoàng Biển Đức:
-                                                            “Lạy Chúa con yêu
-                                                            mến Chúa!”"/></a>
-                                        <a
-                                                href="news-detail.html"
-                                                class="article-link">Những
-                                            lời sau cùng của Đức
-                                            nguyên Giáo hoàng Biển
-                                            Đức: “Lạy Chúa con yêu
-                                            mến Chúa!”</a>
+                                        <a href="{r1_href}"><img src="{r1_img}" alt=""/></a>
+                                        <a href="{r2_href}" class="article-link">{r1_title}</a>
                                     </div>
-
                                     <div>
-                                        <a
-                                                href="news-detail.html">
-                                            <img
-                                                    src="http://giaophanthaibinh.org/upload/article/hang-ngan-tin-huu-o-roma-va-khap-noi-tren-the-gioi-den-kinh-vieng-duc-bien-duc.jpeg?width=600&height=400&quality=100&bgcolor=efefef"
-                                                    alt="Hàng ngàn tín
-                                                            hữu ở Roma và khắp
-                                                            nơi trên thế giới
-                                                            đến kính viếng Đức
-                                                            Biển Đức"/></a>
-                                        <a
-                                                href="news-detail.html"
-                                                class="article-link">Hàng
-                                            ngàn tín hữu ở Roma và
-                                            khắp nơi trên thế giới
-                                            đến kính viếng Đức Biển
-                                            Đức</a>
+                                        <a href="{r2_href}"><img src="{r2_img}" alt=""/></a>
+                                        <a href="{r2}" class="article-link">{r1_title}</a>
                                     </div>
                                     <br class="clear"/>
                                     <div>
-                                        <a
-                                                href="news-detail.html">
-                                            <img
-                                                    src="http://giaophanthaibinh.org/upload/article/di-hai-cua-duc-nguyen-giao-hoang-bien-duc-da-duoc-dat-trong-den-tho-thanh-phero.jpg?width=600&height=400&quality=100&bgcolor=efefef"
-                                                    alt="Di hài của Đức
-                                                            nguyên Giáo hoàng
-                                                            Biển Đức đã được đặt
-                                                            trong đền thờ thánh
-                                                            Phêrô"/></a>
-                                        <a
-                                                href="news-detail.html"
-                                                class="article-link">Di
-                                            hài của Đức nguyên Giáo
-                                            hoàng Biển Đức đã được
-                                            đặt trong đền thờ thánh
-                                            Phêrô</a>
+                                        <a href="{r3_href}"><img src="{r3_img}" alt=""/></a>
+                                        <a href="{r3_href}" class="article-link">{r3_title}</a>
                                     </div>
-
                                     <div>
-                                        <a
-                                                href="de">
-                                            <img
-                                                    src="http://giaophanthaibinh.org/upload/article/tuong-nho-va-cau-nguyen-duc-nguyen-giao-hoang-bien-duc-xvi.jpg?width=600&height=400&quality=100&bgcolor=efefef"
-                                                    alt="Tưởng nhớ và
-                                                            cầu nguyện: Đức
-                                                            Nguyên Giáo hoàng
-                                                            Biển Đức XVI"/></a>
-                                        <a
-                                                href="news-detail.html"
-                                                class="article-link">Tưởng
-                                            nhớ và cầu nguyện: Đức
-                                            Nguyên Giáo hoàng Biển
-                                            Đức XVI</a>
+                                        <a href="{r4_href}"><img src="{r4_img}" alt=""/></a>
+                                        <a href="{r4}" class="article-link">{r4_title}</a>
                                     </div>
                                     <br class="clear"/>
                                 </div>
@@ -187,92 +84,38 @@
                     </div>
                     <div class="clear"></div>
                     <div class="box-list-article">
-
-
+                        <!-- BEGIN Row -->
                         <div class="item">
                             <div>
                                 <div class="img">
-                                    <a
-                                            href="news-detail.html">
-                                        <img
-                                                src="http://giaophanthaibinh.org/upload/article/hoi-dong-giam-muc-viet-nam-thong-bao-cau-nguyen-cho-duc-thanh-cha-benedicto-xvi.jpg?width=300&height=200&quality=100&bgcolor=efefef"
-                                                alt="Hội đồng Giám mục
-                                                        Việt Nam thông báo cầu
-                                                        nguyện cho Đức Thánh Cha
-                                                        Bênêđictô XVI"/></a>
+                                    <a href="news-detail.html">
+                                        <img src="{img_html}" alt=""/>
+                                    </a>
                                 </div>
                             </div>
                             <div>
                                 <h3 class="title">
-                                    <a
-                                            href="news-detail.html">Hội
-                                        đồng Giám mục Việt Nam thông
-                                        báo cầu nguyện cho Đức Thánh
-                                        Cha Bênêđictô XVI</a>
+                                    <a href="{href}">{title}</a>
                                 </h3>
-                                <p class="text">
-                                <p>Hội đồng Gi&aacute;m mục Việt
-                                    Nam th&ocirc;ng b&aacute;o
-                                    cầu nguyện cho Đức
-                                    Th&aacute;nh Cha
-                                    B&ecirc;n&ecirc;đict&ocirc;
-                                    XVI</p>
-                                </p>
+                                <p class="text">{description}</p>
                             </div>
                         </div>
-
-                        <div class="item">
-                            <div>
-                                <div class="img">
-                                    <a
-                                            href="news-detail.html">
-                                        <img
-                                                src="http://giaophanthaibinh.org/upload/article/chuc-thu-tinh-than-cua-duc-nguyen-giao-hoang-bien-duc-xvi.jpeg?width=300&height=200&quality=100&bgcolor=efefef"
-                                                alt="Chúc thư tinh thần
-                                                        của Đức nguyên Giáo
-                                                        hoàng Biển Đức XVI"/></a>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="title">
-                                    <a
-                                            href="news-detail.html">Chúc
-                                        thư tinh thần của Đức nguyên
-                                        Giáo hoàng Biển Đức XVI</a>
-                                </h3>
-                                <p class="text">
-                                <p class="MsoNormal">To&agrave;
-                                    Th&aacute;nh đ&atilde;
-                                    c&ocirc;ng bố Ch&uacute;c
-                                    thư tinh thần của Đức
-                                    nguy&ecirc;n Gi&aacute;o
-                                    ho&agrave;ng Biển Đức XVI,
-                                    được đề ng&agrave;y 29
-                                    th&aacute;ng 8 năm 2006.</p>
-                                </p>
-                            </div>
-                        </div>
-
+                        <!-- END Row -->
                     </div>
                     <div class="clear"></div>
-
-                    <div class="container-btn show-more"><a
-                            id="category_paging_article"
-                            class="btn-see-more">Xem thêm <i
-                            class="fas fa-sort-down"></i></a></div>
+                    <div class="container-btn show-more">
+                        {view_more}
+                    </div>
                 </div>
             </div>
             <div class="right right-category">
-
                 <div class="sticky sticky-category">
-
                     <div class="container-new-hot">
                         <h4 class="title-c">
                             <i class="fas fa-fire"></i>Tin nổi bật
                         </h4>
                         <div class="article-list">
                             <ul>
-
                                 <li>
                                     <a
                                             href="news-detail.html"
@@ -298,7 +141,6 @@
                                     </p>
                                     <div class="clear"></div>
                                 </li>
-
                                 <li>
                                     <a
                                             href="news-detail.html"
@@ -323,7 +165,6 @@
                                     </p>
                                     <div class="clear"></div>
                                 </li>
-
                                 <li>
                                     <a
                                             href="news-detail.html"
@@ -352,7 +193,6 @@
                                     </p>
                                     <div class="clear"></div>
                                 </li>
-
                                 <li>
                                     <a
                                             href="news-detail.html"
@@ -383,11 +223,9 @@
                                     </p>
                                     <div class="clear"></div>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
